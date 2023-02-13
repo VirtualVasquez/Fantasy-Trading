@@ -1,0 +1,31 @@
+{
+  "name": "fantasy_trading",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start --prefix client\" \"npm run start --prefix server\"",
+    "test": "npm run test --prefix server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VirtualVasquez/Fantasy-Trading.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VirtualVasquez/Fantasy-Tradingissues"
+  },
+  "homepage": "https://github.com/VirtualVasquez/Fantasy-Trading#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "chai": "^4.3.7",
+    "concurrently": "^7.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.20",
+    "pg": "^8.9.0"
+  }
+}
