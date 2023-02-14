@@ -7,11 +7,13 @@ import {
 import HomePage from './pages/homePage/homePage';
 import LoginPage from './pages/loginPage/loginPage';
 import TradePage from './pages/tradePage/tradePage';
+import Navbar from './components/navbar';
 
 
 function App() {
   return (
     <div className="App">
+      <Navbar />
       <Router>
         <Routes>
           <Route
