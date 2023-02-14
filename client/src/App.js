@@ -19,13 +19,13 @@ function App() {
           <Route
             exact path="/"
             element={
-              <HomePage />
+              <LoginPage />
             }
           />
           <Route
             exact path="/login"
             element={
-              <LoginPage />
+              <HomePage />
             }
           />
           <Route
