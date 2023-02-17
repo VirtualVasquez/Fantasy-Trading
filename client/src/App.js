@@ -13,7 +13,8 @@ import Navbar from './components/navbar';
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      {/* Render Navbar only for HomePage and Trade Page */}
+      {/* <Navbar /> */}
       <Router>
         <Routes>
           <Route

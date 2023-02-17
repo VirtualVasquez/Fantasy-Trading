@@ -1,0 +1,51 @@
+.login-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    #login-form{
+        border: #dadde1 solid 1px;
+        box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+        border-radius: 8px;
+        padding: 1rem;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        > *:not(.btn-register){
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+    }
+}
+
+
+
+
+.btn-submit{
+    width: 100%;
+}
+.button-divider{
+    border-bottom: solid 1px #dadde1;
+}
+
+.btn-register{
+    width: 60%;
+    min-width: 180px;
+    margin-top: 0.5rem;
+}
+
+
+
+
+.col{
+    border: 1px solid black;
+}
