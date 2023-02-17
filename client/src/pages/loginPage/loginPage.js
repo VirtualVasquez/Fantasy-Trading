@@ -12,9 +12,8 @@ const LoginPage = props => {
                 <p>Whether you lack the money or the experience, the Stonks Exchange will help you learn the ropes. We're a platform that lets you practice trading real stocks with fake money.</p>
                     <img src={stonks} alt="stonks" width="100%"></img>
                 </div>
-                <div className='col-4 offset-1 form-col'>
+                <div className='col-4 offset-2 form-col'>
                 <form id="login-form">
-                    
                     <div class="form-group email-group">
                         <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"></input>
 
