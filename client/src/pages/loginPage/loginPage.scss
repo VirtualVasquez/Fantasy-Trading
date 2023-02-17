@@ -1,9 +1,10 @@
 .login-page{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
+    // height: 100vh;
+    padding: 200px;
 }
 
 .form-col{
@@ -12,6 +13,8 @@
     justify-content: center;
     align-items: center;
     #login-form{
+        color: #725118;
+        background-color: white;
         border: #dadde1 solid 1px;
         box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
         border-radius: 8px;
