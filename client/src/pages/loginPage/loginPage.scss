@@ -1,9 +1,17 @@
 .login-page{
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
-    // height: 100vh;
+    .info-col{
+        font-size: 20px;
+    }
+    @media(max-width: 992px){
+        padding: 50px;
+        text-align: center;
+        img{
+            display: none;
+        }
+        .form-col{
+            margin-top: 50px;
+        }
+    }
     padding: 200px;
 }
 
@@ -30,9 +38,6 @@
     }
 }
 
-
-
-
 .btn-submit{
     width: 100%;
 }
@@ -45,9 +50,6 @@
     min-width: 180px;
     margin-top: 0.5rem;
 }
-
-
-
 
 .col{
     border: 1px solid black;

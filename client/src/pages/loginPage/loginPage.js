@@ -7,12 +7,12 @@ const LoginPage = props => {
     return (
         <div className='container login-page'>
             <div className='row'>
-                <div className='col-6 info-col'>
+                <div className='col-10 offset-1 col-lg-6 offset-lg-0 info-col'>
                 <h1>Stonks Exchange</h1>
                 <p>Whether you lack the money or the experience, the Stonks Exchange will help you learn the ropes. We're a platform that lets you practice trading real stocks with fake money.</p>
                     <img src={stonks} alt="stonks" width="100%"></img>
                 </div>
-                <div className='col-4 offset-2 form-col'>
+                <div className='col-10 offset-1 col-lg-4 offset-lg-2  form-col'>
                 <form id="login-form">
                     <div class="form-group email-group">
                         <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"></input>
