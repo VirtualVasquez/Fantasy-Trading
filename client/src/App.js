@@ -7,20 +7,23 @@ import {
 import HomePage from './pages/homePage/homePage';
 import LoginPage from './pages/loginPage/loginPage';
 import TradePage from './pages/tradePage/tradePage';
-import Navbar from './components/navbar';
+import Navbar from './components/navbar/navbar';
 
 
 function App() {
   return (
     <div className="App">
       {/* Render Navbar only for HomePage and Trade Page */}
-      {/* <Navbar /> */}
+      <Navbar />
       <Router>
         <Routes>
           <Route
             exact path="/"
             element={
-              <LoginPage />
+              // <LoginPage />
+              // <HomePage />
+              <TradePage />
+
             }
           />
           <Route
