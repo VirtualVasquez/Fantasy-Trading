@@ -1,0 +1,29 @@
+.trade-page{
+    margin-top: 2rem;
+    .balance-breakdown{
+        background-color: yellow;
+        height: 400px;
+    }
+    .assets-breakdown{
+        .table{
+            p{
+                margin-bottom:0;
+            }
+            .positive{
+                color:green;
+            }
+            .negative{
+                color:red;
+            }
+            tbody{
+                tr{
+                    &:hover{
+                        transition: 0.2s opacity;
+                        opacity: 0.8;
+                    }
+                }
+            }
+
+        }
+    }
+}
