@@ -4,10 +4,10 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import HomePage from './pages/homePage/homePage';
-import LoginPage from './pages/loginPage/loginPage';
-import TradePage from './pages/tradePage/tradePage';
-import Navbar from './components/navbar/navbar';
+import HomePage from './modules/HomePage';
+import LoginPage from './modules/LoginPage';
+import TradePage from './modules/TradePage';
+import Navbar from './modules/common/Navbar';
 
 
 function App() {
