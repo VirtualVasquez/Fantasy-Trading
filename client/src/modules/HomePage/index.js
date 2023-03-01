@@ -5,7 +5,7 @@ import HoldingsTable from './HoldingsTable.js';
 
 const HomePage = props => {
     return (
-        <div className='container trade-page'>
+        <div className='container home-page'>
             <div className='row'>
                 <div className='col-12'>
                     <BalanceSummary />
