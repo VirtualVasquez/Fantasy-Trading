@@ -3,6 +3,7 @@ import './TradePage.scss';
 import './StockResult';
 import './SavedStock';
 import SavedStock from './SavedStock';
+import StockResult from './StockResult';
 
 const TradePage = props => {
     return (
@@ -18,13 +19,14 @@ const TradePage = props => {
                 </div>
             </div>
             <div className='row stocks-row'>
-                <div className='col-4'>
+                <div className='col-12 col-lg-7'>
+                    <h3>Results</h3>
+                    <StockResult />
+
+                </div>
+                <div className='col-12 col-lg-5'>
                     <h3>Saved Stocks</h3>
                     <SavedStock />
-                </div>
-                <div className='col-8'>
-                    <h3>Results</h3>
-
                 </div>
             </div>
         </div>

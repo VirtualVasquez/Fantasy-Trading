@@ -36,10 +36,10 @@ const SavedStock = props => {
                     <div className='col-7 saved-stats'>
                         <p className="stat high-low-stat">
                             <span className="label high-low-label">
-                            Day High|Low
+                            Day High | Low
                             </span>
                             <span className="value high-low-value">
-                            $251.49|$248.73
+                                $251.49 | $248.73
                             </span>
                         </p>
                         <p className="stat previous-close-stat">

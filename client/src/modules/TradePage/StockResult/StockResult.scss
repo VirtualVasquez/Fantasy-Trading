@@ -1,0 +1,17 @@
+.stock-result{
+    padding: 0.25rem 1rem;
+    .stock-result-body{
+        font-size: 1.25rem;
+        display: flex;
+        justify-content: space-between;
+        .comp-info{
+            font-weight: 600;
+            margin-bottom: 0rem;
+            display: flex;
+            align-items: center;
+        }
+        .btn{
+            font-size: 1.15rem;
+        }
+    }
+}
