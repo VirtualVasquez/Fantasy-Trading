@@ -13,8 +13,10 @@ const TradePage = props => {
                     <h1>TradePage</h1>
                     <p>Search for stocks in publicly traded companies here.</p>
                     <form>
-                        <input></input>
-                        <button>Submit</button>
+                        <div class="form-group">
+                            <input placeholder='What are you buying today?'></input>
+                            <button className="btn btn-light">Submit</button>
+                        </div>
                     </form>
                 </div>
             </div>
