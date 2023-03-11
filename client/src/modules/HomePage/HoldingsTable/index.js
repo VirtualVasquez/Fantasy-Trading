@@ -13,10 +13,11 @@ const HoldingsTable = props => {
                         {/* percentage is value per share invested, divided by current price (~sorta) */}
                     <th scope="col">Performance</th>
                         {/* Performance is net difference between dollars spent and dollars earned/lost */}
-                    </tr>
+                    <th scope="col"></th>
+                    </tr>            
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr className="stock-row">
                         <th scope="row" className="name-and-symbol">
                             <p>Amazon.com</p>
                             <p>AMZN</p>
@@ -31,6 +32,9 @@ const HoldingsTable = props => {
                         </td>
                         <td className="performance-value positive">
                             +$5,000.00
+                        </td>
+                        <td className="trade-cell">
+                            <button className="btn btn-primary">Trade</button>
                         </td>
                     </tr>
                     <tr>
@@ -48,6 +52,9 @@ const HoldingsTable = props => {
                         </td>
                         <td className="performance-value negative">
                             -$5,000.00
+                        </td>
+                        <td className="trade-cell">
+                            <button className="btn btn-primary">Trade</button>
                         </td>
                     </tr>
                 </tbody>

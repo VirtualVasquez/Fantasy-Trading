@@ -19,7 +19,6 @@ const Navbar = props => {
 
     //Needed logic
         //logout user
-
     const logoutUser = props =>{
 
     }

@@ -1,7 +1,7 @@
 import React, {useEffect, useState } from 'react';
 import './HomePage.scss';
 import BalanceSummary from './BalanceSummary.js';
-import HoldingsTable from './HoldingsTable.js';
+import HoldingsTable from './HoldingsTable/index.js';
 
 const HomePage = props => {
     return (
