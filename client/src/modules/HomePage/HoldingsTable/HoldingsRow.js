@@ -9,7 +9,6 @@ import React from 'react';
         //assigned class of 'negative'
             //potenitally also prepend '-' sign
 
-
 const HoldingsRow = props => {
     return(
         <tr className="stock-row">
@@ -25,7 +24,7 @@ const HoldingsRow = props => {
                 <p>$1,000.00</p>
 
                 {/* assign 'postive' or 'negative' className */}
-                <p className="positive net-percentage">
+                <p className="net-percentage">
                     +50.00%
                 </p>
             </td>
