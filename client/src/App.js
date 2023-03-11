@@ -28,7 +28,7 @@ function App() {
             }
           />
           <Route
-            exact path="/login"
+            exact path="/home"
             element={
               <HomePage />
             }
