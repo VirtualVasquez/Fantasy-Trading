@@ -4,6 +4,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import { useState } from "react";
 import HomePage from './modules/HomePage';
 import LoginPage from './modules/LoginPage';
 import TradePage from './modules/TradePage';
@@ -11,19 +12,19 @@ import Navbar from './modules/common/Navbar';
 
 
 function App() {
+
+  //placeholder until we implement webtokens for login
+  const[ loggedIn, setLoggedIn]  = useState(true);
+
   return (
     <div className="App">
-      {/* Render Navbar only for HomePage and Trade Page */}
-      <Navbar />
+      {loggedIn ? <Navbar /> : null}
       <Router>
         <Routes>
           <Route
             exact path="/"
             element={
-              // <LoginPage />
-              // <HomePage />
-              <TradePage />
-
+              <LoginPage />
             }
           />
           <Route
