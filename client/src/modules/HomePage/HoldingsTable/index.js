@@ -23,7 +23,6 @@ const HoldingsTable = props => {
                 <tbody>
                     <HoldingsRow />
                 </tbody>
-
             </table>
         </div>
     )
