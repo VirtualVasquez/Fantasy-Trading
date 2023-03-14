@@ -4,24 +4,8 @@ import './StockResult';
 import './SavedStock';
 import SavedStock from './SavedStock';
 import StockResult from './StockResult';
-import Modal from '../common/Modal';
 
 const TradePage = props => {
-    
-    const[ showModal, setShowModal]  = useState(false);
-    const[ modalContents, setModalContents] = useState(null);
-
-    const toggleModal = (e) => {
-        console.log(showModal)
-        e.preventDefault();
-        if(showModal){
-            setShowModal(false);
-        } else {
-            setShowModal(true);
-        }
-        
-    }
-
     return (
         <div className='container trade-page'>
             <div className='row search-row'>
@@ -40,24 +24,20 @@ const TradePage = props => {
                 <div className='col-12 col-lg-7'>
                     <h3>Results</h3>
                     <StockResult 
-                        toggleModal={toggleModal}              
-                        setModalContents={setModalContents}
+                        toggleModal={props.toggleModal}              
+                        setModalContents={props.setModalContents}
                     />
 
                 </div>
                 <div className='col-12 col-lg-5'>
                     <h3>Saved Stocks</h3>
                     <SavedStock 
-                        toggleModal={toggleModal}            
-                        setModalContents={setModalContents}
+                        toggleModal={props.toggleModal}            
+                        setModalContents={props.setModalContents}
                     />
                 </div>
             </div>
-            {showModal ? 
-                <Modal 
-                    toggleModal={toggleModal}
-                /> 
-            : null}
+
         </div>
     )
 }

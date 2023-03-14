@@ -6,20 +6,6 @@ import Modal from '../common/Modal';
 
 const HomePage = props => {
     
-    const[ showModal, setShowModal]  = useState(false);
-    const[ modalContents, setModalContents] = useState(null);
-
-    const toggleModal = (e) => {
-        console.log(showModal)
-        e.preventDefault();
-        if(showModal){
-            setShowModal(false);
-        } else {
-            setShowModal(true);
-        }
-        
-    }
-
     return (
         <div className='container home-page'>
             <div className='row'>
@@ -28,16 +14,10 @@ const HomePage = props => {
                 </div>
                 <div className='col-12'>
                     <HoldingsTable 
-                        toggleModal={toggleModal}                  
-                        setModalContents={setModalContents}
+                        toggleModal={props.toggleModal}                  
+                        setModalContents={props.setModalContents}
                     />
                 </div>
-                {showModal ? 
-                <Modal 
-                toggleModal={toggleModal} 
-                /> 
-                : null}
-                
             </div>
         </div>
     )
