@@ -34,7 +34,10 @@ const HoldingsRow = props => {
                 +$5,000.00
             </td>
             <td className="trade-cell">
-                <button className="btn btn-primary">
+                <button 
+                    className="btn btn-primary"
+                    onClick={props.toggleModal}
+                >
                     Trade
                 </button>
             </td>

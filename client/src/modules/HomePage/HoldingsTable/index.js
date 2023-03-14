@@ -21,7 +21,9 @@ const HoldingsTable = props => {
                     </tr>            
                 </thead>
                 <tbody>
-                    <HoldingsRow />
+                    <HoldingsRow 
+                        toggleModal={props.toggleModal}setModalContents={props.setModalContents}
+                    />
                 </tbody>
             </table>
         </div>
