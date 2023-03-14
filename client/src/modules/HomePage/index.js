@@ -32,7 +32,11 @@ const HomePage = props => {
                         setModalContents={setModalContents}
                     />
                 </div>
-                {showModal ? <Modal /> : null}
+                {showModal ? 
+                <Modal 
+                toggleModal={toggleModal} 
+                /> 
+                : null}
                 
             </div>
         </div>

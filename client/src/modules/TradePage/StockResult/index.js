@@ -15,7 +15,12 @@ const StockResult = props => {
                     Google
                 </span>
             </p>
-            <button className="btn btn-primary">Quote</button>            
+            <button 
+                className="btn btn-primary"
+                onClick={props.toggleModal}
+            >
+                Quote
+            </button>            
         </div>
     </div>
     )

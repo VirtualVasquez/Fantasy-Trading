@@ -15,7 +15,7 @@ const SavedStock = props => {
                 <p>Price: <span>$249.42</span></p>
             </div>
         </div>
-        <div class="card-body">
+        <div className="card-body">
             <div className='container'>
                 <div className='row'>
                     <div className='col-5'>
@@ -61,14 +61,20 @@ const SavedStock = props => {
                     </div>
                 </div>
                 <div className='row'>
-                    <button class="btn btn-success col-6">Trade</button>
-                    <button class="btn btn-secondary col-6">Unsave</button>
+                    <button
+                     className="btn btn-success col-6"
+                     onClick={props.toggleModal}
+                    >
+                        Trade
+                    </button>
+                    <button 
+                    className="btn btn-secondary col-6"
+                    onClick={props.toggleModal}
+                    >
+                        Unsave
+                    </button>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
     )
