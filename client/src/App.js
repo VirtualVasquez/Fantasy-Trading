@@ -4,7 +4,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HomePage from './modules/HomePage';
 import LoginPage from './modules/LoginPage';
 import TradePage from './modules/TradePage';
@@ -26,9 +26,27 @@ function App() {
           setShowModal(false);
       } else {
           setShowModal(true);
-      }
-      
+      }      
   }
+  
+  useEffect(() => {
+    function handleEscKeyPress(event) {
+      if (event.key === 'Escape' && showModal === true) {
+        console.log("I am working at esc");
+        setShowModal(false);
+      }
+    }
+
+    document.addEventListener('keydown', handleEscKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleEscKeyPress);
+    };
+  }, [showModal]);
+
+
+
+
 
   return (
     <div className="App">
