@@ -1,9 +1,23 @@
 import React, {useEffect, useState } from 'react';
 import stonks from '../../images/stonks.jpg';
+import LoginForm from './LoginForm'
+import RegisterForm from './RegisterForm'
 import './loginPage.scss';
 // import axios from 'axios';
 
 const LoginPage = props => {
+
+    const[ showLogin, setShowLogin]  = useState(true);
+
+    const toggleLogin = (e) => {
+        e.preventDefault();
+        if(showLogin){
+            setShowLogin(false);
+        } else {
+            setShowLogin(true);
+        }
+    }
+
     return (
         <div className='container login-page'>
             <div className='row'>
@@ -13,20 +27,16 @@ const LoginPage = props => {
                     <img src={stonks} alt="stonks" width="100%"></img>
                 </div>
                 <div className='col-10 offset-1 col-lg-4 offset-lg-2  form-col'>
-                <form id="login-form">
-                    <div class="form-group email-group">
-                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"></input>
-
-                    </div>
-                    <div class="form-group password-group">
-                        <input type="password" class="form-control" id="password" placeholder="Password"></input>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary btn-submit">Log In</button>
-                    </div>
-                    <p class="button-divider"></p>
-                    <button type="submit" class="btn btn-success btn-register">Create new Account</button>
-                    </form>
+                    {
+                        showLogin ? 
+                        <LoginForm 
+                            toRegister={toggleLogin}                       
+                        /> 
+                        : 
+                        <RegisterForm 
+                            toLogin={toggleLogin}
+                        />
+                    }
                 </div>     
             </div>
 

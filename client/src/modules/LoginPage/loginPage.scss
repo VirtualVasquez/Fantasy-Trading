@@ -20,7 +20,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    #login-form{
+    .account-form{
+        font-size: 14px;
         color: #725118;
         background-color: white;
         border: #dadde1 solid 1px;
@@ -34,6 +35,15 @@
         > *:not(.btn-register){
             width: 100%;
             margin: 0.5rem 0;
+        }
+        .to-login{
+            text-align: center;
+            span{
+                color: blue;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
         }
     }
 }
