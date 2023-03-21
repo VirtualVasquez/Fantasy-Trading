@@ -69,7 +69,6 @@ const SavedStock = props => {
                     </button>
                     <button 
                     className="btn btn-secondary col-6"
-                    onClick={props.toggleModal}
                     >
                         Unsave
                     </button>
