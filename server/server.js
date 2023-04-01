@@ -33,7 +33,7 @@ app.get('/users', (req, res) => {
 
         //currently use local variable as storage
         //refactor later to use DB
-        const user = users.find(user => user.anme === req.body.name)
+        const user = users.find(user => user.name === req.body.name)
 
         if (user == null) {
             return res.status(400).send('Cannot find user')
@@ -51,9 +51,10 @@ app.get('/users', (req, res) => {
     })
 
     //signout a user
-        //maybe doesn't need to be defined here?
-        //token stored in browser. Removing that "logsout the user"
-        //Not sure if jwtoken changes that
+    // app.delete('/users/logout', (req, res) => {
+    //     refreshTokens = refreshTokens.filter( token => token !== req.body.token);
+    //     res.sendStatus(204) //successfully delete token
+    // })
 
 
 //will need this to validate user and user actions
