@@ -5,75 +5,28 @@ const app = express()
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
-// //from strings project, might not need
-
-// //provides utilities for working with file and directory paths
-//const path = require("path"); 
-
-// //Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
-// const bodyParser = require('body-parser');
-// app.use(bodyParser.urlencoded({
-//     extended: true
-// }));
-
-
-
 app.use(express.json())
 
-const posts = [
-    {
-        username: 'Kyle',
-        title: 'Post 1'
-    },
-    {
-        username: 'Jim',
-        title: 'Post 1'
-    }
-]
+let users = []
 
-const users = []
-
-
-app.get('/posts', authenticateToken, (req, res) => {
-    res.json(posts.filter(post => post.username === req.user.name))
-    res.json(posts);
-})
-
+//not needed in the final project
+//keeping for now for testing purposes
 app.get('/users', (req, res) => {
     res.json(users)
 })
 
-app.post('/users', async (req, res) => {
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        const user = { name: req.body.name, password: hashedPassword }
-        users.push(user)
-        res.status(201).send();
-    } catch { 
-        res.status(500).send();
-    }
-
-})
-
-app.post('/users/login', async (req, res) => {
-    const user = users.find(user => user.anme === req.body.name)
-    if (user == null) {
-        return res.status(400).send('Cannot find user')
-    }
-    try{
-        if(await bcrypt.compare(req.body.password, user.password)){
-            res.send('Success')
-        } else {
-            res.send('Not allowed');
-        }
-    } catch {
-        res.status(500).send();
-    }
-})
-
 ////project needs
     //create a user
+    app.post('/users', async (req, res) => {
+        try {
+            const hashedPassword = await bcrypt.hash(req.body.password, 10)
+            const user = { name: req.body.name, password: hashedPassword }
+            users.push(user)
+            res.status(201).send();
+        } catch { 
+            res.status(500).send();
+        }
+    })
 
     //login a user
     app.post('/users/login', async (req, res) => {
@@ -85,7 +38,7 @@ app.post('/users/login', async (req, res) => {
         if (user == null) {
             return res.status(400).send('Cannot find user')
         }
-        
+
         try{
             if(await bcrypt.compare(req.body.password, user.password)){
                 res.send('Success')
@@ -98,8 +51,12 @@ app.post('/users/login', async (req, res) => {
     })
 
     //signout a user
+        //maybe doesn't need to be defined here?
+        //token stored in browser. Removing that "logsout the user"
+        //Not sure if jwtoken changes that
 
 
+//will need this to validate user and user actions
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -111,5 +68,15 @@ function authenticateToken(req, res, next) {
         next();
     });    
 }
+
+
+// // not needed in final project.
+// // keeping commented out for reference
+// // shows how to use token as middleware to authenticate user actions
+// // vital since we're dealing with (fake) currency
+// // app.get('/posts', authenticateToken, (req, res) => {
+// //    res.json(posts.filter(post => post.username === req.user.name))
+// //    res.json(posts);
+// // })
 
 app.listen(3000)
