@@ -1,24 +1,18 @@
 require("dotenv").config();
 
-
-// //needed for postgresql
-// //not yet implementing
-// const Pool = require('pg').Pool
-// const pool = new Pool({
-//     user: process.env.DB_USER,
-//     host: process.env.DB_HOST,
-//     database: process.env.DB_DATABASE,
-//     password: process.env.DB_PASSWORD,
-//     port: process.env.DB_PORT,
-// });
+const Pool = require('pg').Pool
+const pool = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+});
 
 
 
-// //project needs
-// //The following are models to use with postgres
-// //we're defining them for now to see structure of project.
-// //not yet using
-    // //login function
+//project needs
+    //login function
     const login = (body) => {
         return new Promise(function(resolve, reject){
 
@@ -66,6 +60,3 @@ require("dotenv").config();
             })
         })
     }
-
-    //logout user??
-    //not defined in last project because that simply 

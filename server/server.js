@@ -7,6 +7,9 @@ const jwt = require('jsonwebtoken');
 
 app.use(express.json())
 
+
+//will not need in the final version
+//using now until DB established
 let users = []
 
 
