@@ -3,7 +3,9 @@ require('dotenv').config();
 const express = require('express')
 const app = express()
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');//move to models
+
+const user_model = require('./user_model.js');
 
 app.use(express.json())
 
@@ -33,36 +35,42 @@ app.get('/users', (req, res) => {
 ////project needs
     //create a user
     app.post('/users', async (req, res) => {
+        // //local variable approach
+        // //check if username already exists in local variable
+        // //refactor later to use DB
+        //     const userExists = users.find( user => user.name === req.body.name);
+        //     if(userExists){
+        //         return res.status(409).send('Username already exists.')
+        //     }
+        //     try {
 
-        //check if username already exists in local variable
-        //refactor later to use DB
-        const userExists = users.find( user => user.name === req.body.name);
+        //         const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        //         const user = { name: req.body.name, password: hashedPassword }
 
-        if(userExists){
-            return res.status(409).send('Username already exists.')
-        }
+        //         //add user to local variable
+        //         //refactor later to push to db
+        //         users.push(user)
 
-        try {
+        //         //when user pushed to db, create access and refresh tokens
+        //         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+        //         const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
 
-            const hashedPassword = await bcrypt.hash(req.body.password, 10)
-            const user = { name: req.body.name, password: hashedPassword }
+        //         //refreshtoken gets stored in its own db, but for now stored in variable
+        //         refreshTokens.push(refreshToken);
 
-            //add user to local variable
-            //refactor later to push to db
-            users.push(user)
+        //         res.status(201).json({acccesToken: accessToken});
 
-            //when user pushed to db, create access and refresh tokens
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-            const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+        //     } catch { 
+        //         res.status(500).send("Something went wrong");
+        //     }
 
-            //refreshtoken gets stored in its own db, but for now stored in variable
-            refreshTokens.push(refreshToken);
-
-            res.status(201).json({acccesToken: accessToken});
-
-        } catch { 
-            res.status(500).send("Something went wrong");
-        }
+        user_model.createUser(req.body).then(response => {
+            res.status(200).send(response);
+            console.log(response);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        })
     })
 
     //login a user

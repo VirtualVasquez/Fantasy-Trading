@@ -1,4 +1,5 @@
 require("dotenv").config();
+const jwt =     require('jsonwebtoken');
 
 const Pool = require('pg').Pool
 const pool = new Pool({
@@ -13,50 +14,69 @@ const pool = new Pool({
 
 //project needs
     //login function
-    const login = (body) => {
-        return new Promise(function(resolve, reject){
+const login = (body) => {
+    return new Promise(function(resolve, reject){
 
-            //the names of the const may change OR
-            //match what's already here to work
-            //will investiage later 
-            const {user_name, user_pass} = body;
-            pool.query(`SELECT * FROM users WHERE user_name = $1`, [user_name], (error,results) => {
-                if (error){
-                    reject(error)
+        //the names of the const may change OR
+        //match what's already here to work
+        //will investiage later 
+        const {email, password} = body;
+        pool.query(`SELECT * FROM users WHERE email = $1`, [email], (error,results) => {
+            if (error){
+                reject(error)
+            }
+            if(results){
+                if(password != results.rows[0].password){
+                    resolve("The provided password is incorrect");
                 }
-                if(results){
-                    if(user_pass != results.rows[0].user_pass){
-                        resolve("The provided password is incorrect");
-                    }
-                    if(user_pass === results.rows[0].user_pass){
-                        resolve(results.rows[0]);
-                        //may or may not need to add pieces for jwtokens. uncertain at this time
-                    }
+                if(password === results.rows[0].password){
+                    resolve(results.rows[0]);
+                    //may or may not need to add pieces for jwtokens. uncertain at this time
                 }
-            })
+            }
         })
-    }
+    })
+}
     
-    // //create user
-    const createUser = (body) => {
-        return new Promise(function(resolve, reject) {
-            
-            //the names of the const may change OR
-            //match what's already here to work
-            //will investiage later 
-            const {user_name, user_pass, pass_check } = body;
-            pool.query('INSERT INTO users (user_name, user_pass) VALUES ($1, $2) RETURNING *', [user_name, user_pass], (error, results) => {
+//create user
+const createUser = (body) => {
+    return new Promise(function(resolve, reject) {
+        const {email, password, password_check } = body;
+
+        if(password != password_check){
+            return reject("The two passwords do not match.")
+        }
+
+        pool.query(
+            'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *', 
+            [email, password], 
+            (error, results) => {
                 if(error){
                     reject(error)
                 }
-                if(user_pass != pass_check){
-                    resolve("The two passwords do not match.")
-                }
-                if(user_pass === pass_check){
-                    resolve(results.rows[0]);
-                }
-    
-                resolve(`A new user has been added`)
-            })
+
+                const user_id = results.rows[0].id;
+                const refresh_token = generateRefreshToken();
+
+                pool.query(
+                    'INSERT INTO refresh_token (user_id, token) VALUES ($1, $2)',
+                    [user_id, refresh_token],
+                    (error) => {
+                      if (error) {
+                        reject(error);
+                      }
+          
+                      resolve({
+                        message: `A new user has been added with ID: ${user_id}`,
+                      });
+                    }
+                );
+
         })
-    }
+    })
+}
+
+module.exports = {
+    login,
+    createUser
+}
