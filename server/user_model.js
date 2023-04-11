@@ -1,5 +1,5 @@
 require("dotenv").config();
-const jwt =     require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const Pool = require('pg').Pool
 const pool = new Pool({
@@ -40,6 +40,7 @@ const login = (body) => {
     
 //create user
 const createUser = (body) => {
+    console.log(body);
     return new Promise(function(resolve, reject) {
         const {email, password, password_check } = body;
 
@@ -54,14 +55,16 @@ const createUser = (body) => {
                 if(error){
                     reject(error)
                 }
-
-                const user_id = results.rows[0].id;
-                const refresh_token = generateRefreshToken();
+                
+                const user_id = results.rows[0].user_id;
+                const user_email = results.rows[0].user_email;
+                const payload = { email: user_email }; // Create a payload object
+                const token = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
 
                 pool.query(
-                    'INSERT INTO refresh_token (user_id, token) VALUES ($1, $2)',
-                    [user_id, refresh_token],
-                    (error) => {
+                    'INSERT INTO refresh_tokens (user_id, token) VALUES ($1, $2)',
+                    [user_id, token],
+                    (error, results) => {
                       if (error) {
                         reject(error);
                       }
@@ -71,12 +74,25 @@ const createUser = (body) => {
                       });
                     }
                 );
+            }
+        )
+    })
+}
 
+//get users
+const getUsers = () => {
+    return new Promise(function(resolve, reject){
+        pool.query('SELECT email, user_id FROM users', (error, results) => {
+            if (error){
+                reject(error)
+            }
+            resolve(results.rows);
         })
     })
 }
 
 module.exports = {
     login,
-    createUser
+    createUser,
+    getUsers
 }
