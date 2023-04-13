@@ -40,7 +40,6 @@ const login = (body) => {
     
 //create user
 const createUser = (body) => {
-    console.log(body);
     return new Promise(function(resolve, reject) {
         const {email, password, password_check } = body;
 
@@ -59,11 +58,13 @@ const createUser = (body) => {
                 const user_id = results.rows[0].user_id;
                 const user_email = results.rows[0].user_email;
                 const payload = { email: user_email }; // Create a payload object
-                const token = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
+                const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
+                const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }); // Generate access token
+
 
                 pool.query(
                     'INSERT INTO refresh_tokens (user_id, token) VALUES ($1, $2)',
-                    [user_id, token],
+                    [user_id, refreshToken],
                     (error, results) => {
                       if (error) {
                         reject(error);
@@ -71,6 +72,7 @@ const createUser = (body) => {
           
                       resolve({
                         message: `A new user has been added with ID: ${user_id}`,
+                        accessToken: accessToken 
                       });
                     }
                 );
