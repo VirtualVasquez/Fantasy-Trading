@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const express = require('express')
 const app = express()
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');//move to models
 
 const bodyParser = require('body-parser');
@@ -41,32 +40,18 @@ app.get('/users', (req, res) => {
     //login a user
     app.post('/users/login', async (req, res) => {
 
-        //currently use local variable as storage
-        //refactor later to use DB
-        const user = users.find(user => user.name === req.body.name)
-
-        if (user == null) {
-            return res.status(400).send('Cannot find user')
-        }
-
-        try{
-            if(await bcrypt.compare(req.body.password, user.password)){
-                //when user found in db, create access and refresh tokens
-                const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-                const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
-
-                //refreshtoken gets stored in its own db, but for now stored in variable
-                refreshTokens.push(refreshToken);
-
-                //accesstoken gets sent back to client, and in the front end will be stored in localStorage
-                //presence and validation of accessToken will be proof 
-                res.json({accessToken: accessToken});
-            } else {
-                res.send('Not allowed');
+        user_model.login(req.body).then(response => {
+            try {
+                res.status(200).send(response);
+            } catch (error) {
+                console.error(error);
+                res.status(500).send({ error: "Internal Server Error" });
             }
-        } catch {
-            res.status(500).send();
-        }
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).send({ error: "Internal Server Error" });
+        })
     })
 
     //logout a user
