@@ -55,29 +55,21 @@ app.get('/users', (req, res) => {
     })
 
     //logout a user
-    app.delete('/users/logout', (req, res) => {
-        //in final version, refreshToken would be deleted from refreshToken DB
-        refreshTokens = refreshTokens.filter( token => token !== req.body.token);
+    app.delete('/users/logout', async (req, res) => {
 
-        //on the frontend (not here), also remove access token from localStorage
-        res.sendStatus(204) //successfully delete token
+        user_model.logout(req.body).then(response => {
+            try {
+                res.status(204).send(response);
+            } catch (error) {
+                console.error(error);
+                res.status(500).send({ error: "Internal Server Error" })
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).send({error: "Internal Server Error"})
+        })
 
-
-        //something like this would be needed in the final version
-        // were req.body.token would equal the access token stored in localStorage
-        //  const accessToken = req.headers.authorization?.split(' ')[1]; // get the access token from the request headers
-
-        // if (!accessToken) {
-        //     return res.sendStatus(401);
-        // }
-
-        // try {
-        //     const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET); // verify the access token
-        //     refreshTokens = refreshTokens.filter((token) => token.userId !== decoded.id); // delete the corresponding refresh token from the database
-        //     res.sendStatus(204);
-        // } catch (error) {
-        //     res.sendStatus(401);
-        // }
     })
 
     //provide refreshToken when needed

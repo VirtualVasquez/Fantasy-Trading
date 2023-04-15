@@ -28,7 +28,7 @@ const login = (body) => {
                 
                 const user_id = results.rows[0].user_id;
                 const user_email = results.rows[0].email;
-                const payload = {email: user_email}
+                const payload = {user_id: user_id}
                 const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
                 const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }); // Generate access token
 
@@ -54,6 +54,48 @@ const login = (body) => {
     })
 }
 
+const logout = (body) => {
+    return new Promise(function(resolve, reject){
+        const {accessToken} = body;
+
+        if (!accessToken) {
+            return reject(new Error('Access token not provided'));
+        }
+
+        try{
+            const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET); // verify the access token
+            return decoded;
+        }
+        catch (err){
+            console.error('Failed to verify access token:', err.message);
+        }
+
+        const user_id = decoded.user_id;
+
+        try{
+
+            pool.query(
+                'DELETE FROM refresh_tokens WHERE user_id = $1',
+                [user_id], 
+                (error, results) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve({
+                            message: `User ID ${user_id}'s refresh token has been deleted.`,
+                        })
+                    }
+                }
+            )
+        }
+        catch (error){
+            reject(new Error('Invalid access token'));
+        }
+
+    })
+
+}
+
     
 //create user
 const createUser = (body) => {
@@ -74,7 +116,7 @@ const createUser = (body) => {
                 
                 const user_id = results.rows[0].user_id;
                 const user_email = results.rows[0].email;
-                const payload = { email: user_email }; // Create a payload object
+                const payload = { user_id: user_id }; // Create a payload object
                 const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
                 const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }); // Generate access token
 
@@ -112,6 +154,7 @@ const getUsers = () => {
 
 module.exports = {
     login,
+    logout,
     createUser,
     getUsers
 }
