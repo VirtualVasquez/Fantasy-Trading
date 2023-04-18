@@ -22,7 +22,7 @@ const LoginForm = props => {
 
     function handleSubmit(event) {
         event.preventDefault();
-        loginUser(email, password);
+        loginUser(providedEmail, providedPassword);
     }
 
 

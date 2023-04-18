@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from "axios";
 
 async function createUser(email, password, passcheck) {
@@ -38,6 +38,7 @@ function validateCredentials({email, password, confirmPassword}){
 }
 
 const RegisterForm = props => {
+    const [errorMessage, setErrorMessage] = useState('');
     const [providedEmail, setEmail] = useState(null);
     const [providedPassword, setPassword] = useState(null);
     const [passwordCheck, setPasswordCheck] = useState(null);
