@@ -9,8 +9,6 @@ const LoginPage = props => {
 
     const[ showLogin, setShowLogin]  = useState(true);
 
-    const [currentForm, setCurrentForm] = useState('login');
-
     const toggleLogin = (e) => {
         e.preventDefault();
         if(showLogin){
