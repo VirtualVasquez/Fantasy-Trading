@@ -96,7 +96,6 @@ const logout = (body) => {
 
 }
 
-    
 //create user
 const createUser = (body) => {
     return new Promise(function(resolve, reject) {
@@ -138,6 +137,10 @@ const createUser = (body) => {
             }
         )
     })
+}
+
+const validateUser = (body) => {
+    
 }
 
 //get users

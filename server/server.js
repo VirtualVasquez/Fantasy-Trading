@@ -72,6 +72,24 @@ app.get('/users', (req, res) => {
 
     })
 
+    app.post('/token/validate', (req,res) => {
+        return new Promise(function(resolve, reject){
+            const {accessToken} = body;
+    
+            if (!accessToken) {
+                return res.status(401).json({ message: 'Access token not provided' });
+            }
+            try{
+                const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET); // verify the access token
+                return res.json(decoded);
+            }
+            catch (err){
+                console.error('Failed to verify access token:', err.message);
+                return res.status(401).json({ error: 'Invalid access token' });
+            }    
+        })
+    })
+
     //provide refreshToken when needed
     app.post('/token', (req, res) => {
         //checks if refreshToken exists to then generate accessToken

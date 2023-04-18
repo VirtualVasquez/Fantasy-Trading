@@ -1,15 +1,17 @@
+import { useState, useEffect } from "react";
 import './App.scss';
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
-import { useState, useEffect } from "react";
 import HomePage from './modules/HomePage';
 import LoginPage from './modules/LoginPage';
 import TradePage from './modules/TradePage';
 import Navbar from './modules/common/Navbar';
-import Modal from './modules/common/Modal'
+import Modal from './modules/common/Modal';
+import Protected from "./helpers/Protected";
+
 
 
 function App() {
@@ -43,9 +45,6 @@ function App() {
       document.removeEventListener('keydown', handleEscKeyPress);
     };
   }, [showModal]);
-
-
-
 
 
   return (
