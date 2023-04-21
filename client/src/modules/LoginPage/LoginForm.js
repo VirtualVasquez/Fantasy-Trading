@@ -22,6 +22,8 @@ const LoginForm = props => {
 
     function handleSubmit(event) {
         event.preventDefault();
+        console.log(providedEmail);
+        console.log(providedPassword);
         loginUser(providedEmail, providedPassword);
     }
 
@@ -59,7 +61,7 @@ const LoginForm = props => {
                     Log In
                 </button>
             </div>
-            <p class="button-divider"></p>
+            <p className="button-divider"></p>
             <button type="submit" className="btn btn-success btn-register" onClick={props.toRegister}>Create new Account</button>
         </form>
     )

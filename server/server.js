@@ -2,7 +2,9 @@ require('dotenv').config();
 
 const express = require('express')
 const app = express()
-const jwt = require('jsonwebtoken');//move to models
+const jwt = require('jsonwebtoken');
+const port = process.env.port || 3001;
+
 
 const bodyParser = require('body-parser');
 
@@ -72,6 +74,7 @@ app.get('/users', (req, res) => {
 
     })
 
+    //validate token
     app.post('/token/validate', (req,res) => {
         return new Promise(function(resolve, reject){
             const {accessToken} = req.body;
@@ -81,6 +84,13 @@ app.get('/users', (req, res) => {
             }
             try{
                 const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET); // verify the access token
+                // if the token is expired
+                // come back to this
+                //signal to the frontend to delete the token in localStorage
+                // if(decoded.exp){
+                //     throw new Error("token is expired");
+                    
+                // }
                 return res.json(decoded);
             }
             catch (err){
@@ -90,25 +100,26 @@ app.get('/users', (req, res) => {
         })
     })
 
+    //only need if you want to persist an ACTIVE session past 30 minutes total
     //provide refreshToken when needed
-    app.post('/token', (req, res) => {
-        //checks if refreshToken exists to then generate accessToken
-        //does not store refreshToken
-        const refreshToken = req.body.token;
-        if (refreshToken == null ) return res.sendStatus(401)
-        if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
-        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-            if (err) res.sendStatus(403);
-            const acccesToken = generateAccessToken({name: user.name});
-            res.json({ accessToken: accessToken  })
-        })
-    })
+    // app.post('/token', (req, res) => {
+    //     //checks if refreshToken exists to then generate accessToken
+    //     //does not store refreshToken
+    //     const refreshToken = req.body.token;
+    //     if (refreshToken == null ) return res.sendStatus(401)
+    //     if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
+    //     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    //         if (err) res.sendStatus(403);
+    //         const acccesToken = generateAccessToken({name: user.name});
+    //         res.json({ accessToken: accessToken  })
+    //     })
+    // })
 
 
 
 
-    function generateAccessToken(user) {
-        return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m' })
-    }
+    // function generateAccessToken(user) {
+    //     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m' })
+    // }
 
 app.listen(3001)
