@@ -11,13 +11,33 @@ import TradePage from './modules/TradePage';
 import Navbar from './modules/common/Navbar';
 import Modal from './modules/common/Modal';
 import Protected from "./helpers/Protected";
+import axios from "axios";
 
 
 
 function App() {
 
-  //placeholder until we implement webtokens for login
-  const[ loggedIn, setLoggedIn]  = useState(true);
+  //get access token in local storage
+  const[ localToken, setLocalToken]  = useState(localStorage.getItem('fantasy_access_token'));
+  const[ user, setUser] = useState(null);
+
+
+  async function verifyAccessToken(token) {
+    try {
+      const response = await axios.post('token/validate', {
+        accessToken: token
+      });
+      setUser(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  //if access token present
+  if(localToken){
+    verifyAccessToken(localToken);
+  }
+
   const[ showModal, setShowModal]  = useState(false);
   const[ modalContents, setModalContents] = useState(null);
 
@@ -54,31 +74,40 @@ function App() {
           toggleModal={toggleModal} 
         /> 
         : null}
-      {loggedIn ? <Navbar /> : null}
+      {user ? <Navbar /> : null}
       <Router>
         <Routes>
           <Route
             exact path="/"
             element={
-              <LoginPage />
+              <LoginPage 
+                setUser={setUser}
+              />
             }
           />
           <Route
             exact path="/home"
             element={
-              <HomePage
-                toggleModal={toggleModal}
-                setModalContents={setModalContents} 
-              />
+              <Protected user={user}>            
+                <HomePage
+                  toggleModal={toggleModal}
+                  setModalContents={setModalContents}
+                  user={user} 
+                />
+              </Protected>
+
             }
           />
           <Route
             exact path="/trade"
             element={
-              <TradePage 
-                toggleModal={toggleModal}
-                setModalContents={setModalContents}
-              />
+              <Protected user={user}>            
+                <TradePage 
+                  toggleModal={toggleModal}
+                  setModalContents={setModalContents}
+                  user={user}
+                />
+              </Protected>
             }
           />
         </Routes>

@@ -139,9 +139,6 @@ const createUser = (body) => {
     })
 }
 
-const validateUser = (body) => {
-    
-}
 
 //get users
 const getUsers = () => {

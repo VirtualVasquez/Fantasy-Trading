@@ -74,7 +74,7 @@ app.get('/users', (req, res) => {
 
     app.post('/token/validate', (req,res) => {
         return new Promise(function(resolve, reject){
-            const {accessToken} = body;
+            const {accessToken} = req.body;
     
             if (!accessToken) {
                 return res.status(401).json({ message: 'Access token not provided' });

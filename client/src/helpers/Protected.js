@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
-const Protected = ({setAccesToken, children }) => {
+const Protected = ({user, children }) => {
     //need to change variable of 'setAccessToken'
-    if (!setAccesToken){
+    if (!user){
         return <Navigate to='/' replace />;
     }
     return children;
