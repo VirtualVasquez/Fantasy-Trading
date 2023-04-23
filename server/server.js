@@ -76,29 +76,22 @@ app.get('/users', (req, res) => {
 
     //validate token
     app.post('/token/validate', (req,res) => {
-        return new Promise(function(resolve, reject){
-            const {accessToken} = req.body;
+        const {accessToken} = req.body;
     
-            if (!accessToken) {
-                return res.status(401).json({ message: 'Access token not provided' });
-            }
-            try{
-                const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET); // verify the access token
-                // if the token is expired
-                // come back to this
-                //signal to the frontend to delete the token in localStorage
-                // if(decoded.exp){
-                //     throw new Error("token is expired");
-                    
-                // }
+        if (!accessToken) {
+            return res.status(401).json({ message: 'Access token not provided' });
+        }
+    
+        jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
+            .then(decoded => {
                 return res.json(decoded);
-            }
-            catch (err){
+            })
+            .catch(err => {
                 console.error('Failed to verify access token:', err.message);
-                return res.status(401).json({ error: 'Invalid access token' });
-            }    
-        })
-    })
+                return res.status(401).json({ message: 'Invalid access token' });
+            });
+    });
+    
 
     //only need if you want to persist an ACTIVE session past 30 minutes total
     //provide refreshToken when needed

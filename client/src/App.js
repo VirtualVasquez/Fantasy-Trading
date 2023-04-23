@@ -30,6 +30,7 @@ function App() {
       setUser(response);
     } catch (error) {
       console.error(error);
+      localStorage.removeItem('fantasy_access_token');
     }
   }
 
