@@ -84,13 +84,6 @@ app.get('/users', (req, res) => {
             }
             try{
                 const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET); // verify the access token
-                // if the token is expired
-                // come back to this
-                //signal to the frontend to delete the token in localStorage
-                // if(decoded.exp){
-                //     throw new Error("token is expired");
-                    
-                // }
                 return res.json(decoded);
             }
             catch (err){
