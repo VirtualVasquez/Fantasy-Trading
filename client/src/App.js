@@ -20,27 +20,25 @@ function App() {
   //get access token in local storage
   const[ localToken, setLocalToken]  = useState(localStorage.getItem('fantasy_access_token'));
   const[ user, setUser] = useState(null);
-
-
-  async function verifyAccessToken(token) {
-    try {
-      const response = await axios.post('token/validate', {
-        accessToken: token
-      });
-      setUser(response);
-    } catch (error) {
-      console.error(error);
-      localStorage.removeItem('fantasy_access_token');
-    }
-  }
-
-  //if access token present
-  if(localToken){
-    verifyAccessToken(localToken);
-  }
-
   const[ showModal, setShowModal]  = useState(false);
   const[ modalContents, setModalContents] = useState(null);
+
+
+
+  // //may need this, but is failing/causing issues implementing here.
+  // async function verifyAccessToken(token) {
+  //   try {
+  //     const response = await axios.post('token/validate', {
+  //       accessToken: token
+  //     });
+  //     setUser(response);
+  //   } catch (error) {
+  //     console.error(error);
+  //     localStorage.removeItem('fantasy_access_token');
+  //   }
+  // }
+
+
 
   const toggleModal = (e) => {
       console.log(showModal)
