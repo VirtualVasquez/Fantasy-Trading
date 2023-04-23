@@ -3,7 +3,8 @@ import './App.scss';
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  
 } from "react-router-dom";
 import HomePage from './modules/HomePage';
 import LoginPage from './modules/LoginPage';
@@ -13,43 +14,29 @@ import Modal from './modules/common/Modal';
 import Protected from "./helpers/Protected";
 import axios from "axios";
 
-
-
 function App() {
-
-  //get access token in local storage
-  const[ localToken, setLocalToken]  = useState(localStorage.getItem('fantasy_access_token'));
-  const[ user, setUser] = useState(null);
-  const[ showModal, setShowModal]  = useState(false);
-  const[ modalContents, setModalContents] = useState(null);
-
-
-
-  // //may need this, but is failing/causing issues implementing here.
-  // async function verifyAccessToken(token) {
-  //   try {
-  //     const response = await axios.post('token/validate', {
-  //       accessToken: token
-  //     });
-  //     setUser(response);
-  //   } catch (error) {
-  //     console.error(error);
-  //     localStorage.removeItem('fantasy_access_token');
-  //   }
-  // }
-
+  const [localToken, setLocalToken] = useState(localStorage.getItem('fantasy_access_token'));
+  const [user, setUser] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalContents, setModalContents] = useState(null);
 
 
   const toggleModal = (e) => {
-      console.log(showModal)
-      e.preventDefault();
-      if(showModal){
-          setShowModal(false);
-      } else {
-          setShowModal(true);
-      }      
+    console.log(showModal)
+    e.preventDefault();
+    if (showModal) {
+      setShowModal(false);
+    } else {
+      setShowModal(true);
+    }
   }
-  
+
+  useEffect(() => {
+    if (localToken) {
+      setUser(true);
+    }
+  }, [localToken]);
+
   useEffect(() => {
     function handleEscKeyPress(event) {
       if (event.key === 'Escape' && showModal === true) {
@@ -65,7 +52,6 @@ function App() {
     };
   }, [showModal]);
 
-
   return (
     <div className="App">
       {showModal ? 
@@ -73,7 +59,7 @@ function App() {
           toggleModal={toggleModal} 
         /> 
         : null}
-      {user ? <Navbar /> : null}
+      {localToken ? <Navbar /> : null}
       <Router>
         <Routes>
           <Route
@@ -87,7 +73,7 @@ function App() {
           <Route
             exact path="/home"
             element={
-              <Protected user={user}>            
+              <Protected localToken={localToken}>            
                 <HomePage
                   toggleModal={toggleModal}
                   setModalContents={setModalContents}
@@ -100,7 +86,7 @@ function App() {
           <Route
             exact path="/trade"
             element={
-              <Protected user={user}>            
+              <Protected localToken={localToken}>            
                 <TradePage 
                   toggleModal={toggleModal}
                   setModalContents={setModalContents}
@@ -111,7 +97,6 @@ function App() {
           />
         </Routes>
       </Router>
-
     </div>
   );
 }
