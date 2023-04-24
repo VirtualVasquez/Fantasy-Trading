@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  
 } from "react-router-dom";
 import HomePage from './modules/HomePage';
 import LoginPage from './modules/LoginPage';
@@ -15,11 +14,24 @@ import Protected from "./helpers/Protected";
 import axios from "axios";
 
 function App() {
-  const [localToken, setLocalToken] = useState(localStorage.getItem('fantasy_access_token'));
+  const [localToken, setLocalToken] = useState(null);
   const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [modalContents, setModalContents] = useState(null);
 
+  async function verifyAccessToken(token) {
+    try {
+      const response = await axios.post('http://localhost:3001/token/validate', null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setUser(response.data);
+    } catch (error) {
+      console.error(error);
+      localStorage.removeItem('fantasy_access_token');
+    }
+  }
 
   const toggleModal = (e) => {
     console.log(showModal)
@@ -32,8 +44,10 @@ function App() {
   }
 
   useEffect(() => {
+    const token = localStorage.getItem('fantasy_access_token');
     if (localToken) {
-      setUser(true);
+      setLocalToken(token);
+      verifyAccessToken(token);
     }
   }, [localToken]);
 
