@@ -9,15 +9,15 @@ import HomePage from './modules/HomePage';
 import LoginPage from './modules/LoginPage';
 import TradePage from './modules/TradePage';
 import Navbar from './modules/common/Navbar';
-import Modal from './modules/common/Modal';
+// import Modal from './modules/common/Modal';
 import Protected from "./helpers/Protected";
 import axios from "axios";
 
 function App() {
   const [localToken, setLocalToken] = useState(null);
   const [user, setUser] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [modalContents, setModalContents] = useState(null);
+  // const [showModal, setShowModal] = useState(false);
+  // const [modalContents, setModalContents] = useState(null);
 
   async function verifyAccessToken(token) {
     try {
@@ -33,15 +33,15 @@ function App() {
     }
   }
 
-  const toggleModal = (e) => {
-    console.log(showModal)
-    e.preventDefault();
-    if (showModal) {
-      setShowModal(false);
-    } else {
-      setShowModal(true);
-    }
-  }
+  // const toggleModal = (e) => {
+  //   console.log(showModal)
+  //   e.preventDefault();
+  //   if (showModal) {
+  //     setShowModal(false);
+  //   } else {
+  //     setShowModal(true);
+  //   }
+  // }
 
   useEffect(() => {
     const token = localStorage.getItem('fantasy_access_token');
@@ -51,28 +51,28 @@ function App() {
     }
   }, [localToken]);
 
-  useEffect(() => {
-    function handleEscKeyPress(event) {
-      if (event.key === 'Escape' && showModal === true) {
-        console.log("I am working at esc");
-        setShowModal(false);
-      }
-    }
+  // useEffect(() => {
+  //   function handleEscKeyPress(event) {
+  //     if (event.key === 'Escape' && showModal === true) {
+  //       console.log("I am working at esc");
+  //       setShowModal(false);
+  //     }
+  //   }
 
-    document.addEventListener('keydown', handleEscKeyPress);
+  //   document.addEventListener('keydown', handleEscKeyPress);
 
-    return () => {
-      document.removeEventListener('keydown', handleEscKeyPress);
-    };
-  }, [showModal]);
+  //   return () => {
+  //     document.removeEventListener('keydown', handleEscKeyPress);
+  //   };
+  // }, [showModal]);
 
   return (
     <div className="App">
-      {showModal ? 
+      {/* {showModal ? 
         <Modal 
           toggleModal={toggleModal} 
         /> 
-        : null}
+        : null} */}
       {localToken ? <Navbar /> : null}
       <Router>
         <Routes>
@@ -89,8 +89,8 @@ function App() {
             element={
               <Protected localToken={localToken}>            
                 <HomePage
-                  toggleModal={toggleModal}
-                  setModalContents={setModalContents}
+                  // toggleModal={toggleModal}
+                  // setModalContents={setModalContents}
                   user={user} 
                 />
               </Protected>
@@ -102,8 +102,8 @@ function App() {
             element={
               <Protected localToken={localToken}>            
                 <TradePage 
-                  toggleModal={toggleModal}
-                  setModalContents={setModalContents}
+                  // toggleModal={toggleModal}
+                  // setModalContents={setModalContents}
                   user={user}
                 />
               </Protected>

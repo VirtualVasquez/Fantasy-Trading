@@ -31,14 +31,14 @@ function validateCredentials({email, password, confirmPassword}){
     if (!email) {
       return {status: false, msg:'Please validate your password' };
     }
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       return {status: false, msg:'The passwords do not match' };
     }
     return {status: true, msg: 'valid' };
 }
 
 const RegisterForm = props => {
-    const [errorMessage, setErrorMessage] = useState('');
+    // const [errorMessage, setErrorMessage] = useState('');
     const [providedEmail, setEmail] = useState(null);
     const [providedPassword, setPassword] = useState(null);
     const [passwordCheck, setPasswordCheck] = useState(null);
@@ -54,7 +54,7 @@ const RegisterForm = props => {
         if(validation.status){
           createUser(providedEmail, providedPassword, passwordCheck);
         } else {
-          setErrorMessage(validation.msg);
+          // setErrorMessage(validation.msg);
         }
     };    
 

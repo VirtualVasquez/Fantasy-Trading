@@ -1,4 +1,6 @@
-import React, {useEffect, useState } from 'react';
+import React
+// , {useEffect, useState }
+from 'react';
 import './TradePage.scss';
 import './StockResult';
 import './SavedStock';
