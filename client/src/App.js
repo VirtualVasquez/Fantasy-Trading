@@ -45,7 +45,7 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('fantasy_access_token');
-    if (localToken) {
+    if (token) {
       setLocalToken(token);
       verifyAccessToken(token);
     }
