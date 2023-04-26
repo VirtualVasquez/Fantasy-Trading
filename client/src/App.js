@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate
 } from "react-router-dom";
 import HomePage from './modules/HomePage';
 import LoginPage from './modules/LoginPage';
@@ -76,14 +77,16 @@ function App() {
       {localToken ? <Navbar /> : null}
       <Router>
         <Routes>
-          <Route
-            exact path="/"
-            element={
-              <LoginPage 
-                setUser={setUser}
-              />
-            }
-          />
+        <Route
+          exact path="/"
+          element={
+            user ? (
+              <Navigate to="/home" replace />
+            ) : (
+              <LoginPage setUser={setUser} />
+            )
+          }
+        />
           <Route
             exact path="/home"
             element={
