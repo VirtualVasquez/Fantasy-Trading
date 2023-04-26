@@ -14,7 +14,7 @@ import Protected from "./helpers/Protected";
 import axios from "axios";
 
 function App() {
-  const [localToken, setLocalToken] = useState(null);
+  const [localToken, setLocalToken] = useState(localStorage.getItem('fantasy_access_token'));
   const [user, setUser] = useState(null);
   // const [showModal, setShowModal] = useState(false);
   // const [modalContents, setModalContents] = useState(null);
@@ -29,7 +29,6 @@ function App() {
       setUser(response.data);
     } catch (error) {
       console.error(error);
-      localStorage.removeItem('fantasy_access_token');
     }
   }
 
@@ -44,10 +43,11 @@ function App() {
   // }
 
   useEffect(() => {
-    const token = localStorage.getItem('fantasy_access_token');
-    if (token) {
-      setLocalToken(token);
-      verifyAccessToken(token);
+    if (localToken) {
+      const verified = verifyAccessToken(localToken);
+      if(!verified){
+        localStorage.removeItem('fantasy_access_token');
+      }
     }
   }, [localToken]);
 
