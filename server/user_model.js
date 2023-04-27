@@ -99,45 +99,55 @@ const logout = (body) => {
 //create user
 const createUser = (body) => {
     return new Promise(function(resolve, reject) {
-        const {email, password, password_check } = body;
-
-        if(password != password_check){
-            return reject("The two passwords do not match.")
-        }
-
-        pool.query(
-            'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *', 
-            [email, password], 
+      const { email, password, password_check } = body;
+  
+      if (password != password_check) {
+        return reject("The two passwords do not match.")
+      }
+  
+      pool.query(
+        'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *', 
+        [email, password], 
+        (error, results) => {
+          if (error) {
+            reject(error);
+          }
+  
+          const user_id = results.rows[0].user_id;
+          const user_email = results.rows[0].email;
+          const payload = { user_id: user_id }; // Create a payload object
+          const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
+          const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }); // Generate access token
+  
+          // Insert a transaction record for the new user with a starting balance of $100,000
+          pool.query(
+            'INSERT INTO transactions (user_id, transaction_type, company_name, nyse_symbol, shares, price, total) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+            [user_id, 'DEPOSIT', 'N/A', 'N/A', 1, 100000.00, 100000.00],
             (error, results) => {
-                if(error){
-                    reject(error)
+              if (error) {
+                reject(error);
+              }
+  
+              pool.query(
+                'INSERT INTO refresh_tokens (user_id, token) VALUES ($1, $2)',
+                [user_id, refreshToken],
+                (error, results) => {
+                  if (error) {
+                    reject(error);
+                  }
+  
+                  resolve({
+                    message: `A new user has been added with ID: ${user_id}`,
+                    accessToken: accessToken 
+                  });
                 }
-                
-                const user_id = results.rows[0].user_id;
-                const user_email = results.rows[0].email;
-                const payload = { user_id: user_id }; // Create a payload object
-                const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
-                const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }); // Generate access token
-
-
-                pool.query(
-                    'INSERT INTO refresh_tokens (user_id, token) VALUES ($1, $2)',
-                    [user_id, refreshToken],
-                    (error, results) => {
-                      if (error) {
-                        reject(error);
-                      }
-          
-                      resolve({
-                        message: `A new user has been added with ID: ${user_id}`,
-                        accessToken: accessToken 
-                      });
-                    }
-                );
+              );
             }
-        )
+          );
+        }
+      )
     })
-}
+  }
 
 
 //get users
