@@ -16,7 +16,6 @@ import axios from "axios";
 
 function App() {
   const [localToken, setLocalToken] = useState(localStorage.getItem('fantasy_access_token'));
-  const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [modalContents, setModalContents] = useState(null);
 
@@ -27,7 +26,6 @@ function App() {
           Authorization: `Bearer ${token}`
         }
       });
-      setUser(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -66,7 +64,6 @@ function App() {
       document.removeEventListener('keydown', handleEscKeyPress);
     };
   }, [showModal]);
-
   return (
     <div className="App">
       {showModal ? 
@@ -80,10 +77,10 @@ function App() {
         <Route
           exact path="/"
           element={
-            user ? (
+            localToken ? (
               <Navigate to="/home" replace />
             ) : (
-              <LoginPage setUser={setUser} />
+              <LoginPage />
             )
           }
         />
@@ -94,7 +91,6 @@ function App() {
                 <HomePage
                   toggleModal={toggleModal}
                   setModalContents={setModalContents}
-                  user={user} 
                 />
               </Protected>
 
@@ -107,7 +103,6 @@ function App() {
                 <TradePage 
                   toggleModal={toggleModal}
                   setModalContents={setModalContents}
-                  user={user}
                 />
               </Protected>
             }

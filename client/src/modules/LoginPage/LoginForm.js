@@ -8,9 +8,8 @@ async function loginUser(email, password){
             password: password
         });
 
-        //somewhere in the response should be an accesstoken we can store. 
-        localStorage.setItem('fantasy_access_token', response.data.accessToken) // MAY NEED TO CHANGE
-        //may need axios or react-router version to redirect user.
+        localStorage.setItem('fantasy_access_token', response.data.accessToken); 
+        window.location.reload();
     } catch (error) {
         console.error(error)
     }
