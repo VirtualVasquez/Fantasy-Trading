@@ -9,7 +9,7 @@ async function createUser(email, password, passcheck) {
         pass_check: passcheck
       });
       localStorage.setItem("fantasy_access_token", response.data.accessToken);
-      //may need axios or react-router version to redirect user.
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }

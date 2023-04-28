@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from "axios";
 
-async function loginUser(email, password){
+async function LoginUser(email, password){
     try {
         const response = await axios.post('users/login', {
             email: email,
@@ -21,9 +21,7 @@ const LoginForm = props => {
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(providedEmail);
-        console.log(providedPassword);
-        loginUser(providedEmail, providedPassword);
+        LoginUser(providedEmail, providedPassword);
     }
 
 
@@ -61,7 +59,13 @@ const LoginForm = props => {
                 </button>
             </div>
             <p className="button-divider"></p>
-            <button type="submit" className="btn btn-success btn-register" onClick={props.toRegister}>Create new Account</button>
+            <button 
+                type="submit" 
+                className="btn btn-success btn-register" 
+                onClick={props.toRegister}
+            >
+                Create new Account
+            </button>
         </form>
     )
 }
