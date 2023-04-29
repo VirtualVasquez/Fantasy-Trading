@@ -15,27 +15,28 @@ async function createUser(email, password, passcheck) {
     }
 }
 
-// function validateCredentials({email, password, confirmPassword}){
-//     if (!email) {
-//       return {status: false, msg:'Please provide a email' };
-//     }
-//     if (email.includes(' ')) {
-//       return {status: false, msg:'No whitespace is allowed for the email' };
-//     }
-//     if (!email) {
-//       return {status: false, msg: 'Please provide a password'};
-//     }
-//     if (email.includes(' ')) {
-//       return {status: false, msg: 'No whitespace is allowed for the password' };
-//     }
-//     if (!email) {
-//       return {status: false, msg:'Please validate your password' };
-//     }
-//     if (password !== confirmPassword) {
-//       return {status: false, msg:'The passwords do not match' };
-//     }
-//     return {status: true, msg: 'valid' };
-// }
+function validateCredentials(email, password, confirmPassword){
+    if (!email) {
+      return {status: false, msg:'Please provide a email' };
+    }
+    if (email.includes(' ')) {
+      return {status: false, msg:'No whitespace is allowed for the email' };
+    }
+    if (!password) {
+      return {status: false, msg: 'Please provide a password'};
+    }
+    if (password.includes(' ')) {
+        return {status: false, msg: 'No whitespace is allowed for the password' };
+      }
+    if (password && !confirmPassword) {
+        return {status: false, msg: 'Please confirm your password'};
+      }
+
+    if (password !== confirmPassword) {
+      return {status: false, msg:'The passwords do not match' };
+    }
+    return {status: true, msg: 'valid' };
+}
 
 const RegisterForm = props => {
     // const [errorMessage, setErrorMessage] = useState('');
@@ -46,16 +47,18 @@ const RegisterForm = props => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // const validation = validateCredentials(
-        //   providedEmail,
-        //   providedPassword,
-        //   passwordCheck
-        // );
-        // if(validation.status){
+        const validation = validateCredentials(
+          providedEmail,
+          providedPassword,
+          passwordCheck
+        );
+        if(validation.status){
           createUser(providedEmail, providedPassword, passwordCheck);
-        // } else {
-        //   // setErrorMessage(validation.msg);
-        // }
+        } 
+        else {
+            console.log(validation.msg);
+          // setErrorMessage(validation.msg);
+        }
     };    
 
 
