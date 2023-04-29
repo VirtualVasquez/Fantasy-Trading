@@ -3,10 +3,10 @@ import axios from "axios";
 
 async function createUser(email, password, passcheck) {
     try {
-      const response = await axios.post('api/users', {
+      const response = await axios.post('http://localhost:3001/users', {
         email: email,
-        user_pass: password,
-        pass_check: passcheck
+        password: password,
+        password_check: passcheck
       });
       localStorage.setItem("fantasy_access_token", response.data.accessToken);
       window.location.reload();
@@ -15,27 +15,27 @@ async function createUser(email, password, passcheck) {
     }
 }
 
-function validateCredentials({email, password, confirmPassword}){
-    if (!email) {
-      return {status: false, msg:'Please provide a email' };
-    }
-    if (email.includes(' ')) {
-      return {status: false, msg:'No whitespace is allowed for the email' };
-    }
-    if (!email) {
-      return {status: false, msg: 'Please provide a password'};
-    }
-    if (email.includes(' ')) {
-      return {status: false, msg: 'No whitespace is allowed for the password' };
-    }
-    if (!email) {
-      return {status: false, msg:'Please validate your password' };
-    }
-    if (password !== confirmPassword) {
-      return {status: false, msg:'The passwords do not match' };
-    }
-    return {status: true, msg: 'valid' };
-}
+// function validateCredentials({email, password, confirmPassword}){
+//     if (!email) {
+//       return {status: false, msg:'Please provide a email' };
+//     }
+//     if (email.includes(' ')) {
+//       return {status: false, msg:'No whitespace is allowed for the email' };
+//     }
+//     if (!email) {
+//       return {status: false, msg: 'Please provide a password'};
+//     }
+//     if (email.includes(' ')) {
+//       return {status: false, msg: 'No whitespace is allowed for the password' };
+//     }
+//     if (!email) {
+//       return {status: false, msg:'Please validate your password' };
+//     }
+//     if (password !== confirmPassword) {
+//       return {status: false, msg:'The passwords do not match' };
+//     }
+//     return {status: true, msg: 'valid' };
+// }
 
 const RegisterForm = props => {
     // const [errorMessage, setErrorMessage] = useState('');
@@ -46,16 +46,16 @@ const RegisterForm = props => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const validation = validateCredentials(
-          providedEmail,
-          providedPassword,
-          passwordCheck
-        );
-        if(validation.status){
+        // const validation = validateCredentials(
+        //   providedEmail,
+        //   providedPassword,
+        //   passwordCheck
+        // );
+        // if(validation.status){
           createUser(providedEmail, providedPassword, passwordCheck);
-        } else {
-          // setErrorMessage(validation.msg);
-        }
+        // } else {
+        //   // setErrorMessage(validation.msg);
+        // }
     };    
 
 

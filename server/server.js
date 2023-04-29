@@ -1,12 +1,13 @@
 require('dotenv').config();
 
 const express = require('express')
+const cors = require('cors');
 const app = express()
 const jwt = require('jsonwebtoken');
 const port = process.env.port || 3001;
-
-
 const bodyParser = require('body-parser');
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -115,4 +116,6 @@ app.get('/users', (req, res) => {
     //     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m' })
     // }
 
-app.listen(3001)
+app.listen(port, () => {
+    console.log('Server started on port 3001');
+})
