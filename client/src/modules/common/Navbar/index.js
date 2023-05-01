@@ -1,7 +1,17 @@
 import React, { useEffect } from 'react';
 import './navbar.scss';
 
-const Navbar = props => {       
+function logoutUser(){
+    localStorage.removeItem('fantasy_access_token');
+    window.location.reload();
+}
+
+const Navbar = props => {
+    
+    const handleLogout = (event) => {
+         event.preventDefault();
+         logoutUser();
+    }
 
     //comment out useEffect until you know how to struct navbar buttons/links
     useEffect(() => {
@@ -17,11 +27,6 @@ const Navbar = props => {
         });
     }, []);
 
-    // //Needed logic
-    //     //logout user
-    // const logoutUser = props =>{
-
-    // }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -44,7 +49,11 @@ const Navbar = props => {
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/">
+                            <a 
+                                className="nav-link" 
+                                href="/"
+                                onClick={handleLogout}
+                            >
                                 Log out
                             </a>
                         </li>
