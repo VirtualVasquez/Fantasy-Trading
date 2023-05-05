@@ -121,8 +121,8 @@ const createUser = (body) => {
   
           // Insert a transaction record for the new user with a starting balance of $100,000
           pool.query(
-            'INSERT INTO transactions (user_id, transaction_type, company_name, nyse_symbol, shares, price, total) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-            [user_id, 'DEPOSIT', 'N/A', 'N/A', 1, 100000.00, 100000.00],
+            'INSERT INTO transactions (user_id, transaction_type, company_name, nyse_symbol, shares, price) VALUES ($1, $2, $3, $4, $5, $6)',
+            [user_id, 'DEPOSIT', null, null, null, 100000.00],
             (error, results) => {
               if (error) {
                 reject(error);
