@@ -10,6 +10,17 @@ const pool = new Pool({
     port: process.env.DB_PORT,
 });
 
+//get transactions
+const getTransactions = async(body) => {
+  try{
+    const results = await pool.query();
+  }
+  catch(err){
+
+  }
+}
+
+
 //buy share(s)
   //
 
@@ -18,4 +29,8 @@ const pool = new Pool({
 
 
 
-module.exports = {}
+
+
+module.exports = {
+  getTransactions
+}

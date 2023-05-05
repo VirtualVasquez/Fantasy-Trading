@@ -75,6 +75,24 @@ app.get('/users', (req, res) => {
 
     })
 
+    //get user's transactions
+    //id is from jwt
+    app.get('/transactions', async (req,res) => {
+
+        //validate token
+        //parse user id
+        let user_id;
+        
+        transaction_model.getTransactions(user_id).then(response => {
+            try{
+                res.status(200).send(response);
+            } catch (err){
+                
+            }
+        })
+    })
+
+
     //validate token
     app.post('/token/validate', (req,res) => {
         return new Promise(function(resolve, reject){

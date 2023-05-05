@@ -47,6 +47,7 @@ function App() {
       if(!verified){
         localStorage.removeItem('fantasy_access_token');
       }
+      console.log(localToken);
     }
   }, [localToken]);
 
