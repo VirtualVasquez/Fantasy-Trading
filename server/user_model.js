@@ -30,7 +30,8 @@ const login = (body) => {
                 const user_email = results.rows[0].email;
                 const payload = {user_id: user_id}
                 const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
-                const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }); // Generate access token
+                // const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }); // Generate access token
+                const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET); // Generate access token
 
                 // Use ON CONFLICT clause to handle conflicts on the database side
                 pool.query(
