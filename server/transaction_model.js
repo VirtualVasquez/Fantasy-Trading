@@ -11,12 +11,20 @@ const pool = new Pool({
 });
 
 //get transactions
+//SELECT * FROM transactions WHERE user_id = 58
+
 const getTransactions = async(body) => {
+
   try{
-    const results = await pool.query();
+    const transactions = await pool.query(
+      'SELECT * FROM transactions WHERE user_id = $1', [body]
+    );
+    console.log(transactions.rows);
+    return transactions.rows;
   }
   catch(err){
-
+    console.error("No transactions for user found");
+    throw err;
   }
 }
 

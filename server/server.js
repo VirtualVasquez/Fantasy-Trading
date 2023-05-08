@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 const user_model = require('./user_model.js');
+const transaction_model = require('./transaction_model.js');
+
 
 app.use(express.json())
 
@@ -78,20 +80,19 @@ app.get('/users', (req, res) => {
     //get user's transactions
     //id is from jwt
     app.get('/transactions', async (req,res) => {
+        const { accessToken } = req.query;
 
-        //validate token
-        //parse user id
-        let user_id;
-        
+        //validate token, parse user_id
+        const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);const user_id = decoded.user_id;
+
         transaction_model.getTransactions(user_id).then(response => {
             try{
                 res.status(200).send(response);
             } catch (err){
-                
+                console.error(error);
             }
         })
     })
-
 
     //validate token
     app.post('/token/validate', (req,res) => {

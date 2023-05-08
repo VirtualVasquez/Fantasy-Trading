@@ -65,6 +65,7 @@ function App() {
       document.removeEventListener('keydown', handleEscKeyPress);
     };
   }, [showModal]);
+
   return (
     <div className="App">
       {showModal ? 
@@ -92,6 +93,7 @@ function App() {
                 <HomePage
                   toggleModal={toggleModal}
                   setModalContents={setModalContents}
+                  accessToken={localToken}
                 />
               </Protected>
 
