@@ -7,9 +7,7 @@ import axios from "axios";
 
 
 
-const HomePage = props => {
-
-    const { accessToken } = props;
+function HomePage({accessToken, toggleModal, setModalContents}) {
 
     async function getTransactions(token){
         try {
@@ -17,7 +15,9 @@ const HomePage = props => {
                 params: {
                     accessToken: token
                 }
-            })
+            });
+            //return the response to be present/altered in the frontend
+            console.log(response);
         } catch (error){
             console.error(error);
         }
@@ -42,8 +42,8 @@ const HomePage = props => {
                 </div>
                 <div className='col-12'>
                     <HoldingsTable 
-                        toggleModal={props.toggleModal}                  
-                        setModalContents={props.setModalContents}
+                        toggleModal={toggleModal}                  
+                        setModalContents={setModalContents}
                     />
                 </div>
             </div>

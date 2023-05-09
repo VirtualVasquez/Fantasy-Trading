@@ -13,21 +13,27 @@ const pool = new Pool({
 //get transactions
 //SELECT * FROM transactions WHERE user_id = 58
 
-const getTransactions = async(body) => {
+const getTransactions = async (params) => {
+  const {accessToken} = params;
 
-  try{
+  if (!accessToken) {
+      console.error('Access token not provided');
+      return null;
+  }
+
+  try {
+    const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET); // verify the access token
+    const user_id = decoded.user_id;
     const transactions = await pool.query(
-      'SELECT * FROM transactions WHERE user_id = $1', [body]
+      'SELECT * FROM transactions WHERE user_id = $1', [user_id]
     );
     console.log(transactions.rows);
     return transactions.rows;
-  }
-  catch(err){
-    console.error("No transactions for user found");
+  } catch (err) {
+    console.error('Failed to verify access token:', err.message);
     throw err;
   }
-}
-
+};
 
 //buy share(s)
   //

@@ -79,20 +79,16 @@ app.get('/users', (req, res) => {
 
     //get user's transactions
     //id is from jwt
-    app.get('/transactions', async (req,res) => {
-        const { accessToken } = req.query;
-
-        //validate token, parse user_id
-        const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);const user_id = decoded.user_id;
-
-        transaction_model.getTransactions(user_id).then(response => {
-            try{
-                res.status(200).send(response);
-            } catch (err){
-                console.error(error);
-            }
-        })
-    })
+    app.get('/transactions', async (req, res) => {
+        try {
+          const transactions = await transaction_model.getTransactions(req.query);
+          res.status(200).send(transactions);
+        } catch (err) {
+          console.error(err);
+          res.status(500).send("Error fetching transactions");
+        }
+      });
+    
 
     //validate token
     app.post('/token/validate', (req,res) => {
