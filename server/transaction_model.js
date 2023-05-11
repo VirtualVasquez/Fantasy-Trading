@@ -27,7 +27,7 @@ const getTransactions = async (params) => {
     const transactions = await pool.query(
       'SELECT * FROM transactions WHERE user_id = $1', [user_id]
     );
-    console.log(transactions.rows);
+    // console.log(transactions.rows);
     return transactions.rows;
   } catch (err) {
     console.error('Failed to verify access token:', err.message);
