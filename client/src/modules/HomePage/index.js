@@ -15,17 +15,22 @@ function HomePage({accessToken, toggleModal, setModalContents}) {
         cashBalance: 0,
         marketValue: 0,
         baseCost: 0,
-        gainLoss: 0
+        gainLoss: {
+            netCash: "-$1.00",
+            netPercent: "-1.0%"
+        }
     });
 
     const accountFunctions = {
-        setAccountValue(){
-
+        setValue(){
+            //accountFigures.cashBalance + accountFigures.marketValue
+                //but because ^this^ won't be defined at time of running
+                //this.setCashBalance() + this.setMarketValue();
         },
-        setAccountCashBalance(){
+        setCashBalance(){
             return getTransactionTypeTotal('DEPOSIT') + getTransactionTypeTotal('SELL') - getTransactionTypeTotal('WITHDRAWAL') - getTransactionTypeTotal('BUY');
         },
-        setAccountMarketValue(){
+        setMarketValue(){
             //get all BUY transactions made
             //get all SELL transactions made
             //if "X" company is both in BUY and SELL
@@ -35,15 +40,15 @@ function HomePage({accessToken, toggleModal, setModalContents}) {
                 //total shares multiplied by current market price
             //Add all market values for all shares
         },
-        setAccountBaseCost(){
+        setBaseCost(){
             return getTransactionTypeTotal("BUY") - getTransactionTypeTotal("SELL");
         },
-        setAccountValue(){
+        setValue(){
             //return setCashBalance() + setMarketValue()
         },
-        setAccountGainLoss(){
-            // object should be returned. Maybe like this:
-            //{netCash: -$100.00, netPercent: -100%}
+        setGainLoss(){
+            //IN THIS ORDER
+            // return setBaseCost() - setMarketValue()
         }
     }
 
@@ -87,8 +92,8 @@ function HomePage({accessToken, toggleModal, setModalContents}) {
         getTransactions(accessToken);
         setAccountFigures({
             ...accountFigures,
-            cashBalance: accountFunctions.setAccountCashBalance(),
-            baseCost: accountFunctions.setAccountBaseCost(),
+            cashBalance: accountFunctions.setCashBalance(),
+            baseCost: accountFunctions.setBaseCost(),
         })
         console.log(accountFigures)
     }, []);
