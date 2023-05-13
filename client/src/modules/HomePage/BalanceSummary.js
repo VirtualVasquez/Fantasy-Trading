@@ -1,6 +1,11 @@
 import React from 'react';
 
-const BalanceSummary = props => {
+function BalanceSummary({ accountFigures })  {
+
+    function formatToUS(string){
+        return (new Number(string)).toLocaleString('en-US', {style:'currency', currency: 'USD'})
+    }
+
     return(
         <div className="balance-table">
             <h2>Account Summary</h2>
@@ -16,21 +21,22 @@ const BalanceSummary = props => {
                 </thead>
                 <tbody >
                     <td className="account-value">
-                        $100,000
+                        {formatToUS(accountFigures.accountValue)}
                     </td>
                     <td className="cash-balance">
-                        $100,000
+                        {formatToUS(accountFigures.cashBalance)}
                     </td>
                     <td className="market-value">
-                        $0
+                        {formatToUS(accountFigures.marketValue)}
                     </td>
                     <td className="base-cost">
-                        $0
+                        {formatToUS(accountFigures.baseCost)}
                     </td>
                     <td className="gain-loss">
-                        +$0.00(+0.0%)
+                        {accountFigures.gainLoss.netCash}
+                        &nbsp;
+                        ({accountFigures.gainLoss.netPercent})
                     </td>
-
                 </tbody>
             </table>
         </div>

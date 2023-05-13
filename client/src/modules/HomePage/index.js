@@ -22,7 +22,7 @@ function HomePage({accessToken, toggleModal, setModalContents}) {
     });
 
     const accountFunctions = {
-        setValue(){
+        setAccountValue(){
             //accountFigures.cashBalance + accountFigures.marketValue
                 //but because ^this^ won't be defined at time of running
                 //this.setCashBalance() + this.setMarketValue();
@@ -43,12 +43,10 @@ function HomePage({accessToken, toggleModal, setModalContents}) {
         setBaseCost(){
             return getTransactionTypeTotal("BUY") - getTransactionTypeTotal("SELL");
         },
-        setValue(){
-            //return setCashBalance() + setMarketValue()
-        },
         setGainLoss(){
             //IN THIS ORDER
-            // return setBaseCost() - setMarketValue()
+            //setBaseCost() - setMarketValue()
+            //result should be something like {netCash: "valueX", netPercent: "valueY"}
         }
     }
 
@@ -94,8 +92,7 @@ function HomePage({accessToken, toggleModal, setModalContents}) {
             ...accountFigures,
             cashBalance: accountFunctions.setCashBalance(),
             baseCost: accountFunctions.setBaseCost(),
-        })
-        console.log(accountFigures)
+        })        
     }, []);
 
     //axios request for user's transactions
