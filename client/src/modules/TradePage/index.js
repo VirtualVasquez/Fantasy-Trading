@@ -1,13 +1,37 @@
 import React
-// , {useEffect, useState }
+, {useEffect, useState }
 from 'react';
 import './TradePage.scss';
 import './StockResult';
 import './SavedStock';
 import SavedStock from './SavedStock';
 import StockResult from './StockResult';
+import axios from "axios";
 
-const TradePage = props => {
+
+function TradePage(props){
+
+    const [searchResults, setSearchResults] = useState([]);
+    const [savedSearches, setSavedSearches] = useState([]);
+
+
+    async function executeSearch(userQuery){
+
+        try{
+            const response = await axios.get('/symbol-lookup', {
+                params:{
+                    q: userQuery,
+                }
+            })
+            setSearchResults(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    
+    useEffect(() => {}, []);
+    
     return (
         <div className='container trade-page'>
             <div className='row search-row'>

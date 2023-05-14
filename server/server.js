@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({
 
 const user_model = require('./user_model.js');
 const transaction_model = require('./transaction_model.js');
+const finnhub_model = require('./finnhub_model.js');
 
 
 app.use(express.json())
@@ -88,6 +89,16 @@ app.get('/users', (req, res) => {
           res.status(500).send("Error fetching transactions");
         }
       });
+
+    //lookup symbols through finnhub api
+    app.get('/symbol-lookup', async (req, res) => { 
+        try{
+            const results = await finnhub_model.getCompanySymbols(req.query);
+            res.status(200).send(results);
+        } catch(err) {
+            console.error(err);
+        }
+    })
     
 
     //validate token
