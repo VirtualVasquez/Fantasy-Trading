@@ -20,23 +20,25 @@ function BalanceSummary({ accountFigures })  {
                     </tr>            
                 </thead>
                 <tbody >
-                    <td className="account-value">
-                        {formatToUS(accountFigures.accountValue)}
-                    </td>
-                    <td className="cash-balance">
-                        {formatToUS(accountFigures.cashBalance)}
-                    </td>
-                    <td className="market-value">
-                        {formatToUS(accountFigures.marketValue)}
-                    </td>
-                    <td className="base-cost">
-                        {formatToUS(accountFigures.baseCost)}
-                    </td>
-                    <td className="gain-loss">
-                        {accountFigures.gainLoss.netCash}
-                        &nbsp;
-                        ({accountFigures.gainLoss.netPercent})
-                    </td>
+                    <tr>
+                        <td className="account-value">
+                            {formatToUS(accountFigures.accountValue)}
+                        </td>
+                        <td className="cash-balance">
+                            {formatToUS(accountFigures.cashBalance)}
+                        </td>
+                        <td className="market-value">
+                            {formatToUS(accountFigures.marketValue)}
+                        </td>
+                        <td className="base-cost">
+                            {formatToUS(accountFigures.baseCost)}
+                        </td>
+                        <td className="gain-loss">
+                            {accountFigures.gainLoss.netCash}
+                            &nbsp;
+                            ({accountFigures.gainLoss.netPercent})
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

@@ -41,16 +41,17 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    if (localToken) {
-      const verified = verifyAccessToken(localToken);
-      if(!verified){
-        localStorage.removeItem('fantasy_access_token');
-      }
-      console.log(localToken);
-    }
-  }, [localToken]);
-
+  // useEffect(() => {
+  //   if (localToken) {
+  //     const verified = verifyAccessToken(localToken);
+  //     if(!verified){
+  //       localStorage.removeItem('fantasy_access_token');
+  //     }
+  //     console.log(localToken);
+  //   }
+  // }, [localToken]);
+ 
+  
   useEffect(() => {
     function handleEscKeyPress(event) {
       if (event.key === 'Escape' && showModal === true) {

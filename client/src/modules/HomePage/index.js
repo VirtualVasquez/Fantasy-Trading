@@ -92,7 +92,9 @@ function HomePage({accessToken, toggleModal, setModalContents}) {
             ...accountFigures,
             cashBalance: accountFunctions.setCashBalance(),
             baseCost: accountFunctions.setBaseCost(),
-        })        
+        })
+        console.log(userTransactions)
+        console.log(accountFigures)        
     }, []);
 
     //axios request for user's transactions
