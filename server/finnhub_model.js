@@ -26,3 +26,8 @@ const getCompanySymbols = async(params) => {
         throw new Error ('error retrieving data from API')
     }
 }
+
+
+module.exports = {
+    getCompanySymbols
+  }
