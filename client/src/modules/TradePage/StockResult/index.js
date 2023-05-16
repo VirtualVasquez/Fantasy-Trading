@@ -4,22 +4,27 @@ from 'react';
 import './StockResult.scss';
 
 
-const StockResult = props => {
+function StockResult(props){
+
+    // you might need to run another query here to get stock information 
+
+    const{index, toggleModal, setModalContents, symbol, company } = props;
+
     return (
     <div className="card stock-result"> 
         <div className="card-body stock-result-body">
             <p className="comp-info">
                 <span className="comp-symbol">
-                    ABC
+                    {symbol}
                 </span>
-                &nbsp;-&nbsp;
+                    &nbsp;-&nbsp;
                 <span className="comp-name">
-                    Google
+                    {company}
                 </span>
             </p>
             <button 
                 className="btn btn-primary"
-                onClick={props.toggleModal}
+                onClick={toggleModal}
             >
                 Quote
             </button>            
