@@ -96,19 +96,6 @@ function App() {
     const prices = transactions.map(transaction => parseFloat(transaction.price));
     return total = prices.reduce((total, currentValue) => total + currentValue, 0);
   }
-
-  async function verifyAccessToken(token) {
-    try {
-      const response = await axios.post('http://localhost:3001/token/validate', null, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   const toggleModal = (e) => {
     console.log(showModal)
     e.preventDefault();
@@ -118,6 +105,32 @@ function App() {
       setShowModal(true);
     }
   }
+
+  async function getStockPriceQuote(stockSymbol){
+    try {
+      const response = await axios.get('/stock-quote', {
+        params:{
+          symbol: stockSymbol,
+        }
+      })
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // async function verifyAccessToken(token) {
+  //   try {
+  //     const response = await axios.post('http://localhost:3001/token/validate', null, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+
 
   // useEffect(() => {
   //   if (localToken) {
@@ -150,7 +163,9 @@ function App() {
       {showModal ? 
         <Modal 
           toggleModal={toggleModal}
-          modalContents={modalContents} 
+          modalContents={modalContents}
+          accountFigures={accountFigures}
+          setAccountFigures={setAccountFigures}
         /> 
         : null}
       {localToken ? <Navbar /> : null}
@@ -190,8 +205,15 @@ function App() {
             element={
               <Protected localToken={localToken}>            
                 <TradePage 
+                  accessToken={localToken}
                   toggleModal={toggleModal}
+                  modalContents={modalContents}
                   setModalContents={setModalContents}
+                  getTransactions={getTransactions}
+                  userTransactions={userTransactions}
+                  accountFigures={accountFigures}
+                  setAccountFigures={setAccountFigures}
+                  accountFunctions={accountFunctions}
                 />
               </Protected>
             }

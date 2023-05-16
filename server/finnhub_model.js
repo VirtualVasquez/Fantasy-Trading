@@ -27,7 +27,22 @@ const getCompanySymbols = async(params) => {
     }
 }
 
+//get stock quote
+const getStockQuote = async(params) => {
+    const { symbol } = params;
+    const uppercased = symbol.toUpperCase();
+
+    try { 
+        const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${uppercased}&token=${process.env.FINNHUB_TOKEN}`);
+        return response.data;
+    } catch (error){
+        console.error(error);
+        throw new Error ('error retrieving data from API')
+    }
+}
+
 
 module.exports = {
-    getCompanySymbols
+    getCompanySymbols,
+    getStockQuote
   }

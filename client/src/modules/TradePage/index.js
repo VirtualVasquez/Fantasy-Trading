@@ -9,7 +9,7 @@ import StockResult from './StockResult';
 import SearchBar from './SearchBar';
 
 
-function TradePage(props){
+function TradePage({accessToken, toggleModal, modalContents, setModalContents, getTransactions, userTransactions, accountFigures, setAccountFigures, accountFunctions}){
 
     const [searchResults, setSearchResults] = useState([]);
     const [savedSearches, setSavedSearches] = useState([]);
@@ -36,8 +36,8 @@ function TradePage(props){
                         return (
                             <StockResult    
                                 key={index}
-                                toggleModal={props.toggleModal}              
-                                setModalContents={props.setModalContents}
+                                toggleModal={toggleModal}              
+                                setModalContents={setModalContents}
                                 symbol={result.symbol}
                                 company={result.description}
                             />
@@ -49,8 +49,8 @@ function TradePage(props){
                 <div className='col-12 col-lg-5'>
                     <h3>Saved Stocks</h3>
                     <SavedStock 
-                        toggleModal={props.toggleModal}            
-                        setModalContents={props.setModalContents}
+                        toggleModal={toggleModal}            
+                        setModalContents={setModalContents}
                     />
                 </div>
             </div>

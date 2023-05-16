@@ -99,6 +99,16 @@ app.get('/users', (req, res) => {
             console.error(err);
         }
     })
+
+    //lookup symbols through finnhub api
+    app.get('/stock-quote', async (req, res) => { 
+        try{
+            const results = await finnhub_model.getStockQuote(req.query);
+            res.status(200).send(results);
+        } catch(err) {
+            console.error(err);
+        }
+    })
     
 
     //validate token
