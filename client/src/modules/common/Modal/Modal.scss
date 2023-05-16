@@ -12,6 +12,10 @@
         background-color: cyan;
         height: 400px;
         width: 600px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
