@@ -9,19 +9,17 @@ import StockResult from './StockResult';
 import SearchBar from './SearchBar';
 
 
-function TradePage({accessToken, toggleModal, modalContents, setModalContents, getTransactions, userTransactions, accountFigures, setAccountFigures, accountFunctions, getStockPriceQuote, sharesOwnedByUser}){
+function TradePage({accessToken, toggleModal, modalContents, setModalContents, userTransactions, accountFigures, accountFunctions, getStockPriceQuote, sharesOwnedByUser}){
 
     const [searchResults, setSearchResults] = useState([]);
+    const [availableFunds, setAvailableFunds] = useState([]);
+
     // const [savedSearches, setSavedSearches] = useState([]);
     
-    // useEffect(() => {
-    //     getTransactions(accessToken);
-    //     setAccountFigures({
-    //         ...accountFigures,
-    //         cashBalance: accountFunctions.setCashBalance(),
-    //         baseCost: accountFunctions.setBaseCost(),
-    //     });
-    // }, []);
+    useEffect(() => {
+        setAvailableFunds(accountFunctions.setCashBalance());
+        console.log(availableFunds);
+    }, [userTransactions]);
 
     return (
         
@@ -43,13 +41,13 @@ function TradePage({accessToken, toggleModal, modalContents, setModalContents, g
                         return (
                             <StockResult    
                                 key={index}
+                                availableFunds={availableFunds}
                                 toggleModal={toggleModal}
                                 modalContents={modalContents}              
                                 setModalContents={setModalContents}
                                 symbol={result.symbol}
                                 company={result.description}
                                 getStockPriceQuote={getStockPriceQuote}
-                                accountFigures={accountFigures}
                                 sharesOwnedByUser={sharesOwnedByUser}
                             />
                         )

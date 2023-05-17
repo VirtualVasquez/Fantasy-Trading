@@ -4,25 +4,7 @@ from 'react';
 import './StockResult.scss';
 
 
-function StockResult({index, toggleModal, modalContents, setModalContents, symbol, company, getStockPriceQuote, accountFigures, sharesOwnedByUser }){
-
-
-//    async function handleGetQuote(e){
-//     getStockPriceQuote(symbol)
-//     .then((stockQuoteData) => {
-//       setModalContents({
-//         ...modalContents,
-//         symbol: symbol,
-//         sharePrice: stockQuoteData.c,
-//         availableFunds: accountFigures.cashBalance,
-//         currentOwnedShares: 3,
-//       });
-//       toggleModal(e);
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-//    }
+function StockResult({index, toggleModal, modalContents, setModalContents, symbol, company, getStockPriceQuote, sharesOwnedByUser, availableFunds }){
 
     async function handleGetQuote(e) {
         try {
@@ -36,7 +18,7 @@ function StockResult({index, toggleModal, modalContents, setModalContents, symbo
             ...modalContents,
             symbol: symbol,
             sharePrice: stockQuoteData.c,
-            availableFunds: accountFigures.cashBalance,
+            availableFunds: availableFunds,
             currentOwnedShares: ownedSharesData,
         });
     
