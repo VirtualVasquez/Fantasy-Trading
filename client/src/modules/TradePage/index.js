@@ -9,12 +9,21 @@ import StockResult from './StockResult';
 import SearchBar from './SearchBar';
 
 
-function TradePage({accessToken, toggleModal, modalContents, setModalContents, getTransactions, userTransactions, accountFigures, setAccountFigures, accountFunctions}){
+function TradePage({accessToken, toggleModal, modalContents, setModalContents, getTransactions, userTransactions, accountFigures, setAccountFigures, accountFunctions, getStockPriceQuote}){
 
     const [searchResults, setSearchResults] = useState([]);
     const [savedSearches, setSavedSearches] = useState([]);
     
-    // useEffect(() => {}, []);
+    useEffect(() => {
+        getTransactions(accessToken);
+        console.log(userTransactions);
+        setAccountFigures({
+            ...accountFigures,
+            cashBalance: accountFunctions.setCashBalance(),
+            baseCost: accountFunctions.setBaseCost(),
+        });
+        console.log(accountFigures);
+    }, []);
 
     return (
         
@@ -36,10 +45,13 @@ function TradePage({accessToken, toggleModal, modalContents, setModalContents, g
                         return (
                             <StockResult    
                                 key={index}
-                                toggleModal={toggleModal}              
+                                toggleModal={toggleModal}
+                                modalContents={modalContents}              
                                 setModalContents={setModalContents}
                                 symbol={result.symbol}
                                 company={result.description}
+                                getStockPriceQuote={getStockPriceQuote}
+                                accountFigures={accountFigures}
                             />
                         )
                         }) : null

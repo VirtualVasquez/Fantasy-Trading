@@ -16,7 +16,7 @@ import axios from "axios";
 
 function App() {
   const [localToken, setLocalToken] = useState(localStorage.getItem('fantasy_access_token'));
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [userTransactions, setUserTransactions] = useState([]);
   const [accountFigures, setAccountFigures] = useState({
       accountValue: 0,
@@ -97,7 +97,6 @@ function App() {
     return total = prices.reduce((total, currentValue) => total + currentValue, 0);
   }
   const toggleModal = (e) => {
-    console.log(showModal)
     e.preventDefault();
     if (showModal) {
       setShowModal(false);
@@ -113,6 +112,7 @@ function App() {
           symbol: stockSymbol,
         }
       })
+      return response.data;
     } catch (error) {
       console.error(error);
     }
@@ -214,6 +214,7 @@ function App() {
                   accountFigures={accountFigures}
                   setAccountFigures={setAccountFigures}
                   accountFunctions={accountFunctions}
+                  getStockPriceQuote={getStockPriceQuote}
                 />
               </Protected>
             }

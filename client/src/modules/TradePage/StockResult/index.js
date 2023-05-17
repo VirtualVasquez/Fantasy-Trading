@@ -4,11 +4,27 @@ from 'react';
 import './StockResult.scss';
 
 
-function StockResult(props){
+function StockResult({index, toggleModal, modalContents, setModalContents, symbol, company, getStockPriceQuote, accountFigures }){
 
-    // you might need to run another query here to get stock information 
 
-    const{index, toggleModal, setModalContents, symbol, company } = props;
+   async function handleGetQuote(e){
+    getStockPriceQuote(symbol)
+    .then((stockQuoteData) => {
+        console.log("firin' the laser");
+        console.log(accountFigures.cashBalance);
+      setModalContents({
+        ...modalContents,
+        symbol: symbol,
+        sharePrice: stockQuoteData.c,
+        availableFunds: accountFigures.cashBalance,
+        currentOwnedShares: 3,
+      });
+      toggleModal(e);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+   }
 
     return (
     <div className="card stock-result"> 
@@ -24,7 +40,7 @@ function StockResult(props){
             </p>
             <button 
                 className="btn btn-primary"
-                onClick={toggleModal}
+                onClick={handleGetQuote}
             >
                 Quote
             </button>            
