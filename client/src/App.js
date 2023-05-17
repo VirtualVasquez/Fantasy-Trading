@@ -118,6 +118,21 @@ function App() {
     }
   }
 
+  function sharesOwnedByUser(symbol) {
+    return new Promise((resolve) => {
+      const sharesBought = userTransactions.filter((transaction) => {
+        return transaction.nyse_symbol === symbol && transaction.transaction_type === 'BUY';
+      }).length;
+  
+      const sharesSold = userTransactions.filter((transaction) => {
+        return transaction.nyse_symbol === symbol && transaction.transaction_type === 'SELL';
+      }).length;
+  
+      const sharesOwned = sharesBought - sharesSold;
+      resolve(sharesOwned);
+    });
+  }
+
   // async function verifyAccessToken(token) {
   //   try {
   //     const response = await axios.post('http://localhost:3001/token/validate', null, {
@@ -215,6 +230,7 @@ function App() {
                   setAccountFigures={setAccountFigures}
                   accountFunctions={accountFunctions}
                   getStockPriceQuote={getStockPriceQuote}
+                  sharesOwnedByUser={sharesOwnedByUser}
                 />
               </Protected>
             }

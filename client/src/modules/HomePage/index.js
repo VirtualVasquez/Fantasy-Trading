@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import './HomePage.scss';
 import BalanceSummary from './BalanceSummary.js';
 import HoldingsTable from './HoldingsTable/index.js';
-import axios from "axios";
 
 
 
@@ -36,7 +35,8 @@ function HomePage({accessToken, toggleModal, modalContents, setModalContents, ge
                 </div>
                 <div className='col-12'>
                     <HoldingsTable 
-                        toggleModal={toggleModal}                  
+                        toggleModal={toggleModal}
+                        modalContents={modalContents}               
                         setModalContents={setModalContents}
                     />
                 </div>

@@ -4,27 +4,48 @@ from 'react';
 import './StockResult.scss';
 
 
-function StockResult({index, toggleModal, modalContents, setModalContents, symbol, company, getStockPriceQuote, accountFigures }){
+function StockResult({index, toggleModal, modalContents, setModalContents, symbol, company, getStockPriceQuote, accountFigures, sharesOwnedByUser }){
 
 
-   async function handleGetQuote(e){
-    getStockPriceQuote(symbol)
-    .then((stockQuoteData) => {
-        console.log("firin' the laser");
-        console.log(accountFigures.cashBalance);
-      setModalContents({
-        ...modalContents,
-        symbol: symbol,
-        sharePrice: stockQuoteData.c,
-        availableFunds: accountFigures.cashBalance,
-        currentOwnedShares: 3,
-      });
-      toggleModal(e);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-   }
+//    async function handleGetQuote(e){
+//     getStockPriceQuote(symbol)
+//     .then((stockQuoteData) => {
+//       setModalContents({
+//         ...modalContents,
+//         symbol: symbol,
+//         sharePrice: stockQuoteData.c,
+//         availableFunds: accountFigures.cashBalance,
+//         currentOwnedShares: 3,
+//       });
+//       toggleModal(e);
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+//    }
+
+    async function handleGetQuote(e) {
+        try {
+        const [stockQuoteData, ownedSharesData] = await Promise.all([
+            getStockPriceQuote(symbol),
+            sharesOwnedByUser(symbol),
+        ]);
+        console.log(ownedSharesData)
+    
+        setModalContents({
+            ...modalContents,
+            symbol: symbol,
+            sharePrice: stockQuoteData.c,
+            availableFunds: accountFigures.cashBalance,
+            currentOwnedShares: ownedSharesData,
+        });
+    
+        toggleModal(e);
+        } catch (error) {
+        console.error(error);
+        }
+    }
+  
 
     return (
     <div className="card stock-result"> 
