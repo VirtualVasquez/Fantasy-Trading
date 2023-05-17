@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from 'react';
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -18,6 +18,7 @@ function App() {
   const [localToken, setLocalToken] = useState(localStorage.getItem('fantasy_access_token'));
   const [showModal, setShowModal] = useState(false);
   const [userTransactions, setUserTransactions] = useState([]);
+  const prevUserTransactionsRef = useRef([]);
   const [accountFigures, setAccountFigures] = useState({
       accountValue: 0,
       cashBalance: 0,
@@ -172,6 +173,23 @@ function App() {
       document.removeEventListener('keydown', handleEscKeyPress);
     };
   }, [showModal]);
+
+  useEffect(() => {
+    //change this to "if localToken verified" later
+    //only checking with localToken for now to advance the project
+    if(localToken){
+      getTransactions(localToken);
+    }
+  }, [localToken]);
+
+  // useEffect(() => {
+  //     //won't need in final product, but useRef might be useful for something else
+  //     //make sure useRef !== userTransactions, AND that userTransactions is not empty
+  //   if (prevUserTransactionsRef.current !== userTransactions && userTransactions.length ) {
+  //     console.log(userTransactions);
+  //     prevUserTransactionsRef.current = userTransactions;
+  //   }
+  // }, [userTransactions]);
 
   return (
     <div className="App">

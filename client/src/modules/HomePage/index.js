@@ -9,15 +9,26 @@ import HoldingsTable from './HoldingsTable/index.js';
 function HomePage({accessToken, toggleModal, modalContents, setModalContents, getTransactions, userTransactions, accountFigures, setAccountFigures, accountFunctions}) {
 
     useEffect(() => {
-        getTransactions(accessToken);
-        setAccountFigures({
-            ...accountFigures,
-            cashBalance: accountFunctions.setCashBalance(),
-            baseCost: accountFunctions.setBaseCost(),
-        })
-        console.log(userTransactions)
-        console.log(accountFigures)        
-    }, []);
+        const fetchData = async () => {
+            try {
+                const userCashBalance = accountFunctions.setCashBalance();
+                const userBaseCost = accountFunctions.setBaseCost();
+            
+                await Promise.all([userCashBalance, userBaseCost]);
+                
+                setAccountFigures({
+                    ...accountFigures,
+                    cashBalance: userCashBalance,
+                    baseCost: userBaseCost,
+                })    
+            } catch (error){
+                console.error(error);
+            }
+        }
+
+        fetchData();
+ 
+    }, [userTransactions]);
 
     //axios request for user's transactions
         //make account summary end point

@@ -14,14 +14,14 @@ function TradePage({accessToken, toggleModal, modalContents, setModalContents, g
     const [searchResults, setSearchResults] = useState([]);
     // const [savedSearches, setSavedSearches] = useState([]);
     
-    useEffect(() => {
-        getTransactions(accessToken);
-        setAccountFigures({
-            ...accountFigures,
-            cashBalance: accountFunctions.setCashBalance(),
-            baseCost: accountFunctions.setBaseCost(),
-        });
-    }, []);
+    // useEffect(() => {
+    //     getTransactions(accessToken);
+    //     setAccountFigures({
+    //         ...accountFigures,
+    //         cashBalance: accountFunctions.setCashBalance(),
+    //         baseCost: accountFunctions.setBaseCost(),
+    //     });
+    // }, []);
 
     return (
         
