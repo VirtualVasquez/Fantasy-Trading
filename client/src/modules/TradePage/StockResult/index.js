@@ -5,6 +5,19 @@ import './StockResult.scss';
 
 
 function StockResult({index, toggleModal, modalContents, setModalContents, symbol, company, getStockPriceQuote, sharesOwnedByUser, availableFunds }){
+    function formatToDate(timestamp){
+        const date = new Date(timestamp);
+        const options = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric', 
+            hour: 'numeric', 
+            minute: 'numeric', 
+            second: 'numeric', 
+            timeZone: 'UTC' 
+          };
+          return date.toLocaleString('en-US', options);
+    }
 
     async function handleGetQuote(e) {
         try {
@@ -12,14 +25,21 @@ function StockResult({index, toggleModal, modalContents, setModalContents, symbo
             getStockPriceQuote(symbol),
             sharesOwnedByUser(symbol),
         ]);
-        console.log(ownedSharesData)
-    
+        console.log(stockQuoteData)
         setModalContents({
             ...modalContents,
             symbol: symbol,
-            sharePrice: stockQuoteData.c,
+            companyName: company,
             availableFunds: availableFunds,
             currentOwnedShares: ownedSharesData,
+            currentPrice: stockQuoteData.c,
+            priceChange: stockQuoteData.d,
+            percentChange: stockQuoteData.dp,
+            highestPriceToday: stockQuoteData.h,
+            lowestPriceToday: stockQuoteData.l,
+            openPriceToday: stockQuoteData.o,
+            previousClosePrice: stockQuoteData.pc,
+            timestamp: stockQuoteData.t
         });
     
         toggleModal(e);

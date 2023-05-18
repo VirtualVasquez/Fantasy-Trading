@@ -31,9 +31,17 @@ function App() {
   });
   const [modalContents, setModalContents] = useState({
     symbol:"DEMO",
-    sharePrice:"$100.00",
+    companyName: "Demonstration, Inc.",
     availableFunds: '$0.00',
-    currentOwnedShares: 0
+    currentOwnedShares: 0,
+    currentPrice: 0,
+    priceChange: 0,
+    percentChange: 0,
+    highestPriceToday: 0,
+    lowestPriceToday: 0,
+    openPriceToday: 0,
+    previousClosePrice: 0,
+    timestamp: 0,
   });
   const accountFunctions = {
       setAccountValue(){

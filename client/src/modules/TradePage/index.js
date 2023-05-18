@@ -18,7 +18,6 @@ function TradePage({accessToken, toggleModal, modalContents, setModalContents, u
     
     useEffect(() => {
         setAvailableFunds(accountFunctions.setCashBalance());
-        console.log(availableFunds);
     }, [userTransactions]);
 
     return (

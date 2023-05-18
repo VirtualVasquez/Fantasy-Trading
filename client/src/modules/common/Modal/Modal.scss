@@ -1,4 +1,4 @@
-.modal-div {
+.modal-backdrop {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -6,17 +6,80 @@
     height: 100vh;
     width: 100vw;
     z-index: 1;
-    background-color: rgba(0,0,0,0.5);
-    .content{
-        opacity: 1;
-        background-color: cyan;
-        height: 400px;
-        width: 600px;
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+    background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
-  
+.modal-wrapper{
+    opacity: 1;
+    background-color: rgb(188, 234, 188);
+    box-shadow: 2px 2px 2px 2px  rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    .modal-header{
+        padding: 0.5rem;
+        // border-bottom: 1px solid black;
+        width: 100%;
+    }
+    .modal-content{
+        span.info-label{
+            font-weight: bold;
+        }
+        .user-data{
+            margin-top: 1rem;
+            border: 3px solid #755000;
+            padding: 0.5rem 0;
+            font-size: 18px;
+            p{
+                margin-bottom: 0;
+            }
+            .user-funds{
+                text-align: center;
+            }
+            .user-shares{
+                text-align: left;
+            }
+        }
+
+        .stock-data{
+            margin-top: 1rem;              
+            p{
+                margin-bottom: 0.5rem;
+            }
+            .stock-price{
+                text-align: center;
+                padding: 1rem;
+                border-right: 3px solid #755000;
+            }
+            .stock-details{
+                font-size: 16px;
+            }
+            .stock-timestamp{
+                font-size: 14px;
+                text-align: center;
+            }
+        }
+        .form-data{
+            margin: 1rem 0 1rem 0;
+            text-align:center;
+            border: 3px solid #755000;
+            padding: 1rem 0;
+            form{
+                font-size: 18px;
+                #quantity{
+                    width: 8rem;
+                }
+                > * {
+                    margin: 0 0.25rem;
+                }
+            }
+            p{
+                margin-bottom: 0;
+            }
+        }
+        .actions{
+            justify-content: space-around;
+            .btn{
+                width: 45%;
+            }
+        }
+    }
+}
