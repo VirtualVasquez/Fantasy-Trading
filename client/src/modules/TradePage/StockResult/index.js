@@ -4,20 +4,7 @@ from 'react';
 import './StockResult.scss';
 
 
-function StockResult({index, toggleModal, modalContents, setModalContents, symbol, company, getStockPriceQuote, sharesOwnedByUser, availableFunds }){
-    function formatToDate(timestamp){
-        const date = new Date(timestamp);
-        const options = { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric', 
-            hour: 'numeric', 
-            minute: 'numeric', 
-            second: 'numeric', 
-            timeZone: 'UTC' 
-          };
-          return date.toLocaleString('en-US', options);
-    }
+function StockResult({toggleModal, modalContents, setModalContents, symbol, company, getStockPriceQuote, sharesOwnedByUser, availableFunds }){
 
     async function handleGetQuote(e) {
         try {

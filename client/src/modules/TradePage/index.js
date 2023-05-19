@@ -9,7 +9,7 @@ import StockResult from './StockResult';
 import SearchBar from './SearchBar';
 
 
-function TradePage({accessToken, toggleModal, modalContents, setModalContents, userTransactions, accountFigures, accountFunctions, getStockPriceQuote, sharesOwnedByUser}){
+function TradePage({accessToken, toggleModal, modalContents, setModalContents, userTransactions, accountFunctions, getStockPriceQuote, sharesOwnedByUser}){
 
     const [searchResults, setSearchResults] = useState([]);
     const [availableFunds, setAvailableFunds] = useState([]);
