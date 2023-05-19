@@ -1,9 +1,34 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import './Modal.scss';
 
 function Modal({modalContents, toggleModal}) {
     
     const {symbol, companyName, availableFunds, currentOwnedShares, currentPrice, priceChange, percentChange, highestPriceToday, lowestPriceToday, openPriceToday, previousClosePrice, timestamp} = modalContents;
+
+    const [tradeData, setTradeData] = useState({
+        action: "buy",
+        quantity: 0,
+        total: 0
+    });
+
+    const handleSelectChange = (event) => {
+        setTradeData({
+            ...tradeData,
+            action: event.target.value
+        })
+    }
+
+    const handleQuantityChange = (event) => {
+        setTradeData({
+            ...tradeData,
+            quantity: event.target.value,
+            total: updateTotal(event.target.value, currentPrice)
+        })
+    }
+
+    const updateTotal = (shares, price) => {
+        return shares * price
+    }
 
     function formatToUS(value){
         return value.toLocaleString('en-US', {
@@ -27,7 +52,6 @@ function Modal({modalContents, toggleModal}) {
           };
           return date.toLocaleString('en-US', options);
     }
-
 
     return(
     <div className="modal-backdrop" id="modal">
@@ -71,17 +95,17 @@ function Modal({modalContents, toggleModal}) {
                 <div className='row form-data'>
                     <form class="form-inline">                        
                         <label for="action">Action</label>
-                        <select id="action" class="custom-select">
-                            <option selected>Buy</option>
-                            <option>Sell</option>
+                        <select id="action" class="custom-select" value={tradeData.action} onChange={handleSelectChange}>
+                            <option value="buy">Buy</option>
+                            <option value="sell">Sell</option>
                         </select>
                         
                         <label for="quantity">Quantity</label>
-                        <input id="quantity" name="quantity" type="number" min="0" placeholder="0">
+                        <input id="quantity" name="quantity" type="number" min="0" value={tradeData.quantity} onChange={handleQuantityChange}>
                         </input>
                             <button class="btn btn-warning">Sell All</button>
                     </form>
-                    <p><span class="info-label">Total:</span> $xxx,xxx,xxx</p>
+                    <p><span class="info-label">Total:</span> {formatToUS(tradeData.total)}</p>
                 </div>
                 <div className='row actions'>
                     <button className='btn btn-secondary'>Cancel</button>
