@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
+import axios from "axios";
 import './Modal.scss';
 
-function Modal({modalContents, toggleModal}) {
+function Modal({modalContents, toggleModal, localToken, getTransactions}) {
     
     const {symbol, companyName, availableFunds, currentOwnedShares, currentPrice, priceChange, percentChange, highestPriceToday, lowestPriceToday, openPriceToday, previousClosePrice, timestamp} = modalContents;
 
     const [tradeData, setTradeData] = useState({
-        action: "buy",
+        action: "BUY",
         quantity: 0,
         total: 0
     });
@@ -34,7 +35,6 @@ function Modal({modalContents, toggleModal}) {
         event.preventDefault();
         setTradeData({
             ...tradeData,
-            // quantity: currentOwnedShares,
             quantity: currentOwnedShares,
             total: updateTotal(currentOwnedShares, currentPrice)
         })
@@ -63,6 +63,48 @@ function Modal({modalContents, toggleModal}) {
           return date.toLocaleString('en-US', options);
     }
 
+    async function makeTransaction(action, token, compName, compSymbol, sharesQuantity, sharesPrice){
+
+        const requestData = {
+            transaction_type: action,
+            company_name: compName,
+            nyse_symbol: compSymbol,
+            shares: sharesQuantity,
+            price: sharesPrice
+        }
+
+        const config ={
+            headers:{
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        }
+
+        try{
+            const response = await axios.post('/transactions', requestData, config)
+            return response.data
+        } catch (error){
+            console.error(error);
+        }
+    }
+    
+    async function handleTradeSubmit(event){
+        event.preventDefault();
+        if(!tradeData.quantity){
+            return console.log("You can not buy zero shares.");
+        }
+        if(availableFunds < tradeData.total){
+            return console.log("You do not have enough money to make this transaction.");
+        }
+        console.log("initiating trade");
+        await makeTransaction(tradeData.action, localToken, companyName, symbol, tradeData.quantity, currentPrice);
+        toggleModal(event);
+        getTransactions(localToken);
+        // setTimeout(() => {
+        //     window.location.href = '/home'
+        //   }, "4000");
+    }
+
     return(
     <div className="modal-backdrop" id="modal">
         <div className="modal-wrapper">
@@ -70,7 +112,7 @@ function Modal({modalContents, toggleModal}) {
                 <h3>Trade: {symbol} - {companyName}</h3>
                 <button 
                     type="button" 
-                    class="btn-close" 
+                    className="btn-close" 
                     aria-label="Close"
                     onClick={toggleModal}
                 >    
@@ -79,10 +121,10 @@ function Modal({modalContents, toggleModal}) {
             <div className="modal-content container">
                 <div className='row user-data'>
                     <div className='col-6 user-funds'>
-                        <p><span class="info-label">Available funds:</span> {formatToUS(availableFunds)}</p>
+                        <p><span className="info-label">Available funds:</span> {formatToUS(availableFunds)}</p>
                     </div>
                     <div className='col-5 offset-1 user-shares'>
-                        <p><span class="info-label">Shares owned: </span>{currentOwnedShares}</p>
+                        <p><span className="info-label">Shares owned: </span>{currentOwnedShares}</p>
                     </div>
                 </div>
                 <div className='row stock-data'>
@@ -90,42 +132,48 @@ function Modal({modalContents, toggleModal}) {
                         <p>Quote as of {formatToDate(timestamp)}</p>
                     </div>
                     <div className="col-6 stock-price">
-                        <p><span class="info-label">Share Price:</span></p>
+                        <p><span className="info-label">Share Price:</span></p>
                         <p>{formatToUS(currentPrice)} / share</p>
                         
                     </div>
                     <div className="col-5 offset-1 stock-details">
-                        <p><span class="info-label">Today's Change:</span> {formatToUS(priceChange)} ({formatToPercent(percentChange)})</p>
-                        <p><span class="info-label">Day High | Low:</span> {formatToUS(highestPriceToday)} | {formatToUS(lowestPriceToday)}</p>
-                        <p><span class="info-label">Previous Close:</span> {formatToUS(previousClosePrice)}</p>
-                        <p><span class="info-label">Open Price:</span> {formatToUS(openPriceToday)}</p>
+                        <p><span className="info-label">Today's Change:</span> {formatToUS(priceChange)} ({formatToPercent(percentChange)})</p>
+                        <p><span className="info-label">Day High | Low:</span> {formatToUS(highestPriceToday)} | {formatToUS(lowestPriceToday)}</p>
+                        <p><span className="info-label">Previous Close:</span> {formatToUS(previousClosePrice)}</p>
+                        <p><span className="info-label">Open Price:</span> {formatToUS(openPriceToday)}</p>
                     </div>
 
                 </div>
                 <div className='row form-data'>
-                    <form class="form-inline">                        
-                        <label for="action">Action</label>
-                        <select id="action" class="custom-select" value={tradeData.action} onChange={handleSelectChange}>
-                            <option value="buy">Buy</option>
-                            <option value="sell">Sell</option>
+                    <form className="form-inline">                        
+                        <label htmlFor="action">Action</label>
+                        <select id="action" className="custom-select" value={tradeData.action} onChange={handleSelectChange}>
+                            <option value="BUY">Buy</option>
+                            <option value="SELL">Sell</option>
                         </select>
                         
-                        <label for="quantity">Quantity</label>
+                        <label htmlFor="quantity">Quantity</label>
                         <input id="quantity" name="quantity" type="number" min="0" value={tradeData.quantity} onChange={handleQuantityChange}>
                         </input>
-                            {currentOwnedShares && tradeData.action === "sell" ? 
+                            {currentOwnedShares && tradeData.action === "SELL" ? 
                             <button 
-                                class="btn btn-warning" 
+                                className="btn btn-warning" 
                                 onClick={selectAllOwnedStock}
                             >
                                 Sell All
                             </button> : null}
                     </form>
-                    <p><span class="info-label">Total:</span> {formatToUS(tradeData.total)}</p>
+                    <p><span className="info-label">Total:</span> {formatToUS(tradeData.total)}</p>
                 </div>
                 <div className='row actions'>
                     <button className='btn btn-secondary'>Cancel</button>
-                    <button className='btn btn-success'>Trade</button>
+                    <button 
+                        className='btn btn-success'
+                        disabled={!tradeData.quantity || availableFunds < tradeData.total }
+                        onClick={handleTradeSubmit}
+                    >
+                        Trade
+                    </button>
                 </div>
                 
             </div>

@@ -88,7 +88,20 @@ app.get('/users', (req, res) => {
           console.error(err);
           res.status(500).send("Error fetching transactions");
         }
-      });
+    });
+
+    //post 'buy' or 'sell' transaction
+    app.post('/transactions', async (req, res) => {
+        try {
+            transaction_model.makeTransaction(req.body, req.headers).then(response => {
+                res.status(200).send(response);
+                // console.log(response);
+            })
+        } catch (err) {
+          console.error(err);
+          res.status(500).send("Error making transaction");
+        }
+    });
 
     //lookup symbols through finnhub api
     app.get('/symbol-lookup', async (req, res) => { 

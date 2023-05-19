@@ -202,11 +202,11 @@ function App() {
   return (
     <div className="App">
       {showModal ? 
-        <Modal 
+        <Modal
+          localToken={localToken} 
           toggleModal={toggleModal}
           modalContents={modalContents}
-          accountFigures={accountFigures}
-          setAccountFigures={setAccountFigures}
+          getTransactions={getTransactions}
         /> 
         : null}
       {localToken ? <Navbar /> : null}
