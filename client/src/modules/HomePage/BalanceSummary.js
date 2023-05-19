@@ -3,7 +3,7 @@ import React from 'react';
 function BalanceSummary({ accountFigures })  {
 
     function formatToUS(string){
-        return (new Number(string)).toLocaleString('en-US', {style:'currency', currency: 'USD'})
+        return (Number(string)).toLocaleString('en-US', {style:'currency', currency: 'USD'})
     }
 
     return(

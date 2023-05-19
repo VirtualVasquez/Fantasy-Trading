@@ -28,7 +28,7 @@ function HomePage({accessToken, toggleModal, modalContents, setModalContents, ge
 
         fetchData();
  
-    }, [userTransactions]);
+    }, [userTransactions, accountFigures, accountFunctions, setAccountFigures]);
 
     //axios request for user's transactions
         //make account summary end point

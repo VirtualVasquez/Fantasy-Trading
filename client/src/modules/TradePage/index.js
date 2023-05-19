@@ -1,5 +1,4 @@
-import React
-, {useEffect, useState }
+import React, { useState }
 from 'react';
 import './TradePage.scss';
 import './StockResult';
@@ -9,16 +8,10 @@ import StockResult from './StockResult';
 import SearchBar from './SearchBar';
 
 
-function TradePage({accessToken, toggleModal, modalContents, setModalContents, userTransactions, accountFunctions, getStockPriceQuote, sharesOwnedByUser}){
+function TradePage({accessToken, toggleModal, modalContents, setModalContents, getStockPriceQuote, sharesOwnedByUser}){
 
     const [searchResults, setSearchResults] = useState([]);
-    const [availableFunds, setAvailableFunds] = useState([]);
-
     // const [savedSearches, setSavedSearches] = useState([]);
-    
-    useEffect(() => {
-        setAvailableFunds(accountFunctions.setCashBalance());
-    }, [userTransactions]);
 
     return (
         
@@ -40,7 +33,6 @@ function TradePage({accessToken, toggleModal, modalContents, setModalContents, u
                         return (
                             <StockResult    
                                 key={index}
-                                availableFunds={availableFunds}
                                 toggleModal={toggleModal}
                                 modalContents={modalContents}              
                                 setModalContents={setModalContents}

@@ -4,7 +4,7 @@ from 'react';
 import './StockResult.scss';
 
 
-function StockResult({toggleModal, modalContents, setModalContents, symbol, company, getStockPriceQuote, sharesOwnedByUser, availableFunds }){
+function StockResult({toggleModal, modalContents, setModalContents, symbol, company, getStockPriceQuote, sharesOwnedByUser }){
 
     async function handleGetQuote(e) {
         try {
@@ -12,12 +12,11 @@ function StockResult({toggleModal, modalContents, setModalContents, symbol, comp
             getStockPriceQuote(symbol),
             sharesOwnedByUser(symbol),
         ]);
-        console.log(stockQuoteData)
+
         setModalContents({
             ...modalContents,
             symbol: symbol,
             companyName: company,
-            availableFunds: availableFunds,
             currentOwnedShares: ownedSharesData,
             currentPrice: stockQuoteData.c,
             priceChange: stockQuoteData.d,

@@ -189,6 +189,15 @@ function App() {
     }
   }, [localToken]);
 
+  useEffect(() => {
+    setModalContents({
+      ...modalContents,
+      availableFunds: accountFunctions.setCashBalance(),
+    })
+    console.log(modalContents);
+
+  }, [userTransactions]);
+
   return (
     <div className="App">
       {showModal ? 
@@ -241,8 +250,6 @@ function App() {
                   modalContents={modalContents}
                   setModalContents={setModalContents}
                   getTransactions={getTransactions}
-                  userTransactions={userTransactions}
-                  accountFunctions={accountFunctions}
                   getStockPriceQuote={getStockPriceQuote}
                   sharesOwnedByUser={sharesOwnedByUser}
                 />
