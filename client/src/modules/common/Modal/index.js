@@ -30,6 +30,16 @@ function Modal({modalContents, toggleModal}) {
         return shares * price
     }
 
+    const selectAllOwnedStock = (event) => {
+        event.preventDefault();
+        setTradeData({
+            ...tradeData,
+            // quantity: currentOwnedShares,
+            quantity: currentOwnedShares,
+            total: updateTotal(currentOwnedShares, currentPrice)
+        })
+    }
+
     function formatToUS(value){
         return value.toLocaleString('en-US', {
             style: 'currency', 
@@ -103,7 +113,13 @@ function Modal({modalContents, toggleModal}) {
                         <label for="quantity">Quantity</label>
                         <input id="quantity" name="quantity" type="number" min="0" value={tradeData.quantity} onChange={handleQuantityChange}>
                         </input>
-                            <button class="btn btn-warning">Sell All</button>
+                            {currentOwnedShares && tradeData.action === "sell" ? 
+                            <button 
+                                class="btn btn-warning" 
+                                onClick={selectAllOwnedStock}
+                            >
+                                Sell All
+                            </button> : null}
                     </form>
                     <p><span class="info-label">Total:</span> {formatToUS(tradeData.total)}</p>
                 </div>
