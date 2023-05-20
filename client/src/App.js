@@ -101,8 +101,25 @@ function App() {
         specifiedType = 'SELL'
     }
     const transactions = userTransactions.filter(transaction => transaction.transaction_type === specifiedType);
-    const prices = transactions.map(transaction => parseFloat(transaction.price));
-    return total = prices.reduce((total, currentValue) => total + currentValue, 0);
+    let sum = 0;
+
+    if(typeOfTransaction == 'WITHDRAWAL' || typeOfTransaction == 'DEPOSIT'){
+      for (let i = 0; i < transactions.length; i++){
+        const price = parseFloat(transactions[i].price);
+        sum += price;
+        
+      }
+      return sum;
+    }
+
+    if(typeOfTransaction == 'BUY' || typeOfTransaction == 'SELL'){
+      for (let i = 0; i < transactions.length; i++){
+        const shares = parseFloat(transactions[i].shares);
+        const sharePrice = parseFloat(transactions[i].price);   
+        sum += (shares * sharePrice)
+      }
+      return sum;
+    }
   }
   const toggleModal = (e) => {
     e.preventDefault();
