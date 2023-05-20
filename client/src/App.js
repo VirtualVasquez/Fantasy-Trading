@@ -127,15 +127,28 @@ function App() {
   }
 
   function sharesOwnedByUser(symbol) {
+
+    function sumShares(array){
+      let sum = 0;
+      for (let i = 0; i < array.length; i++){
+        const shares = parseFloat(array[i].shares);
+
+        sum += shares;
+      }
+      return sum;
+    }
+
     return new Promise((resolve) => {
-      const sharesBought = userTransactions.filter((transaction) => {
+      const buyInstances = userTransactions.filter((transaction) => {
         return transaction.nyse_symbol === symbol && transaction.transaction_type === 'BUY';
-      }).length;
-  
-      const sharesSold = userTransactions.filter((transaction) => {
+      });
+      const sharesBought = sumShares(buyInstances);
+
+      const sellInstances = userTransactions.filter((transaction) => {
         return transaction.nyse_symbol === symbol && transaction.transaction_type === 'SELL';
-      }).length;
-  
+      });
+      const sharesSold = sumShares(sellInstances);
+
       const sharesOwned = sharesBought - sharesSold;
       resolve(sharesOwned);
     });
