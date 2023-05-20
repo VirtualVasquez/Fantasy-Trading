@@ -98,11 +98,8 @@ function Modal({modalContents, toggleModal, localToken, getTransactions}) {
         }
         console.log("initiating trade");
         await makeTransaction(tradeData.action, localToken, companyName, symbol, tradeData.quantity, currentPrice);
+        await getTransactions(localToken);
         toggleModal(event);
-        // getTransactions(localToken);
-        // setTimeout(() => {
-        //     window.location.href = '/home'
-        //   }, "4000");
     }
 
     return(

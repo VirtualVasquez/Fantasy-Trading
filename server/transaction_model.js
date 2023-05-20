@@ -36,7 +36,6 @@ const getTransactions = async (params) => {
 };
 
 function extractAccessToken(object){
-  console.log(object);
   const headerAuth = object['authorization']
   if(!headerAuth){
     throw new Error('Missing authorization header');
@@ -102,6 +101,7 @@ const makeTransaction = async (body, headers) => {
       message: `You ${verb} ${shares} of ${nyse_symbol} - ${company_name} at ${ formatToUSA(price)} per share, for a total of ${ formatToUSA(shares * price)}`,
       // Add any other relevant data you want to include in the response
     };
+    console.log( `You ${verb} ${shares} of ${nyse_symbol} - ${company_name} at ${ formatToUSA(price)} per share, for a total of ${ formatToUSA(shares * price)}`);
     return response;
   } catch (err) {
     console.error('Transaction unsuccesful', err);
