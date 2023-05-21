@@ -11,36 +11,37 @@ import React from 'react';
 
 const HoldingsRow = props => {
     return(
-        <tr className="stock-row">
-            <th scope="row" className="name-and-symbol">
-                <p>Amazon.com</p>
+        <tr className="stock-row" 
+            onClick={props.toggleModal}
+        >
+            <th scope="row" className="symbol">
                 <p>AMZN</p>
             </th>
-            <td className="balance-value">
-                <p>$10,000.00</p>
-                <p>10 Shares</p>
+            <td className="company-name">
+                <p>Amazon.com</p>
             </td>
-            <td className="price-value">
+            <td className="shares">
+                <p>10</p>
+            </td>
+            <td className="market-value">
                 <p>$1,000.00</p>
-
-                {/* assign 'postive' or 'negative' className */}
-                <p className="net-percentage">
-                    +50.00%
-                </p>
             </td>
-
+            <td className="base-cost">
+                <p>$1,000.00</p>
+            </td>
             {/* assign 'postive' or 'negative' className */}
-            <td className="performance-value">
-                +$5,000.00
+            <td className="gain-loss">
+                <p>+$5,000.00 (+50.00%)</p>
+                {/* assign 'postive' or 'negative' className */}
             </td>
-            <td className="trade-cell">
+            {/* <td className="trade-cell">
                 <button 
                     className="btn btn-primary"
                     onClick={props.toggleModal}
                 >
                     Trade
                 </button>
-            </td>
+            </td> */}
         </tr>
     )   
 }

@@ -11,13 +11,15 @@ const HoldingsTable = props => {
             <table className="table table-striped table-dark">
                 <thead>
                     <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Balance</th>
-                    <th scope="col">Price</th>
-                        {/* percentage is value per share invested, divided by current price (~sorta) */}
-                    <th scope="col">Performance</th>
-                        {/* Performance is net difference between dollars spent and dollars earned/lost */}
-                    <th scope="col"></th>
+                        <th scope="col">Symbol</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Shares</th>
+                        <th scope="col">Market Value</th>
+                        <th scope="col">Base Cost</th>
+                            {/* percentage is value per share invested, divided by current price (~sorta) */}
+                        <th scope="col">Gain/Loss</th>
+                            {/* Performance is net difference between dollars spent and dollars earned/lost */}
+                        {/* <th scope="col"></th> */}
                     </tr>            
                 </thead>
                 <tbody>
