@@ -51,15 +51,40 @@ function App() {
       setCashBalance(){
           return getTransactionTypeTotal('DEPOSIT') + getTransactionTypeTotal('SELL') - getTransactionTypeTotal('WITHDRAWAL') - getTransactionTypeTotal('BUY');
       },
-      setMarketValue(){
-          //get all BUY transactions made
-          //get all SELL transactions made
-          //if "X" company is both in BUY and SELL
-              //for each company with both
-                  //"BUY" shares minus "SELL" shares
-          //for each company (with now calculated total shares)
-              //total shares multiplied by current market price
-          //Add all market values for all shares
+      async setMarketValue(){
+          //define variable of 'total'
+          //from userTransactions, filter out unique stock symbols (no duplicates or nulls)
+          let totalValue = 0;
+          const uniqueSymbols = [...new Set(userTransactions.map(transaction => transaction.nyse_symbol))];
+          const symbolObjects = uniqueSymbols
+          .filter(symbol => symbol !== null)
+          .map(symbol => ({
+            symbol: symbol,
+            sharesOwned: 0,
+            sharePrice: 0
+          }))
+          //for each unique stock symbol
+            const getSharesAndPrice = async() => {
+              for (let i = 0; i < symbolObjects.length; i++) {
+                const symbol = symbolObjects[i].symbol;
+            
+                // Update sharesOwned
+                const sharesOwned = await sharesOwnedByUser(symbol);
+                symbolObjects[i].sharesOwned = sharesOwned;
+            
+                // Update sharePrice
+                const stockQuote = await getStockPriceQuote(symbol);
+                const stockPrice = stockQuote.c;
+                symbolObjects[i].sharePrice = stockPrice;
+
+                totalValue += (sharesOwned * stockPrice)
+              }
+
+            }
+            await getSharesAndPrice();
+            console.log ("totalValue after function: " + totalValue)
+
+          return totalValue
       },
       setBaseCost(){
           return getTransactionTypeTotal("BUY") - getTransactionTypeTotal("SELL");
@@ -224,7 +249,6 @@ function App() {
       ...modalContents,
       availableFunds: accountFunctions.setCashBalance(),
     })
-    console.log(modalContents);
 
   }, [userTransactions]);
 

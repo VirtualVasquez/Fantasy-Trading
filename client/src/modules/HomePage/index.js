@@ -13,14 +13,20 @@ function HomePage({accessToken, toggleModal, modalContents, setModalContents, ge
             try {
                 const userCashBalance = accountFunctions.setCashBalance();
                 const userBaseCost = accountFunctions.setBaseCost();
+                const userMarketValue = accountFunctions.setMarketValue();
             
-                await Promise.all([userCashBalance, userBaseCost]);
-                
-                setAccountFigures({
-                    ...accountFigures,
-                    cashBalance: userCashBalance,
-                    baseCost: userBaseCost,
-                })    
+                await Promise.all([userCashBalance, userBaseCost, userMarketValue]).then(([userCashBalance, userBaseCost, userMarketValue]) => {
+                    console.log(userMarketValue);
+
+
+                    setAccountFigures({
+                        ...accountFigures,
+                        cashBalance: userCashBalance,
+                        baseCost: userBaseCost,
+                        marketValue: userMarketValue
+                    })
+                })
+
             } catch (error){
                 console.error(error);
             }
@@ -28,7 +34,9 @@ function HomePage({accessToken, toggleModal, modalContents, setModalContents, ge
 
         fetchData();
  
-    }, [userTransactions, accountFigures, accountFunctions, setAccountFigures]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userTransactions]);
+
 
     //axios request for user's transactions
         //make account summary end point
