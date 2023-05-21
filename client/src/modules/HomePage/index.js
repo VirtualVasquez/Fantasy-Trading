@@ -16,16 +16,22 @@ function HomePage({accessToken, toggleModal, modalContents, setModalContents, ge
                 const userMarketValue = accountFunctions.setMarketValue();
             
                 await Promise.all([userCashBalance, userBaseCost, userMarketValue]).then(([userCashBalance, userBaseCost, userMarketValue]) => {
-                    console.log(userMarketValue);
 
                     const userAccountValue = userCashBalance + userMarketValue;
+                    const netDollarsChange = userMarketValue - userBaseCost;
+                    console.log(netDollarsChange);
+                    const netPercentageChange = (netDollarsChange/userBaseCost) * 100;
 
                     setAccountFigures({
                         ...accountFigures,
                         accountValue: userAccountValue,
                         cashBalance: userCashBalance,
                         baseCost: userBaseCost,
-                        marketValue: userMarketValue
+                        marketValue: userMarketValue,
+                        gainLoss: {
+                            netCash: netDollarsChange,
+                            netPercent: netPercentageChange
+                        }
                     })
                 })
 

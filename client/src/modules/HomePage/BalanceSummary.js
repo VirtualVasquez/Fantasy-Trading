@@ -5,6 +5,15 @@ function BalanceSummary({ accountFigures })  {
     function formatToUS(string){
         return (Number(string)).toLocaleString('en-US', {style:'currency', currency: 'USD'})
     }
+    
+    function formatToPercent (value){
+        const numericValue = Number(value); // Convert the value to a number
+
+        if(isNaN(numericValue)){
+            return '0.00%'
+        }
+        return (value).toFixed(2) + '%';
+    }
 
     return(
         <div className="balance-table">
@@ -33,10 +42,10 @@ function BalanceSummary({ accountFigures })  {
                         <td className="base-cost">
                             {formatToUS(accountFigures.baseCost)}
                         </td>
-                        <td className="gain-loss">
-                            {accountFigures.gainLoss.netCash}
+                        <td className={`gain-loss ${ (accountFigures.marketValue - accountFigures.baseCost) < 0 ? 'negative' : 'positive'}`}>
+                            {formatToUS(accountFigures.gainLoss.netCash)}
                             &nbsp;
-                            ({accountFigures.gainLoss.netPercent})
+                            ({formatToPercent(accountFigures.gainLoss.netPercent * 100)})
                         </td>
                     </tr>
                 </tbody>

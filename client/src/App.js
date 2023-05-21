@@ -43,9 +43,6 @@ function App() {
     timestamp: 0,
   });
   const accountFunctions = {
-      setAccountValue(){
-          return this.setCashBalance() + this.setMarketValue();
-      },
       setCashBalance(){
           return getTransactionTypeTotal('DEPOSIT') + getTransactionTypeTotal('SELL') - getTransactionTypeTotal('WITHDRAWAL') - getTransactionTypeTotal('BUY');
       },
@@ -80,17 +77,11 @@ function App() {
 
             }
             await getSharesAndPrice();
-            console.log ("totalValue after function: " + totalValue)
 
           return totalValue
       },
       setBaseCost(){
           return getTransactionTypeTotal("BUY") - getTransactionTypeTotal("SELL");
-      },
-      setGainLoss(){
-          //IN THIS ORDER
-          //setBaseCost() - setMarketValue()
-          //result should be something like {netCash: "valueX", netPercent: "valueY"}
       }
   }
   async function getTransactions(token){
