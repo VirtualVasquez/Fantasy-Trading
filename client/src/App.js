@@ -44,9 +44,7 @@ function App() {
   });
   const accountFunctions = {
       setAccountValue(){
-          //accountFigures.cashBalance + accountFigures.marketValue
-              //but because ^this^ won't be defined at time of running
-              //this.setCashBalance() + this.setMarketValue();
+          return this.setCashBalance() + this.setMarketValue();
       },
       setCashBalance(){
           return getTransactionTypeTotal('DEPOSIT') + getTransactionTypeTotal('SELL') - getTransactionTypeTotal('WITHDRAWAL') - getTransactionTypeTotal('BUY');

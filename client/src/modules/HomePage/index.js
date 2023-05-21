@@ -18,9 +18,11 @@ function HomePage({accessToken, toggleModal, modalContents, setModalContents, ge
                 await Promise.all([userCashBalance, userBaseCost, userMarketValue]).then(([userCashBalance, userBaseCost, userMarketValue]) => {
                     console.log(userMarketValue);
 
+                    const userAccountValue = userCashBalance + userMarketValue;
 
                     setAccountFigures({
                         ...accountFigures,
+                        accountValue: userAccountValue,
                         cashBalance: userCashBalance,
                         baseCost: userBaseCost,
                         marketValue: userMarketValue
