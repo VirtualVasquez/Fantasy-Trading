@@ -6,7 +6,7 @@ import HoldingsTable from './HoldingsTable/index.js';
 
 
 
-function HomePage({accessToken, toggleModal, modalContents, setModalContents, getTransactions, userTransactions, accountFigures, setAccountFigures, accountFunctions}) {
+function HomePage({accessToken, toggleModal, modalContents, setModalContents, getTransactions, userTransactions, accountFigures, setAccountFigures, accountFunctions, sharesOwnedByUser, getStockPriceQuote, getTransactionTypeTotal}) {
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,7 +20,7 @@ function HomePage({accessToken, toggleModal, modalContents, setModalContents, ge
                     const userAccountValue = userCashBalance + userMarketValue;
                     const netDollarsChange = userMarketValue - userBaseCost;
                     console.log(netDollarsChange);
-                    const netPercentageChange = (netDollarsChange/userBaseCost) * 100;
+                    const netPercentageChange = (netDollarsChange/userBaseCost);
 
                     setAccountFigures({
                         ...accountFigures,
@@ -62,9 +62,13 @@ function HomePage({accessToken, toggleModal, modalContents, setModalContents, ge
                 </div>
                 <div className='col-12'>
                     <HoldingsTable 
+                        userTransactions={userTransactions}
                         toggleModal={toggleModal}
                         modalContents={modalContents}               
                         setModalContents={setModalContents}
+                        sharesOwnedByUser={sharesOwnedByUser}
+                        getStockPriceQuote={getStockPriceQuote}
+                        getTransactionTypeTotal={getTransactionTypeTotal}
                     />
                 </div>
             </div>

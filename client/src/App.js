@@ -97,10 +97,11 @@ function App() {
         console.error(error);
     }
   }
-  function getTransactionTypeTotal(typeOfTransaction){
+  function getTransactionTypeTotal(typeOfTransaction, arrayofTransactions){
 
     let specifiedType;
     let total;
+    let transactions;
 
     if(typeOfTransaction === 'DEPOSIT'){
         specifiedType = 'DEPOSIT'
@@ -114,7 +115,13 @@ function App() {
     if(typeOfTransaction === 'SELL'){
         specifiedType = 'SELL'
     }
-    const transactions = userTransactions.filter(transaction => transaction.transaction_type === specifiedType);
+    
+    if(arrayofTransactions){
+      transactions = arrayofTransactions.filter(transaction => transaction.transaction_type === specifiedType);
+    } else{
+      transactions = userTransactions.filter(transaction => transaction.transaction_type === specifiedType);
+    }
+
     let sum = 0;
 
     if(typeOfTransaction == 'WITHDRAWAL' || typeOfTransaction == 'DEPOSIT'){
@@ -278,6 +285,9 @@ function App() {
                   accountFigures={accountFigures}
                   setAccountFigures={setAccountFigures}
                   accountFunctions={accountFunctions}
+                  sharesOwnedByUser={sharesOwnedByUser}
+                  getStockPriceQuote={getStockPriceQuote}
+                  getTransactionTypeTotal={getTransactionTypeTotal}
                 />
               </Protected>
 

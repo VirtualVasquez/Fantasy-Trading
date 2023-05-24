@@ -1,47 +1,39 @@
 import React from 'react';
 
-//Needed logic
-    //if trade button click, show trade modal
-    //if value is positive
-        //assign class of 'positive'
-            //potentially also prepend '+' sign
-    //if value is negative
-        //assigned class of 'negative'
-            //potenitally also prepend '-' sign
+const HoldingsRow = ({toggleModal, setModalContents, symbol, name, sharesOwned, marketValue, baseCost, gainLoss}) => {
 
-const HoldingsRow = props => {
+    function formatToUS(value){
+        return value.toLocaleString('en-US', {
+            style: 'currency', 
+            currency: 'USD',
+          })
+    }
+    function formatToPercent (value){
+      return (value).toFixed(4) + '%';
+    }
     return(
         <tr className="stock-row" 
-            onClick={props.toggleModal}
+            onClick={toggleModal}
         >
             <th scope="row" className="symbol">
-                <p>AMZN</p>
+                <p>{symbol}</p>
             </th>
             <td className="company-name">
-                <p>Amazon.com</p>
+                <p>{name}</p>
             </td>
             <td className="shares">
-                <p>10</p>
+                <p>{sharesOwned}</p>
             </td>
             <td className="market-value">
-                <p>$1,000.00</p>
+                <p>{formatToUS(marketValue)}</p>
             </td>
             <td className="base-cost">
-                <p>$1,000.00</p>
+                <p>{formatToUS(baseCost)}</p>
             </td>
             {/* assign 'postive' or 'negative' className */}
             <td className="gain-loss">
-                <p>+$5,000.00 (+50.00%)</p>
-                {/* assign 'postive' or 'negative' className */}
+                <p>{formatToUS(gainLoss.netCash)} ({formatToPercent(gainLoss.netPercent)})</p>
             </td>
-            {/* <td className="trade-cell">
-                <button 
-                    className="btn btn-primary"
-                    onClick={props.toggleModal}
-                >
-                    Trade
-                </button>
-            </td> */}
         </tr>
     )   
 }

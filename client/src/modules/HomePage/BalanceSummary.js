@@ -12,7 +12,7 @@ function BalanceSummary({ accountFigures })  {
         if(isNaN(numericValue)){
             return '0.00%'
         }
-        return (value).toFixed(2) + '%';
+        return (value).toFixed(4) + '%';
     }
 
     return(
@@ -45,7 +45,7 @@ function BalanceSummary({ accountFigures })  {
                         <td className={`gain-loss ${ (accountFigures.marketValue - accountFigures.baseCost) < 0 ? 'negative' : 'positive'}`}>
                             {formatToUS(accountFigures.gainLoss.netCash)}
                             &nbsp;
-                            ({formatToPercent(accountFigures.gainLoss.netPercent * 100)})
+                            ({formatToPercent(accountFigures.gainLoss.netPercent)})
                         </td>
                     </tr>
                 </tbody>

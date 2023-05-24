@@ -1,10 +1,56 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import HoldingsRow from './HoldingsRow';
 
-//needed logic
-    //map user's assets to Holdings Row
 
-const HoldingsTable = props => {
+const HoldingsTable = ({toggleModal, setModalContents, userTransactions, sharesOwnedByUser, getStockPriceQuote, getTransactionTypeTotal}) => {
+
+    const [userStockHoldings, setUserStockHoldings] = useState([]);
+
+    async function getUserStockHoldingsInfo() {
+      const trades = userTransactions.filter(transaction => transaction.nyse_symbol !== null);
+      const uniqueSymbols = [...new Set(trades.map(trade => trade.nyse_symbol))];
+    
+      const updatedHoldings = [];
+    
+      for (let i = 0; i < uniqueSymbols.length; i++) {
+        let stockHolding = {
+          nyse_symbol: uniqueSymbols[i],
+          company_name: trades.find(obj => obj.nyse_symbol === uniqueSymbols[i]).company_name,
+          sharesOwned: 0,
+          marketValue: 0,
+          baseCost: 0,
+          gainLoss: {
+            netCash: 0,
+            netPercent: 0
+          }
+        };
+    
+        stockHolding.sharesOwned = await sharesOwnedByUser(uniqueSymbols[i]);
+    
+        const stockQuote = await getStockPriceQuote(uniqueSymbols[i]);
+        const stockPrice = stockQuote.c;
+        stockHolding.marketValue = stockPrice * stockHolding.sharesOwned;
+    
+        const stockSpecificTrades = trades.filter(transaction => transaction.nyse_symbol === uniqueSymbols[i]);
+        stockHolding.baseCost = getTransactionTypeTotal("BUY", stockSpecificTrades) - getTransactionTypeTotal("SELL", stockSpecificTrades);
+    
+        stockHolding.gainLoss.netCash = stockHolding.marketValue - stockHolding.baseCost;
+        stockHolding.gainLoss.netPercent = stockHolding.gainLoss.netCash / stockHolding.baseCost;
+    
+        updatedHoldings.push(stockHolding);
+      }
+    
+      setUserStockHoldings(updatedHoldings);
+    }
+
+    useEffect(() => {
+      getUserStockHoldingsInfo();
+    }, [userTransactions]);
+    
+    useEffect(() => {
+      console.log(userStockHoldings);
+    }, [userStockHoldings]);
+      
     return(
         <div className="holdings-table">
             <h2>My Assets</h2>
@@ -16,16 +62,26 @@ const HoldingsTable = props => {
                         <th scope="col">Shares</th>
                         <th scope="col">Market Value</th>
                         <th scope="col">Base Cost</th>
-                            {/* percentage is value per share invested, divided by current price (~sorta) */}
                         <th scope="col">Gain/Loss</th>
-                            {/* Performance is net difference between dollars spent and dollars earned/lost */}
-                        {/* <th scope="col"></th> */}
                     </tr>            
                 </thead>
                 <tbody>
-                    <HoldingsRow 
-                        toggleModal={props.toggleModal}setModalContents={props.setModalContents}
-                    />
+                    {Array.isArray(userStockHoldings) ? userStockHoldings.map(function (stock, index){
+                        return(
+                            <HoldingsRow
+                                key={index}
+                                toggleModal={toggleModal}
+                                setModalContents={setModalContents}
+                                symbol={stock.nyse_symbol}
+                                name={stock.company_name}
+                                sharesOwned={stock.sharesOwned}
+                                marketValue={stock.marketValue}
+                                baseCost={stock.baseCost}
+                                gainLoss={stock.gainLoss}
+                            />
+                        )
+                    }) : null}
+
                 </tbody>
             </table>
         </div>
