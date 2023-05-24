@@ -13,25 +13,34 @@ const Navbar = props => {
          logoutUser();
     }
 
-    //comment out useEffect until you know how to struct navbar buttons/links
     useEffect(() => {
         // Get the navbar-toggler button element
         const navbarToggler = document.querySelector('.navbar-toggler');
         // Get the menu items container element
         const menuContainer = document.querySelector('.navbar-collapse');
-
-        // Attach a click event listener to the navbar-toggler button
-        navbarToggler.addEventListener('click', () => {
-            // Toggle the "show" class on the menu items container
-            menuContainer.classList.toggle('collapse');
-        });
+    
+        // Define the event listener function
+        const toggleMenuContainer = () => {
+            // Toggle the "collapse" class on the menu items container
+            menuContainer.classList.toggle('show');
+        };
+    
+        // Attach the click event listener to the navbar-toggler button
+        navbarToggler.addEventListener('click', toggleMenuContainer);
+    
+        // Clean up the event listener when the component unmounts or the effect runs again
+        return () => {
+            navbarToggler.removeEventListener('click', toggleMenuContainer);
+        };
     }, []);
 
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container">
+
                 <a className="navbar-brand" href="/">Stonks</a>
+
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
