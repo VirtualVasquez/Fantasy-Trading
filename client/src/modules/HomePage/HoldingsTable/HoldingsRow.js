@@ -1,10 +1,40 @@
 import React from 'react';
 
-const HoldingsRow = ({toggleModal, setModalContents, symbol, name, sharesOwned, marketValue, baseCost, gainLoss, formatToUS, formatToPercent}) => {
+const HoldingsRow = ({toggleModal, modalContents, setModalContents, symbol, name, sharesOwned, marketValue, baseCost, gainLoss, formatToUS, formatToPercent, getStockPriceQuote}) => {
+
+    async function handleGetQuote(e){
+        try{
+            const[stockQuoteData] = await Promise.all([
+                getStockPriceQuote(symbol)
+            ]);
+
+            
+            setModalContents({
+                ...modalContents,
+                symbol: symbol,
+                companyName: name,
+                currentOwnedShares: sharesOwned,
+                currentPrice: stockQuoteData.c,
+                priceChange: stockQuoteData.d,
+                percentChange: stockQuoteData.dp,
+                highestPriceToday: stockQuoteData.h,
+                lowestPriceToday: stockQuoteData.l,
+                openPriceToday: stockQuoteData.o,
+                previousClosePrice: stockQuoteData.pc,
+                timestamp: stockQuoteData.t
+            })
+
+
+            toggleModal(e);
+
+        } catch (error){
+            console.error(error);
+        }
+    }
 
     return(
         <tr className="stock-row" 
-            onClick={toggleModal}
+            onClick={handleGetQuote}
         >
             <th scope="row" className="symbol">
                 <p>{symbol}</p>

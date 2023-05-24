@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import HoldingsRow from './HoldingsRow';
 
 
-const HoldingsTable = ({toggleModal, setModalContents, userTransactions, sharesOwnedByUser, getStockPriceQuote, getTransactionTypeTotal, formatToUS, formatToPercent}) => {
+const HoldingsTable = ({toggleModal, modalContents, setModalContents, userTransactions, sharesOwnedByUser, getStockPriceQuote, getTransactionTypeTotal, formatToUS, formatToPercent}) => {
 
     const [userStockHoldings, setUserStockHoldings] = useState([]);
 
@@ -46,10 +46,6 @@ const HoldingsTable = ({toggleModal, setModalContents, userTransactions, sharesO
     useEffect(() => {
       getUserStockHoldingsInfo();
     }, [userTransactions]);
-    
-    useEffect(() => {
-      console.log(userStockHoldings);
-    }, [userStockHoldings]);
       
     return(
         <div className="holdings-table">
@@ -71,7 +67,9 @@ const HoldingsTable = ({toggleModal, setModalContents, userTransactions, sharesO
                             <HoldingsRow
                                 key={index}
                                 toggleModal={toggleModal}
+                                modalContents={modalContents}
                                 setModalContents={setModalContents}
+                                getStockPriceQuote={getStockPriceQuote}
                                 symbol={stock.nyse_symbol}
                                 name={stock.company_name}
                                 sharesOwned={stock.sharesOwned}

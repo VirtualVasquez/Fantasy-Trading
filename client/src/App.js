@@ -227,7 +227,6 @@ function App() {
   useEffect(() => {
     function handleEscKeyPress(event) {
       if (event.key === 'Escape' && showModal === true) {
-        console.log("I am working at esc");
         setShowModal(false);
       }
     }

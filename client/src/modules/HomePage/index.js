@@ -19,7 +19,6 @@ function HomePage({toggleModal, modalContents, setModalContents, userTransaction
 
                     const userAccountValue = userCashBalance + userMarketValue;
                     const netDollarsChange = userMarketValue - userBaseCost;
-                    console.log(netDollarsChange);
                     const netPercentageChange = (netDollarsChange/userBaseCost);
 
                     setAccountFigures({
