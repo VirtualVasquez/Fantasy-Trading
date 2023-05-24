@@ -100,7 +100,6 @@ function App() {
   function getTransactionTypeTotal(typeOfTransaction, arrayofTransactions){
 
     let specifiedType;
-    let total;
     let transactions;
 
     if(typeOfTransaction === 'DEPOSIT'){
@@ -124,7 +123,7 @@ function App() {
 
     let sum = 0;
 
-    if(typeOfTransaction == 'WITHDRAWAL' || typeOfTransaction == 'DEPOSIT'){
+    if(typeOfTransaction === 'WITHDRAWAL' || typeOfTransaction === 'DEPOSIT'){
       for (let i = 0; i < transactions.length; i++){
         const price = parseFloat(transactions[i].price);
         sum += price;
@@ -133,7 +132,7 @@ function App() {
       return sum;
     }
 
-    if(typeOfTransaction == 'BUY' || typeOfTransaction == 'SELL'){
+    if(typeOfTransaction === 'BUY' || typeOfTransaction === 'SELL'){
       for (let i = 0; i < transactions.length; i++){
         const shares = parseFloat(transactions[i].shares);
         const sharePrice = parseFloat(transactions[i].price);   
@@ -199,29 +198,29 @@ function App() {
     return (value).toFixed(4) + '%';
   }
 
-  // async function verifyAccessToken(token) {
-  //   try {
-  //     const response = await axios.post('http://localhost:3001/token/validate', null, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  async function verifyAccessToken(token) {
+    try {
+      const response = await axios.post('http://localhost:3001/token/validate', null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
 
 
-  // useEffect(() => {
-  //   if (localToken) {
-  //     const verified = verifyAccessToken(localToken);
-  //     if(!verified){
-  //       localStorage.removeItem('fantasy_access_token');
-  //     }
-  //     console.log(localToken);
-  //   }
-  // }, [localToken]);
+  useEffect(() => {
+    if (localToken) {
+      const verified = verifyAccessToken(localToken);
+      if(!verified){
+        localStorage.removeItem('fantasy_access_token');
+      }
+      console.log(localToken);
+    }
+  }, [localToken]);
  
   
   useEffect(() => {
@@ -251,7 +250,7 @@ function App() {
       ...modalContents,
       availableFunds: accountFunctions.setCashBalance(),
     })
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userTransactions]);
 
   return (

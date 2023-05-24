@@ -43,13 +43,6 @@ function HomePage({toggleModal, modalContents, setModalContents, userTransaction
  
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userTransactions]);
-
-
-    //axios request for user's transactions
-        //make account summary end point
-        //make post request
-        //only market value needs to query finnhub for current price of all 
-
     
     return (
         <div className='container home-page'>

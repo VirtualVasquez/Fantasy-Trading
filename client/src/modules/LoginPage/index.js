@@ -6,7 +6,7 @@ import RegisterForm from './RegisterForm'
 import './loginPage.scss';
 // import axios from 'axios';
 
-const LoginPage = props => {
+function LoginPage () {
 
     const[ showLogin, setShowLogin]  = useState(true);
 

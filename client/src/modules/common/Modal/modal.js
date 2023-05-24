@@ -182,7 +182,7 @@ function Modal({modalContents, toggleModal, localToken, getTransactions, formatT
                         disabled={
                             tradeData.quantity < 1 
                             || availableFunds < tradeData.total 
-                            || (tradeData.action == "SELL" && tradeData.quantity > currentOwnedShares)
+                            || (tradeData.action === "SELL" && tradeData.quantity > currentOwnedShares)
                         }
                         onClick={handleTradeSubmit}
                     >
