@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import HoldingsRow from './HoldingsRow';
 
 
-const HoldingsTable = ({toggleModal, setModalContents, userTransactions, sharesOwnedByUser, getStockPriceQuote, getTransactionTypeTotal}) => {
+const HoldingsTable = ({toggleModal, setModalContents, userTransactions, sharesOwnedByUser, getStockPriceQuote, getTransactionTypeTotal, formatToUS, formatToPercent}) => {
 
     const [userStockHoldings, setUserStockHoldings] = useState([]);
 
@@ -78,6 +78,8 @@ const HoldingsTable = ({toggleModal, setModalContents, userTransactions, sharesO
                                 marketValue={stock.marketValue}
                                 baseCost={stock.baseCost}
                                 gainLoss={stock.gainLoss}
+                                formatToUS={formatToUS}
+                                formatToPercent={formatToPercent}
                             />
                         )
                     }) : null}

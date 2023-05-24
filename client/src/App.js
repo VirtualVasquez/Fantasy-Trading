@@ -150,7 +150,6 @@ function App() {
       setShowModal(true);
     }
   }
-
   async function getStockPriceQuote(stockSymbol){
     try {
       const response = await axios.get('/stock-quote', {
@@ -163,7 +162,6 @@ function App() {
       console.error(error);
     }
   }
-
   function sharesOwnedByUser(symbol) {
 
     function sumShares(array){
@@ -190,6 +188,15 @@ function App() {
       const sharesOwned = sharesBought - sharesSold;
       resolve(sharesOwned);
     });
+  }
+  function formatToUS(value){
+    return value.toLocaleString('en-US', {
+        style: 'currency', 
+        currency: 'USD',
+      })
+  }
+  function formatToPercent (value){
+    return (value).toFixed(4) + '%';
   }
 
   // async function verifyAccessToken(token) {
@@ -256,6 +263,8 @@ function App() {
           toggleModal={toggleModal}
           modalContents={modalContents}
           getTransactions={getTransactions}
+          formatToUS={formatToUS}
+          formatToPercent={formatToPercent}
         /> 
         : null}
       {localToken ? <Navbar /> : null}
@@ -276,11 +285,9 @@ function App() {
             element={
               <Protected localToken={localToken}>            
                 <HomePage
-                  accessToken={localToken}
                   toggleModal={toggleModal}
                   modalContents={modalContents}
                   setModalContents={setModalContents}
-                  getTransactions={getTransactions}
                   userTransactions={userTransactions}
                   accountFigures={accountFigures}
                   setAccountFigures={setAccountFigures}
@@ -288,6 +295,8 @@ function App() {
                   sharesOwnedByUser={sharesOwnedByUser}
                   getStockPriceQuote={getStockPriceQuote}
                   getTransactionTypeTotal={getTransactionTypeTotal}
+                  formatToUS={formatToUS}
+                  formatToPercent={formatToPercent}
                 />
               </Protected>
 
@@ -298,13 +307,14 @@ function App() {
             element={
               <Protected localToken={localToken}>            
                 <TradePage 
-                  accessToken={localToken}
                   toggleModal={toggleModal}
                   modalContents={modalContents}
                   setModalContents={setModalContents}
                   getTransactions={getTransactions}
                   getStockPriceQuote={getStockPriceQuote}
                   sharesOwnedByUser={sharesOwnedByUser}
+                  formatToUS={formatToUS}
+                  formatToPercent={formatToPercent}
                 />
               </Protected>
             }

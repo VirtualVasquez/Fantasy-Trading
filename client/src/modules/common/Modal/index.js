@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from "axios";
 import './Modal.scss';
 
-function Modal({modalContents, toggleModal, localToken, getTransactions}) {
+function Modal({modalContents, toggleModal, localToken, getTransactions, formatToUS, formatToPercent}) {
     
     const {symbol, companyName, availableFunds, currentOwnedShares, currentPrice, priceChange, percentChange, highestPriceToday, lowestPriceToday, openPriceToday, previousClosePrice, timestamp} = modalContents;
 
@@ -40,15 +40,6 @@ function Modal({modalContents, toggleModal, localToken, getTransactions}) {
         })
     }
 
-    function formatToUS(value){
-        return value.toLocaleString('en-US', {
-            style: 'currency', 
-            currency: 'USD',
-          })
-    }
-    function formatToPercent (value){
-      return (value).toFixed(2) + '%';
-    }
     function formatToDate(timestamp){
         const date = new Date(timestamp * 1000);
         const options = { 

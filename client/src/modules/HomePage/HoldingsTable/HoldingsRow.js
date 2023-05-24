@@ -1,16 +1,7 @@
 import React from 'react';
 
-const HoldingsRow = ({toggleModal, setModalContents, symbol, name, sharesOwned, marketValue, baseCost, gainLoss}) => {
+const HoldingsRow = ({toggleModal, setModalContents, symbol, name, sharesOwned, marketValue, baseCost, gainLoss, formatToUS, formatToPercent}) => {
 
-    function formatToUS(value){
-        return value.toLocaleString('en-US', {
-            style: 'currency', 
-            currency: 'USD',
-          })
-    }
-    function formatToPercent (value){
-      return (value).toFixed(4) + '%';
-    }
     return(
         <tr className="stock-row" 
             onClick={toggleModal}
