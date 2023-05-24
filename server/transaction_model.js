@@ -27,7 +27,6 @@ const getTransactions = async (params) => {
     const transactions = await pool.query(
       'SELECT * FROM transactions WHERE user_id = $1', [user_id]
     );
-    // console.log(transactions.rows);
     return transactions.rows;
   } catch (err) {
     console.error('Failed to verify access token:', err.message);
@@ -101,7 +100,6 @@ const makeTransaction = async (body, headers) => {
       message: `You ${verb} ${shares} of ${nyse_symbol} - ${company_name} at ${ formatToUSA(price)} per share, for a total of ${ formatToUSA(shares * price)}`,
       // Add any other relevant data you want to include in the response
     };
-    console.log( `You ${verb} ${shares} of ${nyse_symbol} - ${company_name} at ${ formatToUSA(price)} per share, for a total of ${ formatToUSA(shares * price)}`);
     return response;
   } catch (err) {
     console.error('Transaction unsuccesful', err);

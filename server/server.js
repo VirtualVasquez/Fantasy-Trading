@@ -36,7 +36,6 @@ app.get('/users', (req, res) => {
 
         user_model.createUser(req.body).then(response => {
             res.status(200).send(response);
-            // console.log(response);
         })
         .catch(error => {
             res.status(500).send(error);
@@ -95,7 +94,6 @@ app.get('/users', (req, res) => {
         try {
             transaction_model.makeTransaction(req.body, req.headers).then(response => {
                 res.status(200).send(response);
-                // console.log(response);
             })
         } catch (err) {
           console.error(err);
