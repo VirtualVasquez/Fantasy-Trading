@@ -5,7 +5,7 @@ import axios from "axios";
 import './SearchBar.scss';
 
 
-function SearchBar({setSearchResults}){
+function SearchBar({setSearchResults, setNoResults}){
 
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -17,7 +17,14 @@ function SearchBar({setSearchResults}){
                     q: userQuery,
                 }
             })
-            setSearchResults(response.data.filter(stock => !stock.symbol.includes('.')));
+            if(response.data.length > 0){
+                setSearchResults(response.data.filter(stock => !stock.symbol.includes('.')));
+                setNoResults(false);
+            }
+            if(response.data.length === 0){
+                setSearchResults([])
+                setNoResults(true)
+            }
         } catch (error) {
             console.error(error);
         }
@@ -25,6 +32,7 @@ function SearchBar({setSearchResults}){
 
     function clearSearchQuery(){
         setSearchQuery("");
+        setNoResults(false);
     }
 
     
@@ -34,28 +42,28 @@ function SearchBar({setSearchResults}){
     }
 
     return (
-        <form>
-            <div className="form-group">
-                <input 
-                    placeholder='What are you buying today?'
-                    value={searchQuery}
-                    onChange={e=>setSearchQuery(e.target.value)}
-                >                    
-                </input>
-                <button 
-                    disabled={!searchQuery}
-                    className="btn btn-light"
-                    onClick={handleSubmit}
-                >
-                    Submit
-                </button>
-                <button
-                    disabled={!searchQuery}
-                    className="btn btn-dark"
-                    onClick={clearSearchQuery}
-                >
-                    Clear
-                </button>
+        <form className='search'>
+            <div className="form-group row">
+                    <input 
+                        placeholder='What are you buying today?'
+                        value={searchQuery}
+                        onChange={e=>setSearchQuery(e.target.value)}
+                    >                    
+                    </input>
+                    <button 
+                        disabled={!searchQuery}
+                        className="btn btn-success"
+                        onClick={handleSubmit}
+                    >
+                        Submit
+                    </button>
+                    <button
+                        disabled={!searchQuery}
+                        className="btn btn-light"
+                        onClick={clearSearchQuery}
+                    >
+                        Clear
+                    </button>
             </div>
         </form>
     )

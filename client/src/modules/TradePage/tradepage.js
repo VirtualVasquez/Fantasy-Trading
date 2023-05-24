@@ -1,9 +1,6 @@
 import React, { useState }
 from 'react';
 import './TradePage.scss';
-import './StockResult';
-import './SavedStock';
-import SavedStock from './SavedStock';
 import StockResult from './StockResult';
 import SearchBar from './SearchBar/searchbar';
 
@@ -11,6 +8,7 @@ import SearchBar from './SearchBar/searchbar';
 function TradePage({toggleModal, modalContents, setModalContents, getStockPriceQuote, sharesOwnedByUser}){
 
     const [searchResults, setSearchResults] = useState([]);
+    const [noResults, setNoResults] = useState(false);
 
     return (
         
@@ -21,14 +19,25 @@ function TradePage({toggleModal, modalContents, setModalContents, getStockPriceQ
                     <p>Search for stocks in publicly traded companies here.</p>
                     <SearchBar
                         setSearchResults={setSearchResults}
+                        setNoResults={setNoResults}
                     />
                 </div>
             </div>
             <div className='row stocks-row'>
-                <div className='col-12 col-lg-7'>
-                    <h3>Results</h3>
+                <div className='col-12 col-lg-8 offset-lg-2'>
+                
+                {Array.isArray(searchResults) 
+                    && searchResults.length 
+                    ? <h3>Results</h3> 
+                    : null
+                }
+                
+                {noResults 
+                    ? <p>Sorry, no results found</p> 
+                    : null
+                }
 
-                    {Array.isArray(searchResults) ? searchResults.map(function (result, index) {
+                {Array.isArray(searchResults) ? searchResults.map(function (result, index) {
                         return (
                             <StockResult    
                                 key={index}
@@ -42,7 +51,7 @@ function TradePage({toggleModal, modalContents, setModalContents, getStockPriceQ
                             />
                         )
                         }) : null
-                    }
+                }
 
                 </div>
             </div>

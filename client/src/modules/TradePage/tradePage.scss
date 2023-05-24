@@ -1,5 +1,12 @@
 .trade-page{
+    .search-row{
+        text-align: center;
+        padding: 2rem;
+    }
     .stocks-row{
         margin-top: 2rem;
+        p{
+            text-align: center;
+        }
     }
 }

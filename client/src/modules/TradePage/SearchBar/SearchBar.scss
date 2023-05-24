@@ -1,13 +1,32 @@
-.search-row{
-    text-align: center;
-    padding: 2rem;
-    form{
-        width: 100%;
-        input{
-            width: 80%;
+.search{
+        .form-group{
+            margin: 0;
+            @media only screen and (max-width: 600px) {
+                width: 100%;
+                input{
+                    font-size: 18px;
+                }
+                button{
+                    width: 50%;
+                }
+            }
+            @media only screen and (min-width: 600px) {
+                input{
+                    font-size: 18px;
+                }
+            }
+
+            @media only screen and (min-width: 768px) {
+                width: 60%;
+                margin-left: 20%;
+                input{
+                    font-size: 1.5rem;
+                }
+                button{
+                    width: 50%;
+                }
+            }
+
+
         }
-        button{
-            font-size: 19px;
-        }
-    }
- }
+}
