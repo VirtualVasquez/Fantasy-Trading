@@ -21,15 +21,6 @@ const finnhub_model = require('./finnhub_model.js');
 app.use(express.json())
 
 
-//not needed in the final project
-//keeping for now for testing purposes
-app.get('/users', (req, res) => {
-    user_model.getUsers()
-    .then(response => {
-        res.status(200).send(response);
-    })
-})
-
 ////project needs
     //create a user
     app.post('/users', async (req, res) => {

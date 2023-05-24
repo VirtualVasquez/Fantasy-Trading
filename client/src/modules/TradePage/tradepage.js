@@ -11,7 +11,6 @@ import SearchBar from './SearchBar/searchbar';
 function TradePage({toggleModal, modalContents, setModalContents, getStockPriceQuote, sharesOwnedByUser}){
 
     const [searchResults, setSearchResults] = useState([]);
-    // const [savedSearches, setSavedSearches] = useState([]);
 
     return (
         
@@ -45,13 +44,6 @@ function TradePage({toggleModal, modalContents, setModalContents, getStockPriceQ
                         }) : null
                     }
 
-                </div>
-                <div className='col-12 col-lg-5'>
-                    <h3>Saved Stocks</h3>
-                    <SavedStock 
-                        toggleModal={toggleModal}            
-                        setModalContents={setModalContents}
-                    />
                 </div>
             </div>
 

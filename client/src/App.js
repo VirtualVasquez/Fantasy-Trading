@@ -213,12 +213,13 @@ function App() {
 
 
   useEffect(() => {
+    console.log(localToken);
+
     if (localToken) {
       const verified = verifyAccessToken(localToken);
       if(!verified){
-        localStorage.removeItem('fantasy_access_token');
+        return localStorage.removeItem('fantasy_access_token');
       }
-      console.log(localToken);
     }
   }, [localToken]);
  
@@ -237,13 +238,13 @@ function App() {
     };
   }, [showModal]);
 
-  useEffect(() => {
-    //change this to "if localToken verified" later
-    //only checking with localToken for now to advance the project
-    if(localToken){
-      getTransactions(localToken);
-    }
-  }, [localToken]);
+  // useEffect(() => {
+  //   //change this to "if localToken verified" later
+  //   //only checking with localToken for now to advance the project
+  //   if(localToken){
+  //     getTransactions(localToken);
+  //   }
+  // }, [localToken]);
 
   useEffect(() => {
     setModalContents({

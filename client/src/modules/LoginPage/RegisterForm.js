@@ -39,7 +39,6 @@ function validateCredentials(email, password, confirmPassword){
 }
 
 const RegisterForm = props => {
-    // const [errorMessage, setErrorMessage] = useState('');
     const [providedEmail, setEmail] = useState(null);
     const [providedPassword, setPassword] = useState(null);
     const [passwordCheck, setPasswordCheck] = useState(null);
@@ -57,7 +56,6 @@ const RegisterForm = props => {
         } 
         else {
             console.log(validation.msg);
-          // setErrorMessage(validation.msg);
         }
     };    
 
