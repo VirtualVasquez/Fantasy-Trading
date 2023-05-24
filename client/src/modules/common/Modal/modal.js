@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from "axios";
 import './Modal.scss';
 
@@ -135,13 +135,25 @@ function Modal({modalContents, toggleModal, localToken, getTransactions, formatT
                 <div className='row form-data'>
                     <form className="form-inline">                        
                         <label htmlFor="action">Action</label>
-                        <select id="action" className="custom-select" value={tradeData.action} onChange={handleSelectChange}>
+                        <select 
+                            id="action" 
+                            className="custom-select" 
+                            value={tradeData.action} 
+                            onChange={handleSelectChange}
+                        >
                             <option value="BUY">Buy</option>
                             <option value="SELL">Sell</option>
                         </select>
                         
                         <label htmlFor="quantity">Quantity</label>
-                        <input id="quantity" name="quantity" type="number" min="0" value={tradeData.quantity} onChange={handleQuantityChange}>
+                        <input 
+                            id="quantity" 
+                            name="quantity" 
+                            type="number" 
+                            min="0" 
+                            value={tradeData.quantity} 
+                            onChange={handleQuantityChange}
+                        >
                         </input>
                             {currentOwnedShares && tradeData.action === "SELL" ? 
                             <button 
@@ -151,13 +163,27 @@ function Modal({modalContents, toggleModal, localToken, getTransactions, formatT
                                 Sell All
                             </button> : null}
                     </form>
-                    <p><span className="info-label">Total:</span> {formatToUS(tradeData.total)}</p>
+                    {tradeData.action === "SELL" && tradeData.quantity > currentOwnedShares 
+                    ? <p className="errorMessage">You can't sell more shares than what you own.</p> 
+                    : tradeData.action === "BUY" && tradeData.total > availableFunds 
+                    ? <p className="errorMessage">You don't have enough money to buy this amount of shares</p> 
+                    : <p><span className="info-label">Total:</span> {formatToUS(tradeData.total)}</p>}
+                    
                 </div>
                 <div className='row actions'>
-                    <button className='btn btn-secondary'>Cancel</button>
+                    <button 
+                        className='btn btn-secondary'
+                        onClick={toggleModal}
+                    >
+                            Cancel
+                    </button>
                     <button 
                         className='btn btn-success'
-                        disabled={!tradeData.quantity || availableFunds < tradeData.total }
+                        disabled={
+                            tradeData.quantity < 1 
+                            || availableFunds < tradeData.total 
+                            || (tradeData.action == "SELL" && tradeData.quantity > currentOwnedShares)
+                        }
                         onClick={handleTradeSubmit}
                     >
                         Trade

@@ -14,6 +14,9 @@
     background-color: rgb(188, 234, 188);
     box-shadow: 2px 2px 2px 2px  rgba(0, 0, 0, 0.5);
     padding: 1rem;
+    .errorMessage{
+        color: red;
+    }
     .modal-header{
         padding: 0.5rem;
         // border-bottom: 1px solid black;
