@@ -238,13 +238,13 @@ function App() {
     };
   }, [showModal]);
 
-  // useEffect(() => {
-  //   //change this to "if localToken verified" later
-  //   //only checking with localToken for now to advance the project
-  //   if(localToken){
-  //     getTransactions(localToken);
-  //   }
-  // }, [localToken]);
+  useEffect(() => {
+    //change this to "if localToken verified" later
+    //only checking with localToken for now to advance the project
+    if(localToken){
+      getTransactions(localToken);
+    }
+  }, [localToken]);
 
   useEffect(() => {
     setModalContents({

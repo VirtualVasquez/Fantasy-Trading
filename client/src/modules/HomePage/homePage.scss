@@ -3,6 +3,17 @@
     .balance-table{
         background-color: yellow;
     }
+    .balance-table, .holdings-table{
+        @media only screen and (max-width: 600px) {
+            font-size: 12px;
+        }
+        @media only screen and (min-width: 600px) {
+            font-size: 18px;
+        }
+        @media only screen and (min-width: 700px) {
+            font-size: 24px;
+        }
+    }
     .holdings-table{
         .table{
             p{

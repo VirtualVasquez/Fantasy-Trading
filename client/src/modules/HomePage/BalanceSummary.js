@@ -16,9 +16,9 @@ function BalanceSummary({ accountFigures })  {
     }
 
     return(
-        <div className="balance-table">
+        <div>
             <h2>Account Summary</h2>
-            <table className="table table-striped table">
+            <table className="table table-striped balance-table">
                 <thead>
                     <tr>
                         <th scope="col">Account Value</th>

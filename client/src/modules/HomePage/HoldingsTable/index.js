@@ -58,7 +58,7 @@ const HoldingsTable = ({toggleModal, modalContents, setModalContents, userTransa
                         <th scope="col">Shares</th>
                         <th scope="col">Market Value</th>
                         <th scope="col">Base Cost</th>
-                        <th scope="col">Gain/Loss</th>
+                        <th scope="col">Gain / Loss</th>
                     </tr>            
                 </thead>
                 <tbody>

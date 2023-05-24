@@ -1,9 +1,10 @@
-.App{
-    background: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%);
+body{
+    background: linear-gradient(to bottom, #c1dfc4 , #deecdd );
+    background-repeat: no-repeat;
     color: #755000;
     height: 100vh;
     font-size: 24px;
-}
-body {
-    overflow: hidden;
+    @media only screen and (max-width: 600px) {
+        font-size: 14px;
+    }
 }
