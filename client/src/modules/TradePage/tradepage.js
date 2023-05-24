@@ -5,7 +5,7 @@ import './StockResult';
 import './SavedStock';
 import SavedStock from './SavedStock';
 import StockResult from './StockResult';
-import SearchBar from './SearchBar';
+import SearchBar from './SearchBar/searchbar';
 
 
 function TradePage({toggleModal, modalContents, setModalContents, getStockPriceQuote, sharesOwnedByUser}){
@@ -37,7 +37,7 @@ function TradePage({toggleModal, modalContents, setModalContents, getStockPriceQ
                                 modalContents={modalContents}              
                                 setModalContents={setModalContents}
                                 symbol={result.symbol}
-                                company={result.description}
+                                company={result.name}
                                 getStockPriceQuote={getStockPriceQuote}
                                 sharesOwnedByUser={sharesOwnedByUser}
                             />

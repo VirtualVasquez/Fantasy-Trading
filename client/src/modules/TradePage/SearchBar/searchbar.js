@@ -17,7 +17,7 @@ function SearchBar({setSearchResults}){
                     q: userQuery,
                 }
             })
-            setSearchResults(response.data.result.filter(stock => !stock.symbol.includes('.')));
+            setSearchResults(response.data.filter(stock => !stock.symbol.includes('.')));
         } catch (error) {
             console.error(error);
         }
