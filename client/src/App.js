@@ -9,8 +9,8 @@ import {
 import HomePage from './modules/HomePage';
 import LoginPage from './modules/LoginPage';
 import TradePage from './modules/TradePage';
-import Navbar from './modules/common/Navbar';
-import Modal from './modules/common/Modal';
+import Navbar from './modules/common/Navbar/navbar';
+import Modal from './modules/common/Modal/modal';
 import Protected from "./helpers/Protected";
 import axios from "axios";
 
