@@ -116,11 +116,14 @@ app.use(express.json())
     //validate token
     app.post('/token/validate', (req,res) => {
         return new Promise(function(resolve, reject){
-            const {accessToken} = req.body;
+            const {authorization } = req.headers;
     
-            if (!accessToken) {
+            if (!authorization || !authorization.startsWith('Bearer ')) {
                 return res.status(401).json({ message: 'Access token not provided' });
             }
+
+            const accessToken = authorization.split(' ')[1];
+
             try{
                 const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET); // verify the access token
                 return res.json(decoded);

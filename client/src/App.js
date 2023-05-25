@@ -200,11 +200,12 @@ function App() {
 
   async function verifyAccessToken(token) {
     try {
-      const response = await axios.post('http://localhost:3001/token/validate', null, {
+      const response = await axios.post('/token/validate', null, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -212,14 +213,18 @@ function App() {
 
 
 
-  useEffect(() => {
-    console.log(localToken);
+   useEffect(() => {
 
     if (localToken) {
-      const verified = verifyAccessToken(localToken);
-      if(!verified){
-        return localStorage.removeItem('fantasy_access_token');
-      }
+      verifyAccessToken(localToken).then((verified) =>{
+        if(!verified){
+          return localStorage.removeItem('fantasy_access_token');
+        }
+        if(verified){
+          getTransactions(localToken);
+        }
+      })
+
     }
   }, [localToken]);
  
@@ -238,13 +243,13 @@ function App() {
     };
   }, [showModal]);
 
-  useEffect(() => {
-    //change this to "if localToken verified" later
-    //only checking with localToken for now to advance the project
-    if(localToken){
-      getTransactions(localToken);
-    }
-  }, [localToken]);
+  // useEffect(() => {
+  //   //change this to "if localToken verified" later
+  //   //only checking with localToken for now to advance the project
+  //   if(localToken){
+  //     getTransactions(localToken);
+  //   }
+  // }, [localToken]);
 
   useEffect(() => {
     setModalContents({
