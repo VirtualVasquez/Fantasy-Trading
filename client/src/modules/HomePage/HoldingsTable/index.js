@@ -45,6 +45,7 @@ const HoldingsTable = ({toggleModal, modalContents, setModalContents, userTransa
 
     useEffect(() => {
       getUserStockHoldingsInfo();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userTransactions]);
       
     return(
