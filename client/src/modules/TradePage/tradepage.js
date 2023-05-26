@@ -1,6 +1,6 @@
 import React, { useState }
 from 'react';
-import './tradepage.scss';
+import './TradePage.scss';
 import StockResult from './StockResult';
 import SearchBar from './SearchBar/searchbar';
 
