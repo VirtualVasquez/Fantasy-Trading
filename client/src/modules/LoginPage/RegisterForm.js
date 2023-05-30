@@ -3,7 +3,7 @@ import axios from "axios";
 
 async function createUser(email, password, passcheck) {
     try {
-      const response = await axios.post('http://localhost:3001/users', {
+      const response = await axios.post('/users', {
         email: email,
         password: password,
         password_check: passcheck
@@ -99,7 +99,7 @@ const RegisterForm = props => {
                     className="btn btn-warning btn-submit"
                     onClick={handleSubmit}
                 >
-                    Log In
+                    Create Account
                 </button>
             </div>
             <p className="button-divider"></p>
