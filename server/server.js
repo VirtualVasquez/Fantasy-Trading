@@ -9,24 +9,24 @@ const port = process.env.port || 3001;
 const bodyParser = require('body-parser');
 
 app.use(cors());
-
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(express.json())
 
 const user_model = require('./user_model.js');
 const transaction_model = require('./transaction_model.js');
 const finnhub_model = require('./finnhub_model.js');
 
-
-app.use(express.json())
-
-
 ////project needs
-    //serve the homepage of the built application
-    app.get("/", (req, res) => {
-        res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
-    })
+
+    // Serve static files from the client/build directory
+    app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
+    // Serve index.html for all routes
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+    });
 
     //create a user
     app.post('/users', async (req, res) => {
@@ -164,5 +164,5 @@ app.use(express.json())
     // }
 
 app.listen(port, () => {
-    console.log('Server started on port 3001');
+    console.log(`Server started on port ${port}`);
 })
