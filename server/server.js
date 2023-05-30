@@ -28,16 +28,30 @@ const finnhub_model = require('./finnhub_model.js');
         res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
     });
 
-    //create a user
+    // create a user
     app.post('/users', async (req, res) => {
-
-        user_model.createUser(req.body).then(response => {
-            res.status(200).send(response);
-        })
-        .catch(error => {
-            res.status(500).send(error);
-        })
-    })
+        const { email, password, password_check } = req.body;
+    
+        if (!email || !password || !password_check) {
+        res.status(400).send("Invalid request. Please provide valid email, password, and password check.");
+        return;
+        }
+    
+        if (password !== password_check) {
+        res.status(400).send("Passwords do not match.");
+        return;
+        }
+    
+        // Perform other validation checks if necessary
+    
+        try {
+        const response = await user_model.createUser(req.body);
+        res.status(200).send(response);
+        } catch (error) {
+        console.error(error);
+        res.status(500).send("An error occurred while processing your request. Please try again later.");
+        }
+    });
 
     //login a user
     app.post('/users/login', async (req, res) => {
