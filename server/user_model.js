@@ -20,7 +20,7 @@ const login = (body) => {
             if (error){
                 reject(error)
             }
-            if(results){
+            if(typeof results === 'object' && results !== null){
                 const storedPassword = results.rows[0].password;
                 if(password !== storedPassword){
                     resolve("The provided password is incorrect");
@@ -113,38 +113,42 @@ const createUser = (body) => {
           if (error) {
             reject(error);
           }
-  
-          const user_id = results.rows[0].user_id;
-          const user_email = results.rows[0].email;
-          const payload = { user_id: user_id }; // Create a payload object
-          const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
-          const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }); // Generate access token
-  
-          // Insert a transaction record for the new user with a starting balance of $100,000
-          pool.query(
-            'INSERT INTO transactions (user_id, transaction_type, company_name, nyse_symbol, shares, price) VALUES ($1, $2, $3, $4, $5, $6)',
-            [user_id, 'DEPOSIT', null, null, null, 100000.00],
-            (error, results) => {
-              if (error) {
-                reject(error);
-              }
-  
-              pool.query(
-                'INSERT INTO refresh_tokens (user_id, token) VALUES ($1, $2)',
-                [user_id, refreshToken],
-                (error, results) => {
-                  if (error) {
-                    reject(error);
-                  }
-  
-                  resolve({
-                    message: `A new user has been added with ID: ${user_id}`,
-                    accessToken: accessToken 
-                  });
+          
+          if(typeof results === 'object' && results !== null){
+            const user_id = results.rows[0].user_id;
+            const user_email = results.rows[0].email;
+            const payload = { user_id: user_id }; // Create a payload object
+            const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
+            const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }); // Generate access token
+    
+            // Insert a transaction record for the new user with a starting balance of $100,000
+            pool.query(
+              'INSERT INTO transactions (user_id, transaction_type, company_name, nyse_symbol, shares, price) VALUES ($1, $2, $3, $4, $5, $6)',
+              [user_id, 'DEPOSIT', null, null, null, 100000.00],
+              (error, results) => {
+                if (error) {
+                  reject(error);
                 }
-              );
-            }
-          );
+    
+                pool.query(
+                  'INSERT INTO refresh_tokens (user_id, token) VALUES ($1, $2)',
+                  [user_id, refreshToken],
+                  (error, results) => {
+                    if (error) {
+                      reject(error);
+                    }
+    
+                    resolve({
+                      message: `A new user has been added with ID: ${user_id}`,
+                      accessToken: accessToken 
+                    });
+                  }
+                );
+              }
+            );
+          }
+
+
         }
       )
     })
