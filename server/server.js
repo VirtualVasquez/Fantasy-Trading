@@ -22,6 +22,11 @@ app.use(express.json())
 
 
 ////project needs
+    //serve the homepage of the built application
+    app.get("/", (req, res) => {
+        res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
+    })
+
     //create a user
     app.post('/users', async (req, res) => {
 
