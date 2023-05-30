@@ -11,7 +11,25 @@ async function createUser(email, password, passcheck) {
       localStorage.setItem("fantasy_access_token", response.data.accessToken);
       window.location.reload();
     } catch (error) {
-      console.error(error);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        const status = error.response.status;
+        if (status === 400) {
+          throw new Error("Err Code: 400. Invalid request. Please provide valid email, password, and password check.");
+        } else if (status === 401) {
+          throw new Error("Err Code: 401 Unauthorized. Please check your credentials.");
+        } else if (status === 500) {
+          throw new Error("Err Code: 500. Internal server error. Please try again later.");
+        } else {
+          throw new Error("An error occurred while processing your request. Please try again.");
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        throw new Error("No response received from the server. Please try again later.");
+      } else {
+        // Something else happened in making the request
+        throw new Error("An error occurred while making the request. Please try again.");
+      }
     }
 }
 
