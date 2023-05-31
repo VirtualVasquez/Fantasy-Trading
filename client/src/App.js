@@ -86,7 +86,7 @@ function App() {
   }
   async function getTransactions(token){
     try {
-        const response = await axios.get('http://localhost:3001/transactions', {
+        const response = await axios.get('/transactions', {
             params: {
                 accessToken: token
             }
