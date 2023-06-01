@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import './HomePage.scss';
 import BalanceSummary from './BalanceSummary.js';
-import HoldingsTable from './HoldingsTable/index.js';
+import HoldingsTable from './HoldingsTable/HoldingsTable.js';
 
 
 
