@@ -6,7 +6,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import HomePage from './modules/HomePage';
+import HomePage from './modules/HomePage/HomePage';
 import LoginPage from './modules/LoginPage';
 import TradePage from './modules/TradePage/TradePage';
 import Navbar from './modules/common/Navbar/navbar';
