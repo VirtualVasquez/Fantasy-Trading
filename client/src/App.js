@@ -24,13 +24,13 @@ function App() {
       marketValue: 0,
       baseCost: 0,
       gainLoss: {
-          netCash: "-$1.00",
-          netPercent: "-1.0%"
+          netCash: "-$0.00",
+          netPercent: "0.0%"
       }
   });
   const [modalContents, setModalContents] = useState({
-    symbol:"DEMO",
-    companyName: "Demonstration, Inc.",
+    symbol:"",
+    companyName: "",
     availableFunds: '$0.00',
     currentOwnedShares: 0,
     currentPrice: 0,
@@ -99,27 +99,17 @@ function App() {
   }
   function getTransactionTypeTotal(typeOfTransaction, arrayofTransactions){
 
-    let specifiedType;
     let transactions;
 
-    if(typeOfTransaction === 'DEPOSIT'){
-        specifiedType = 'DEPOSIT'
+    if(Array.isArray(arrayofTransactions) && arrayofTransactions.length > 0){
+      transactions = arrayofTransactions.filter(transaction => transaction.transaction_type === typeOfTransaction)
+    } else if(Array.isArray(userTransactions) && userTransactions.length > 0){
+      transactions = userTransactions.filter(transaction => transaction.transaction_type === typeOfTransaction)
     }
-    if(typeOfTransaction === 'WITHDRAWAL'){
-        specifiedType = 'WITHDRAWAL'
-    }
-    if(typeOfTransaction === 'BUY'){
-        specifiedType = 'BUY'
-    }
-    if(typeOfTransaction === 'SELL'){
-        specifiedType = 'SELL'
-    }
-    
-    if(arrayofTransactions){
-      transactions = arrayofTransactions.filter(transaction => transaction.transaction_type === specifiedType);
-    } else{
-      transactions = userTransactions.filter(transaction => transaction.transaction_type === specifiedType);
-    }
+
+    if(!transactions){
+      return
+    } 
 
     let sum = 0;
 
@@ -127,19 +117,18 @@ function App() {
       for (let i = 0; i < transactions.length; i++){
         const price = parseFloat(transactions[i].price);
         sum += price;
-        
       }
-      return sum;
+        return sum;
     }
-
-    if(typeOfTransaction === 'BUY' || typeOfTransaction === 'SELL'){
-      for (let i = 0; i < transactions.length; i++){
-        const shares = parseFloat(transactions[i].shares);
-        const sharePrice = parseFloat(transactions[i].price);   
-        sum += (shares * sharePrice)
+  
+      if(typeOfTransaction === 'BUY' || typeOfTransaction === 'SELL'){
+        for (let i = 0; i < transactions.length; i++){
+          const shares = parseFloat(transactions[i].shares);
+          const sharePrice = parseFloat(transactions[i].price);   
+          sum += (shares * sharePrice)
+        }
+        return sum;
       }
-      return sum;
-    }
   }
   const toggleModal = (e) => {
     e.preventDefault();
@@ -251,13 +240,12 @@ function App() {
   //   }
   // }, [localToken]);
 
-  useEffect(() => {
-    setModalContents({
-      ...modalContents,
-      availableFunds: accountFunctions.setCashBalance(),
-    })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userTransactions]);
+useEffect(() => {
+  setModalContents((prevModalContents) => ({
+    ...prevModalContents,
+    availableFunds: accountFunctions.setCashBalance(),
+  }));
+}, [userTransactions, setModalContents]);
 
   return (
     <div className="App">
