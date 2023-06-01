@@ -20,14 +20,6 @@ const finnhub_model = require('./finnhub_model.js');
 
 ////project needs
 
-    // Serve static files from the client/build directory
-    app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
-
-    // Serve index.html for all routes
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
-    });
-
     // create a user
     app.post('/users', async (req, res) => {
         const { email, password, password_check } = req.body;
@@ -154,6 +146,14 @@ const finnhub_model = require('./finnhub_model.js');
             }    
         })
     })
+
+    // Serve static files from the client/build directory
+    app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
+    // Serve index.html for all routes
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+    });
 
     //only need if you want to persist an ACTIVE session past 30 minutes total
     //provide refreshToken when needed

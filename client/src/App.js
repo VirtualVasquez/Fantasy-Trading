@@ -108,7 +108,7 @@ function App() {
     }
 
     if(!transactions){
-      return
+      return 0;
     } 
 
     let sum = 0;
@@ -216,6 +216,10 @@ function App() {
 
     }
   }, [localToken]);
+
+  useEffect(() => {
+    console.log(userTransactions);
+  }, [userTransactions]);
  
   
   useEffect(() => {

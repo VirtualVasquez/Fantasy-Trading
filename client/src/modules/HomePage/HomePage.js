@@ -13,7 +13,7 @@ function HomePage({toggleModal, modalContents, setModalContents, userTransaction
             try {
                 const userCashBalance = accountFunctions.setCashBalance();
                 const userBaseCost = accountFunctions.setBaseCost();
-                const userMarketValue = accountFunctions.setMarketValue();
+                const userMarketValue = await accountFunctions.setMarketValue();
             
                 await Promise.all([userCashBalance, userBaseCost, userMarketValue]).then(([userCashBalance, userBaseCost, userMarketValue]) => {
 
