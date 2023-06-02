@@ -31,6 +31,8 @@ You will also need to setup an access token secret for JSON Web Tokens, a Financ
 
 Afterwards, you'll need to recreate and connect the databases to the applications. The code needed to do so is included in the `sqlseeds` folder. You can do this from an application such as pgAdmin or from an SQL Shell.  While the order in which the the files of `sqlseeds` shouldn't matter, I'd recommened running them in this order: users, refresh_tokens, transactions. An `env-example.txt` file is included in the `server` folder as a reference for the environment variables that are needed for the server to to connect to the database afterwards. You'll need to pass these values in a `.env` file of your own in the same folder. 
 
+Once all of that is setup, run `npm run start` at the root of the project.
+
 ## Road Map
 
 There are a number of features I would like to add or improve to the project to make it more robust.
