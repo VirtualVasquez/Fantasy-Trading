@@ -19,7 +19,6 @@ const getCompanySymbols = async(params) => {
     const { q } = params;
 
     try { 
-        // const response = await axios.get(`https://finnhub.io/api/v1/search?q=${q}&token=${process.env.FINNHUB_TOKEN}`);
         const response = await axios.get(`https://financialmodelingprep.com/api/v3/search?query=${q}&limit=10&apikey=${process.env.FMP_API_KEY}`);
         return response.data;
     } catch (error){
