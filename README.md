@@ -29,7 +29,7 @@ If you'd like to download the repo for yourself to play with, you'll need to run
 
 You will also need to setup an access token secret for JSON Web Tokens, a Financial Modeling Prep Key to be able to lookup companies on the stock market via NYSE symbol or their company name, and a Finnhub API Token to get quotes for stocks.
 
-Afterwards, you'll need to recreate and connect the databases to the applications. The code needed to do so is included in the `sqlseeds` folder. You can do this from an application such as pgAdmin or from an SQL Shell.  While the order in which the the files of `sqlseeds` shouldn't matter, I'd recommened running them in this order: users, refresh_tokens, transactions. An `env-example.txt` file is included in the `server` folder as a reference for the environment variables that are needed for the server to to connect to the database afterwards. You'll need to pass these values in a `.env` file of your own in the same folder. 
+Afterwards, you'll need to recreate the tables for the application. The code needed to do so is included in the `sqlseeds` folder in the `startup.txt` file. You can do this from an application such as pgAdmin or from an SQL Shell. An `env-example.txt` file is included in the `server` folder as a reference for the environment variables that are needed for the server to to connect to the database afterwards. You'll need to pass these values in a `.env` file of your own in the same folder. 
 
 Once all of that is setup, run `npm run start` at the root of the project.
 
