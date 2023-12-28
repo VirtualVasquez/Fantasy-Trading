@@ -1,3 +1,6 @@
+-- Create sequence
+CREATE SEQUENCE IF NOT EXISTS transactions_id_seq;
+
 -- Table: public.transactions
 
 -- DROP TABLE IF EXISTS public.transactions;
@@ -18,9 +21,7 @@ CREATE TABLE IF NOT EXISTS public.transactions
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT valid_transaction_type CHECK (transaction_type::text = ANY (ARRAY['BUY'::character varying, 'SELL'::character varying, 'DEPOSIT'::character varying, 'WITHDRAWAL'::character varying]::text[]))
-)
-
-TABLESPACE pg_default;
+);
 
 ALTER TABLE IF EXISTS public.transactions
     OWNER to postgres;

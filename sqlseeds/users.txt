@@ -1,3 +1,6 @@
+-- Create sequence
+CREATE SEQUENCE IF NOT EXISTS users_user_id_seq;
+
 -- Table: public.users
 
 -- DROP TABLE IF EXISTS public.users;
