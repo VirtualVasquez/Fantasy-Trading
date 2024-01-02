@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import axios from "axios";
+import axios from '../../helpers/axiosConfig';
 
 async function createUser(email, password, passcheck) {
     try {

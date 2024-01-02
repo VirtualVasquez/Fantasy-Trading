@@ -12,7 +12,7 @@ import TradePage from './modules/TradePage/TradePage';
 import Navbar from './modules/common/Navbar/navbar';
 import Modal from './modules/common/Modal/modal';
 import Protected from "./helpers/Protected";
-import axios from "axios";
+import axios from "./helpers/axiosConfig";
 
 function App() {
   const [localToken, setLocalToken] = useState(localStorage.getItem('fantasy_access_token'));

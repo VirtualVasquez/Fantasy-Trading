@@ -1,11 +1,11 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 const express = require('express')
 const cors = require('cors');
 const path = require("path");
 const app = express()
 const jwt = require('jsonwebtoken');
-const port = process.env.port || 3001;
+const port = process.env.SERVER_PORT || 3001;
 const bodyParser = require('body-parser');
 
 app.use(cors());

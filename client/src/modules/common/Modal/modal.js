@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from "axios";
+import axios from "../../../helpers/axiosConfig";
 import './Modal.scss';
 
 function Modal({modalContents, toggleModal, localToken, getTransactions, formatToUS, formatToPercent}) {
