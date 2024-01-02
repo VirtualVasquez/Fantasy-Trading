@@ -1,3 +1,7 @@
+CREATE DATABASE fantasy_stock_trading;
+
+\c fantasy_stock_trading
+
 -- Create sequence
 CREATE SEQUENCE IF NOT EXISTS users_user_id_seq;
 
