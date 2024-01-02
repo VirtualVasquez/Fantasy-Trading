@@ -15,17 +15,23 @@ services:
       - "./server/.env:/app/.env"
 
 
-  #add a service for database initialization
-  db_init:
+  #add a service for database
+  db:
     image: postgres:latest
+    depends_on:
+      server:
+        condition: service_started
+        required: true
+    env_file:
+      - ./server/.env
     environment:
-      POSTGRES_DB: fantasy_stock_trading
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"
     volumes:
       - ./server/sqlseeds/startup.sql:/docker-entrypoint-initdb.d/startup.sql
-    depends_on:
-      - server
 
 # Add a volume for persisting database data
 volumes:
