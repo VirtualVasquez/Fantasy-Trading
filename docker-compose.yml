@@ -8,11 +8,11 @@ services:
   server:
     build: ./server
     env_file:
-      - ./server/.env
+      - .env
     ports:
       - "3001:3001"
     volumes:
-      - "./server/.env:/app/.env"
+      - ".env:/app/.env"
 
 
   #add a service for database
@@ -23,7 +23,7 @@ services:
         condition: service_started
         required: true
     env_file:
-      - ./server/.env
+      - .env
     environment:
       - POSTGRES_DB=${DB_DATABASE}
       - POSTGRES_USER=${DB_USER}
