@@ -4,15 +4,7 @@ const axios = require('axios');
 //might not need?
 const jwt = require('jsonwebtoken');
 
-const Pool = require('pg').Pool
-const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-});
-
+const pool = require('./dbConfig');
 
 //symbol lookup
 const getCompanySymbols = async(params) => {
