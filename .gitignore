@@ -1,7 +1,7 @@
 node_modules
 package-lock.json
 .env
-elephantsql.env
+production.env
 server/.env
 node_modules
 scratch.json

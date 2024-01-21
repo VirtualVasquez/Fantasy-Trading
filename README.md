@@ -25,13 +25,32 @@ All companies for which you currently posses stocks for will appear on the homep
 
 ## Installation and Setup
 
-If you'd like to download the repo for yourself to play with, you'll need to run `npm install` in both the `client` and `server` directories.
+If you'd like to download the repo for yourself to play with, follow these steps:
 
-You will also need to setup an access token secret for JSON Web Tokens, a Financial Modeling Prep Key to be able to lookup companies on the stock market via NYSE symbol or their company name, and a Finnhub API Token to get quotes for stocks.
+### For ALL forms of setup (required)
 
-Afterwards, you'll need to recreate the tables for the application. The code needed to do so is included in the `/server/sqlseeds` folder in the `startup.sql` file. You can do this from an application such as pgAdmin or from an SQL Shell. An `env-example.txt` file is included in the `server` folder as a reference for the environment variables that are needed for the server to to connect to the database afterwards. You'll need to pass these values in a `.env` file of your own in the same folder. 
+1. Set up an access token secret for JSON Web Tokens, a Financial Modeling Prep Key, and a Finnhub API Token.
+2. Create a `.env` file at the root project directory with your environment variables. Reference `env-example.txt` for guidance as to what values are needed in the `.env` file(s), including API keys and tokens.
 
-Once all of that is setup, run `npm run start` at the root of the project.
+**NOTE:** if you use Docker for both a local deployment and a production deployment, it is highly advised to create two separate `.env` files. Your local one should be set to `.env` and the production one to `production.env`.
+
+### Local Development
+
+1. Run `npm install` in both the `client` and `server` directories.
+2. Recreate the tables for the application using `/server/sqlseeds/startup.sql`.
+3. Run `npm run start` to run the application locally.
+
+### Local Deployment with Docker (recommended)
+
+1. Run `docker-compose -f docker-compose-local.yml up -d` at the root of the project.
+2. Access the app at the specified production URL (usually localhost:3000).
+3. To stop instances of the app running in Docker, run `docker-compose -f docker-compose-local.yml down`
+
+### Production Deployment with Docker
+
+1. Run `docker-compose -f docker-compose-production.yml up -d` at the root of the project.
+2. Access the app at the specified production URL (usually localhost:3000).
+3. To stop instances of the app running in Docker, run `docker-compose -f docker-compose-production.yml down`
 
 ## Road Map
 
@@ -44,21 +63,30 @@ There are a number of features I would like to add or improve to the project to 
 
 ## Technologies Used
 
-- Frontend
-    - Axios
-    - Bootstrap
-    - Financial Model Prep API
-    - Finnhub API
-    - React
-    - React-Router-Dom
-    - SASS 
+### Backend
 
-- Backend
-    - Body-parser
-    - DotEnv
-    - Express.js
-    - Node.js
-    - PostgreSQL
+- **Node.js**: JavaScript runtime for server-side development.
+- **Express.js**: Web application framework for Node.js.
+- **PostgreSQL**: Open-source relational database management system.
+
+### Backend Tools
+
+- **Body-parser**: Middleware for parsing incoming request bodies.
+- **DotEnv**: Zero-dependency module that loads environment variables from a .env file.
+- **Docker**: Containerization tool used for packaging the application and its dependencies.
+
+### Frontend
+
+- **React**: JavaScript library for building user interfaces.
+- **React-Router-Dom**: Declarative routing for React applications.
+- **SASS**: Syntactically Awesome Stylesheets for enhancing CSS.
+- **Axios**: Promise-based HTTP client for making requests.
+- **Bootstrap**: Frontend framework for responsive and mobile-first design.
+
+### APIs
+
+- **Financial Model Prep API**: API for financial data related to stocks and companies.
+- **Finnhub API**: Real-time stock market data API.
 
 ## Author
 

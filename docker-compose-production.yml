@@ -10,7 +10,7 @@ services:
   server:
     build: ./server
     env_file:
-      - elephantsql.env
+      - production.env
     ports:
       - "3001:3001"
     volumes:
@@ -25,7 +25,7 @@ services:
         condition: service_started
         required: true
     env_file:
-      - elephantsql.env
+      - production.env
     environment:
       - POSTGRES_DB=${DB_DATABASE}
       - POSTGRES_USER=${DB_USER}
